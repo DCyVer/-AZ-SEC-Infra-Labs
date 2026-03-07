@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "Author": "DCyVer",
+    "Project": "AZ-SEC-Infra-Labs",
+    "Module": "04-VNet-Architecture",
+    "Version": "1.0",
+    "Notes": "Hub VNet with Shared Services, Database, and Public Web segmentation."
+  },
+  "parameters": {
+    "vnetName": { "defaultValue": "CoreServicesVnet", "type": "string" },
+    "location": { "defaultValue": "eastus", "type": "string" }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2023-11-01",
+      "name": "[parameters('vnetName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": { "addressPrefixes": ["10.20.0.0/16"] },
+        "subnets": [
+          { "name": "GatewaySubnet", "properties": { "addressPrefix": "10.20.0.0/27" } },
+          { "name": "SharedServicesSubnet", "properties": { "addressPrefix": "10.20.10.0/24" } },
+          { "name": "DatabaseSubnet", "properties": { "addressPrefix": "10.20.20.0/24" } },
+          { "name": "PublicWebServiceSubnet", "properties": { "addressPrefix": "10.20.30.0/24" } }
+        ]
+      }
+    }
+  ]
+}
