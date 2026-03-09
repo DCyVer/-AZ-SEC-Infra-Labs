@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "norwayeast"
+        },
+        "circuit1Name": {
+            "value": "TestERCircuit"
+        },
+        "circuit1SkuTier": {
+            "value": "Standard"
+        },
+        "circuit1SkuFamily": {
+            "value": "MeteredData"
+        },
+        "circuit1BandwidthInMbps": {
+            "value": 50
+        },
+        "circuit1PeeringLocation": {
+            "value": "Oslo"
+        },
+        "circuit1ProviderName": {
+            "value": "Telenor Secure Cloud Connect"
+        }
+    }
+}

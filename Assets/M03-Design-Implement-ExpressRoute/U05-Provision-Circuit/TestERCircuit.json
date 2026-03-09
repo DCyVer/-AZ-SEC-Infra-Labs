@@ -1,0 +1,48 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "circuit1Name": {
+            "type": "string"
+        },
+        "circuit1SkuTier": {
+            "type": "string"
+        },
+        "circuit1SkuFamily": {
+            "type": "string"
+        },
+        "circuit1BandwidthInMbps": {
+            "type": "int"
+        },
+        "circuit1PeeringLocation": {
+            "type": "string"
+        },
+        "circuit1ProviderName": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('circuit1Name')]",
+            "type": "Microsoft.Network/expressRouteCircuits",
+            "apiVersion": "2024-07-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "serviceProviderProperties": {
+                    "serviceProviderName": "[parameters('circuit1ProviderName')]",
+                    "peeringLocation": "[parameters('circuit1PeeringLocation')]",
+                    "bandwidthInMbps": "[parameters('circuit1BandwidthInMbps')]"
+                }
+            },
+            "tags": {},
+            "sku": {
+                "name": "[concat(parameters('circuit1SkuTier'),'_', parameters('circuit1SkuFamily'))]",
+                "tier": "[parameters('circuit1SkuTier')]",
+                "family": "[parameters('circuit1SkuFamily')]"
+            }
+        }
+    ]
+}

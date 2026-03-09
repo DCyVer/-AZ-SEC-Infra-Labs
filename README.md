@@ -15,65 +15,55 @@ Practical implementation of Azure networking foundations, focusing on connectivi
 *The following parameters define the environment baseline to maintain a secure, private-only infrastructure.*
 
 - **Regional Anchor:** `norwayeast` (Primary for all VNet resources).
-- **Virtual Network (Hub):** `CoreServicesVnet` (10.20.0.0/16).
-- **Virtual Network (Spoke 1):** `ManufacturingVnet` (10.30.0.0/16).
-- **Virtual Network (Spoke 2):** `ResearchVnet` (10.40.0.0/16).
-- **Gateway Subnetting:** Dedicated `/27` range within each VNet for Gateway Infrastructure.
-- **Transit Security:** **S2S IPsec/IKEv2 VPN** (VpnGw1AZ) replacing unencrypted VNet Peering to satisfy **NIS2/BIO2** transit encryption.
+- **Virtual Networks:** CoreServices (10.20.0.0/16), Manufacturing (10.30.0.0/16), Research (10.40.0.0/16).
+- **Transit Security:** **S2S IPsec/IKEv2 VPN** (VpnGw1AZ) and **Virtual WAN Global Transit** replacing unencrypted VNet Peering to satisfy **NIS2/BIO2** transit encryption requirements.
 - **Compute Tier:** `Standard_B2ats_v2` (Spot-eligible for cost optimization).
-- **Identity & Integrity:** Trusted Launch (vTPM/Secure Boot) and System-Assigned Managed Identities enabled on all nodes.
 
 ---
 
 ## 📁 Directory Structure
-
-### **Track 01: Introduction to Azure Virtual Networks**
-- `01-VNet-Architecture/`
-  - `Assets/`
-    - `01-rg-global-topology.png`
-    - `02-hub-vnet-overview.png`
-    - `03-mfg-vnet-overview.png`
-    - `04-research-vnet-overview.png`
-- `02-Name-Resolution/`
-  - `Assets/`
-    - `01-DNS-Zone-Overview.png`
-    - `02-VNet-Links.png`
-    - `03-Internal-Resolution.png`
-- `03-Global-VNet-Peering/`
-  - `Assets/`
-    - `01-Vnet-Peering-Connected.png`
-    - `02-Vnet-Peering-Topology-PreVM.png`
-    - `03-vnet-peering-clean-verification.png`
-    - `04-Connection-Troubleshoot.png`
-
-### **Track 02: Design and Implement Hybrid Networking**
-- `01-VNet-to-VNet-Gateway/`
-  - `README.md`
-  - `Assets/`
-    - `01-vnet-gateway-effective-routes.png`
-    - `02-vnet-gateway-connectivity-test.png`
+- **Assets/** (Global Root - Mirrored Structure)
+  - **M01-Introduction-to-Azure-Virtual-Networks/**
+    - `U04-VNet-Architecture/`
+    - `U06-Name-Resolution/`
+    - `U08-Global-Peering/`
+  - **M02-Design-and-implement-hybrid-networking/**
+    - `U02-VNet-to-VNet-Gateway/`
+    - `U07-Virtual-WAN-Integration/`
 
 ---
 
-## 📘 Module Summaries
-*Technical validation of implemented networking solutions.*
+## 📘 Module & Unit Summaries
+*Technical validation and security logic for implemented networking solutions.*
 
-### **Module 04: Private DNS Zones**
-- **Technical Evidence:** `01-DNS-Zone-Overview.png`, `02-VNet-Links.png`, `03-Internal-Resolution.png`
+### **Module 01: Introduction to Azure Virtual Networks**
+*Establishing the zero-trust foundation through isolated VNet boundaries and internal resolution.*
 
-### **Module 06: Persistent SSH Anchor**
-- **Technical Evidence:** `01-SSH-Key-Resource.png`, `02-Trusted-Launch.png`, `03-Serial-Console-Access.png`
+#### **Unit 04: VNet Architecture**
+- **Security Logic:** Multi-VNet baseline establishing isolated boundaries for Core, Manufacturing, and Research workloads.
+- **Technical Evidence:** [01-rg-global-topology.png](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U04-VNet-Architecture/01-rg-global-topology.png)
+- **Infrastructure Assets:** [CoreServicesVnet.json](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U04-VNet-Architecture/CoreServicesVnet.json) | [ManufacturingVnet.json](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U04-VNet-Architecture/ManufacturingVnet.json)
 
-### **Module 08: VNet Peering (Global)**
-- **Status:** Architecture superseded by Track 02 VPN Gateway configuration to enforce encryption-in-transit.
-- **Technical Evidence:** `01-Vnet-Peering-Connected.png`, `02-Vnet-Peering-Topology-PreVM.png`, `03-vnet-peering-clean-verification.png`, `04-Connection-Troubleshoot.png`
+#### **Unit 06: Name Resolution**
+- **Security Logic:** Implementation of **Azure Private DNS Zones** linked to all regional VNets, eliminating the need for public DNS exposure.
+- **Technical Evidence:** [01-nslookup-validation.png](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U06-Name-Resolution/01-nslookup-validation.png) | [02-private-dns-link.png](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U06-Name-Resolution/02-private-dns-link.png)
 
-### **Module 02: VNet-to-VNet Gateway**
-- **Security Logic:** Migrated from unencrypted peering to an encrypted S2S VPN tunnel to meet **NIS2/BIO2** transit security requirements.
-- **Technical Evidence:**
-  - `01-vnet-gateway-effective-routes.png` (Routing Table Validation)
-  - `02-vnet-gateway-connectivity-test.png` (Data Plane Handshake - Pending)
+#### **Unit 08: Global Peering**
+- **Security Logic:** Validated L3 reachability between regions. Note: This architecture was superseded by Track 02 encrypted transit to meet compliance.
+- **Technical Evidence:** [01-Vnet-Peering-Connected.png](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U08-Global-Peering/01-Vnet-Peering-Connected.png) | [03-vnet-peering-clean-verification.png](/Assets/M01-Introduction-to-Azure-Virtual-Networks/U08-Global-Peering/03-vnet-peering-clean-verification.png)
 
 ---
 
-*Note: All private keys (.pem) are stored locally and excluded from this repository via `.gitignore`.*
+### **Module 02: Design and Implement Hybrid Networking**
+*Migrating to encrypted, policy-driven transit to satisfy **NIS2/BIO2** requirements.*
+
+#### **Unit 02: VNet-to-VNet Gateway**
+- **Security Logic:** Transitioned from unencrypted peering to an encrypted **S2S IPsec/IKEv2 VPN tunnel** for inter-VNet traffic.
+- **Technical Evidence:** [01-vnet-gateway-effective-routes.png](/Assets/M02-Design-and-implement-hybrid-networking/U02-VNet-to-VNet-Gateway/01-vnet-gateway-effective-routes.png) | [03-vnet-gateway-tracepath-nc-success.png](/Assets/M02-Design-and-implement-hybrid-networking/U02-VNet-to-VNet-Gateway/03-vnet-gateway-tracepath-nc-success.png)
+
+#### **Unit 07: Virtual WAN Integration**
+- **Security Logic:** Implementation of **Global Transit Architecture** using Azure Virtual WAN to centralize the control plane and spoke connectivity.
+- **Technical Evidence:** [01-vwan-insights-topology.png](/Assets/M02-Design-and-implement-hybrid-networking/U07-Virtual-WAN-Integration/01-vwan-insights-topology.png) | [02-vwan-effective-routes.png](/Assets/M02-Design-and-implement-hybrid-networking/U07-Virtual-WAN-Integration/02-vwan-effective-routes.png)
+
+---
+*Note: All private keys (.pem) are excluded from this repository via .gitignore.*
