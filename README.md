@@ -24,12 +24,10 @@ Practical implementation of Azure networking foundations, focusing on connectivi
 ## 📁 Directory Structure
 - **Assets/** (Global Root - Mirrored Structure)
   - **M01-Introduction-to-Azure-Virtual-Networks/**
-    - `U04-VNet-Architecture/`
-    - `U06-Name-Resolution/`
-    - `U08-Global-Peering/`
   - **M02-Design-and-implement-hybrid-networking/**
-    - `U02-VNet-to-VNet-Gateway/`
-    - `U07-Virtual-WAN-Integration/`
+  - **M03-Design-Implement-ExpressRoute/**
+    - `U04-Configure-Gateway/`
+    - `U05-Provision-Circuit/`
 
 ---
 
@@ -64,6 +62,24 @@ Practical implementation of Azure networking foundations, focusing on connectivi
 #### **Unit 07: Virtual WAN Integration**
 - **Security Logic:** Implementation of **Global Transit Architecture** using Azure Virtual WAN to centralize the control plane and spoke connectivity.
 - **Technical Evidence:** [01-vwan-insights-topology.png](/Assets/M02-Design-and-implement-hybrid-networking/U07-Virtual-WAN-Integration/01-vwan-insights-topology.png) | [02-vwan-effective-routes.png](/Assets/M02-Design-and-implement-hybrid-networking/U07-Virtual-WAN-Integration/02-vwan-effective-routes.png)
+
+---
+
+### **Module 03: Design and Implement Azure ExpressRoute**
+*Establishing high-bandwidth, private-backbone connectivity to bypass public internet risks and satisfy **NIS2/BIO2** isolation requirements.*
+
+#### **Unit 04: Configure an ExpressRoute Gateway**
+- **Security Logic:** Deployment of a dedicated `GatewaySubnet` (/27) and ExpressRoute Gateway to anchor private circuit termination.
+- **Technical Evidence:** [ExpressRoute-Gateway-Status.png](/Assets/M03-Design-Implement-ExpressRoute/U04-Configure-Gateway/ExpressRoute-Gateway-Status.png) | [ExpressRoute-GatewaySubnet-Proof.png](/Assets/M03-Design-Implement-ExpressRoute/U04-Configure-Gateway/ExpressRoute-GatewaySubnet-Proof.png)
+- **Compliance Note:** Subnet sizing (/27) was implemented to support `ErGwScale` and high-availability zone redundancy for future production scaling.
+
+#### **Unit 05: Provision an ExpressRoute Circuit**
+- **Security Logic:** Established a private peering circuit via **Telenor (Oslo)** to ensure regional data sovereignty and maintain traffic within the Nordic infrastructure.
+- **Technical Evidence:** [ExpressRoute-Circuit-Status.png](/Assets/M03-Design-Implement-ExpressRoute/U05-Provision-Circuit/ExpressRoute-Circuit-Status.png)
+- **Key Artifacts:** 
+    - **Circuit Status:** Enabled (Azure Resource Active)
+    - **Provider Status:** NotProvisioned (Awaiting physical cross-connect / Service Key handshake)
+    - **Service Key:** `[REDACTED-GUID]` (Masked per SecOps credential-handling standards).
 
 ---
 *Note: All private keys (.pem) are excluded from this repository via .gitignore.*

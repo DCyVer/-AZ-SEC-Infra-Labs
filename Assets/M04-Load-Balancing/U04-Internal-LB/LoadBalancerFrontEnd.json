@@ -1,0 +1,56 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string"
+        },
+        "tier": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2025-05-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAddressVersion": "IPv4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "/subscriptions/815fb1a7-d584-44f4-ad61-72c3a8b8edbf/resourceGroups/IntLB-RG/providers/Microsoft.Network/virtualNetworks/IntLB-VNet/subnets/myFrontEndSubnet"
+                            }
+                        },
+                        "zones": [
+                            "1",
+                            "2",
+                            "3"
+                        ]
+                    }
+                ],
+                "backendAddressPools": [],
+                "probes": [],
+                "loadBalancingRules": [],
+                "inboundNatRules": [],
+                "outboundRules": []
+            },
+            "sku": {
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('tier')]"
+            }
+        }
+    ]
+}

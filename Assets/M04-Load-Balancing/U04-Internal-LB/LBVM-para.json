@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "norwayeast"
+        },
+        "networkInterfaceName": {
+            "value": "mytestvm640"
+        },
+        "enableAcceleratedNetworking": {
+            "value": true
+        },
+        "subnetName": {
+            "value": "myFrontEndSubnet"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/815fb1a7-d584-44f4-ad61-72c3a8b8edbf/resourceGroups/IntLB-RG/providers/Microsoft.Network/virtualNetworks/IntLB-VNet"
+        },
+        "virtualMachineName": {
+            "value": "MyTestVM"
+        },
+        "virtualMachineComputerName": {
+            "value": "MyTestVM"
+        },
+        "virtualMachineRG": {
+            "value": "IntLB-RG"
+        },
+        "osDiskType": {
+            "value": "Standard_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_B2als_v2"
+        },
+        "nicDeleteOption": {
+            "value": "Delete"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "adminUsername": {
+            "value": "DverCyLab"
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "enablePeriodicAssessment": {
+            "value": "ImageDefault"
+        },
+        "securityType": {
+            "value": "TrustedLaunch"
+        },
+        "secureBoot": {
+            "value": true
+        },
+        "vTPM": {
+            "value": true
+        }
+    }
+}
