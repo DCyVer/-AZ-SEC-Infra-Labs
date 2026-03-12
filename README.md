@@ -26,6 +26,12 @@ Practical implementation of Azure networking foundations, focusing on connectivi
 │   └── M06-Network-Security.md
 └── README.md               # Root Anchor
 
+## 🗺️ Navigation
+- [M01: Virtual Networking](./Docs/M01-VNet.md) 🟢
+- [M02: Hybrid Networking](./Docs/M02-Hybrid-Networking.md) 🟢
+- [M03: ExpressRoute](./Docs/M03-ExpressRoute.md) 🔵 (SIMULATED)
+- [M04: Load Balancing](./Docs/M04-Load-Balancing.md) 🟡 (NEXT)
+
 ## 📁 Implementation Index
 - [Module 01: Introduction to Azure Virtual Networks](./Docs/M01-VNet.md)
 - [Module 02: Design and Implement Hybrid Networking](./Docs/M02-Hybrid-Networking.md)
@@ -176,21 +182,7 @@ Block Log: Azure Front Door aborted (Student Tier restriction). Documented with 
 - **Region B:** Canada Central (Standard S1) - [Red/White Theme]
 - **Validation Method:** Custom `index.html` injection via Kudu CMD.
 
-#### ⚠️ Deployment Restriction
-The Azure Front Door (Standard) deployment phase was halted due to subscription-level 
-entitlement constraints. 
-Even upgrading to pay as you go would not grant access: https://learn.microsoft.com/en-us/answers/questions/1729771/unbale-to-create-azure-front-door-service-with-azu
 
-### 📝 EXTERNAL REFERENCE & BLOCK JUSTIFICATION
-The Azure Front Door deployment was aborted due to platform-level entitlement 
-restrictions on 'Free Trial' and 'Student' subscriptions. 
-
-**Source:** [Microsoft Q&A - Unable to create Azure Front Door with Student Subscription](https://learn.microsoft.com)
-
-**Status Note:** As of late 2024, Microsoft has tightened 'Microsoft.Cdn' 
-resource creation to mitigate service abuse. This renders this specific 
-unit non-viable for student-tier sandboxes without a transition to 
-a seasoned 'Pay-As-You-Go' account.
 
 **Diagnostic Data:**
 - **Error Code:** `BadRequest`
@@ -207,7 +199,21 @@ a seasoned 'Pay-As-You-Go' account.
 3. **Global Edge Governance:** Identified specific 'Microsoft.Cdn' provider requirements 
    and subscription-tier limitations.
 
-### 📝 ADR-M05-FINAL: Load Balancing HTTP(S) Deviations
+### 📝 ADR-M05-FINAL: Load Balancing HTTP(S) Deviations#### ⚠️ Deployment Restriction
+The Azure Front Door (Standard) deployment phase was halted due to subscription-level 
+entitlement constraints. 
+Even upgrading to pay as you go would not grant access: https://learn.microsoft.com/en-us/answers/questions/1729771/unbale-to-create-azure-front-door-service-with-azu
+
+### 📝 EXTERNAL REFERENCE & BLOCK JUSTIFICATION
+The Azure Front Door deployment was aborted due to platform-level entitlement 
+restrictions on 'Free Trial' and 'Student' subscriptions. 
+
+**Source:** [Microsoft Q&A - Unable to create Azure Front Door with Student Subscription](https://learn.microsoft.com)
+
+**Status Note:** As of late 2024, Microsoft has tightened 'Microsoft.Cdn' 
+resource creation to mitigate service abuse. This renders this specific 
+unit non-viable for student-tier sandboxes without a transition to 
+a seasoned 'Pay-As-You-Go' account.
 - **SKU Pivot:** Upgraded to **Standard S1** (Curriculum: F1) to enable Kudu file-system write access.
 - **Regional Swap:** Deployed to **Canada Central / West Europe** (Curriculum: US) to bypass Student subscription quota limits.
 - **Identity Injection:** Custom **Vexillological Contrast** (Blue/Red flags) injected via Kudu for failover verification.
