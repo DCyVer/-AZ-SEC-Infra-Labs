@@ -1,5 +1,42 @@
-# AZ-SEC-Infra-Labs
-Practical implementation of Azure networking foundations, focusing on connectivity, resolution, and traffic security. Mapping AZ-700 infrastructure configurations to SC-200 security operation requirements.
+# AZ-SEC-Infra-Labs ⚖️ 
+Practical implementation of Azure networking foundations, focusing on connectivity, resolution, and traffic security. With a secondary objective to map AZ-700 infrastructure configurations to SC-200 security operation requirements where possible.
+
+
+## 🛠️ Global Architecture & Constraints
+*Strategic deviations implemented to optimize for Azure Trial/Student subscription limits.*
+
+- **Subscriptions:** Azure 1 Trial + Microsoft 365 E5.
+- **Region Strategy:** Primary focus on norwayeast (Cost-efficient B-Series availability). Rotated to canadacentral and westeurope to bypass regional Web App quota restrictions.
+- **Compute Baseline:** 
+  - OS: Ubuntu 24.04 LTS & Windows Server 2019 Datacenter (SmallDisk / x64 / Gen2).
+  - Storage: Standard HDD (S4/S6) utilized over Premium SSD for cost-burn optimization.
+- **Persistent Logic:** Isolated Persistent-Resources-RG for Public SSH Keys. Enables high-velocity Custom VM ARM Template deployments without credential loss.
+- **Zero-Trust Connectivity:** Configurations which did not require Public IP for the objective were executed with private IP VNets/VMs only. Public IPs were strictly constrained to necessary entry-points.
+- **Compliance Simulation:** Where applicable simulated requirements for BIO2 / NIS2 compliance.
+
+## 📁 Repository Structure
+.
+├── Assets/                 # Technical Evidence (PNG/JSON) per Module
+├── Docs/                   # Modular Documentation & Unit Deviations
+│   ├── M01-VNet.md
+│   ├── M02-Hybrid-Networking.md
+│   ├── M03-ExpressRoute.md
+│   ├── M04-Load-Balancing.md
+│   ├── M05-App-Gateway.md
+│   └── M06-Network-Security.md
+└── README.md               # Root Anchor
+
+## 📁 Implementation Index
+- [Module 01: Introduction to Azure Virtual Networks](./Docs/M01-VNet.md)
+- [Module 02: Design and Implement Hybrid Networking](./Docs/M02-Hybrid-Networking.md)
+- [Module 03: Design and Implement Azure ExpressRoute](./Docs/M03-ExpressRoute.md)
+- [Module 04: Design and Implement Azure Load Balancing](./Docs/M04-Load-Balancing.md)
+- [Module 05: Design and Implement Azure App Gateway](./Docs/M05-App-Gateway.md)
+- [Module 06: Network Security (CURRENT)](./Docs/M06-Network-Security.md)
+
+## ⚠️ Active Blockers
+- M06U04 (DDoS): SUSPENDED (Awaiting BreakingPoint Trial License).
+
 
 ## 🛠️ Implementation Index: Deviations & Enhancements
 *The following solutions were implemented outside the standard lab scope to ensure security consistency and resource efficiency.*
