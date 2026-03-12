@@ -1,0 +1,134 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "norwayeast"
+    },
+    "networkInterfaceName": {
+      "value": "backendvm204"
+    },
+    "enableAcceleratedNetworking": {
+      "value": true
+    },
+    "networkSecurityGroupName": {
+      "value": "BackendVM2-nsg"
+    },
+    "networkSecurityGroupRules": {
+      "value": [
+        {
+          "name": "RDP",
+          "properties": {
+            "priority": 300,
+            "protocol": "TCP",
+            "access": "Allow",
+            "direction": "Inbound",
+            "sourceAddressPrefix": "*",
+            "sourcePortRange": "*",
+            "destinationAddressPrefix": "*",
+            "destinationPortRange": "3389"
+          }
+        },
+        {
+          "name": "SSH",
+          "properties": {
+            "priority": 320,
+            "protocol": "TCP",
+            "access": "Allow",
+            "direction": "Inbound",
+            "sourceAddressPrefix": "*",
+            "sourcePortRange": "*",
+            "destinationAddressPrefix": "*",
+            "destinationPortRange": "22"
+          }
+        },
+        {
+          "name": "HTTPS",
+          "properties": {
+            "priority": 340,
+            "protocol": "TCP",
+            "access": "Allow",
+            "direction": "Inbound",
+            "sourceAddressPrefix": "*",
+            "sourcePortRange": "*",
+            "destinationAddressPrefix": "*",
+            "destinationPortRange": "443"
+          }
+        },
+        {
+          "name": "HTTP",
+          "properties": {
+            "priority": 360,
+            "protocol": "TCP",
+            "access": "Allow",
+            "direction": "Inbound",
+            "sourceAddressPrefix": "*",
+            "sourcePortRange": "*",
+            "destinationAddressPrefix": "*",
+            "destinationPortRange": "80"
+          }
+        }
+      ]
+    },
+    "subnetName": {
+      "value": "BackendSubnet"
+    },
+    "virtualNetworkId": {
+      "value": "/subscriptions/815fb1a7-d584-44f4-ad61-72c3a8b8edbf/resourceGroups/ContosoResourceGroup/providers/Microsoft.Network/virtualNetworks/ContosoVNet"
+    },
+    "virtualMachineName": {
+      "value": "BackendVM2"
+    },
+    "virtualMachineComputerName": {
+      "value": "BackendVM2"
+    },
+    "virtualMachineRG": {
+      "value": "ContosoResourceGroup"
+    },
+    "osDiskType": {
+      "value": "Standard_LRS"
+    },
+    "osDiskDeleteOption": {
+      "value": "Delete"
+    },
+    "virtualMachineSize": {
+      "value": "Standard_B2als_v2"
+    },
+    "nicDeleteOption": {
+      "value": "Delete"
+    },
+    "hibernationEnabled": {
+      "value": null
+    },
+    "adminUsername": {
+      "value": "DCyVer"
+    },
+    "adminPassword": {
+      "value": "CY8er$ecurity00"
+    },
+    "patchMode": {
+      "value": "AutomaticByOS"
+    },
+    "enablePeriodicAssessment": {
+      "value": "ImageDefault"
+    },
+    "enableHotpatching": {
+      "value": null
+    },
+    "customData": {
+      "value": "cG93ZXJzaGVsbC5leGUgSW5zdGFsbC1XaW5kb3dzRmVhdHVyZSAtbmFtZSBXZWItU2VydmVyIC1JbmNsdWRlTWFuYWdlbWVudFRvb2xzCnBvd2Vyc2hlbGwuZXhlIFJlbW92ZS1JdGVtIC1QYXRoICdDOlxpbmV0cHViXHd3d3Jvb3RcaWlzc3RhcnQuaHRtJwpwb3dlcnNoZWxsLmV4ZSBBZGQtQ29udGVudCAtUGF0aCAnQzpcaW5ldHB1Ylx3d3dyb290XGlpc3N0YXJ0Lmh0bScgLVZhbHVlICQoJGVudjpjb21wdXRlcm5hbWUpCg=="
+    },
+    "securityType": {
+      "value": "TrustedLaunch"
+    },
+    "secureBoot": {
+      "value": true
+    },
+    "vTPM": {
+      "value": true
+    },
+    "userData": {
+      "value": "cG93ZXJzaGVsbC5leGUgSW5zdGFsbC1XaW5kb3dzRmVhdHVyZSAtbmFtZSBXZWItU2VydmVyIC1JbmNsdWRlTWFuYWdlbWVudFRvb2xzCnBvd2Vyc2hlbGwuZXhlIFJlbW92ZS1JdGVtIC1QYXRoICdDOlxpbmV0cHViXHd3d3Jvb3RcaWlzc3RhcnQuaHRtJwpwb3dlcnNoZWxsLmV4ZSBBZGQtQ29udGVudCAtUGF0aCAnQzpcaW5ldHB1Ylx3d3dyb290XGlpc3N0YXJ0Lmh0bScgLVZhbHVlICQoJGVudjpjb21wdXRlcm5hbWUpCg=="
+    }
+  }
+}
