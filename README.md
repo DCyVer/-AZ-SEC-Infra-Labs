@@ -2,31 +2,27 @@
 **A comprehensive implementation of enterprise-grade networking and security controls.**
 
 ## 📁 Repository Structure
-- **Assets/**: Technical Evidence (PNG/JSON)
-- **Docs/**: Modular Implementation Handbooks
-  - `M01-Design-and-Implement-Virtual-Networking.md`
-  - `M02-Design-and-Implement-Hybrid-Networking.md`
-  - `M03-Design-and-Implement-Azure-ExpressRoute.md`
-  - `M04-Design-and-Implement-Azure-Load-Balancing.md`
-  - `M05-Design-and-Implement-Azure-Application-Gateway.md`
-  - `M06-Design-and-Implement-Network-Security.md`
+- **M[01-06] Modular Folders/**: Self-contained implementation handbooks.
+  - **README.md**: Detailed Module/Unit documentation.
+  - **[Local Proof]**: Relative-pathed JSON templates, PNG topologies, and PS1 scripts.
+- **README.md**: Executive Dashboard and global project navigation.
 
 ## 🗺️ Project Navigation
-- [M01: Virtual Networking](./Docs/M01-Design-and-Implement-Virtual-Networking.md) 🟢
-- [M02: Hybrid Networking](./Docs/M02-Design-and-Implement-Hybrid-Networking.md) 🟢
-- [M03: ExpressRoute](./Docs/M03-Design-and-Implement-Azure-ExpressRoute.md) 🟢
-- [M04: Load Balancing](./Docs/M04-Design-and-Implement-Azure-Load-Balancing.md) 🟢
-- [M05: App Gateway & Front Door](./Docs/M05-Design-and-Implement-Azure-Application-Gateway.md) 🟢
-- [M06: Network Security](./Docs/M06-Design-and-Implement-Network-Security.md) 🟢
+- [M01: Virtual Networking](./M01-Virtual-Networking/README.md) 🟢
+- [M02: Hybrid Networking](./M02-Hybrid-Networking/README.md) 🟢
+- [M03: ExpressRoute](./M03-ExpressRoute/README.md) 🟢
+- [M04: Load Balancing](./M04-Load-Balancing/README.md) 🟢
+- [M05: Application Gateway](./M05-Application-Gateway/README.md) 🟢
+- [M06: Network Security](./M06-Network-Security/README.md) 🟢
 
 ## ⚙️ Tech Stack & Requirements
-- **Tools:** Azure CLI 2.x, Bicep / ARM Templates
-- **Subscription:** Azure Trial / Student Tier (Norway East)
-- **Prerequisites:** Basic knowledge of VNet Peering and NSG logic.
+- **Infrastructure:** ARM Templates (JSON), Azure CLI 2.x
+- **Provisioning:** PowerShell (IIS & Workload Automation)
+- **Environment:** Norway East (Primary) | Ubuntu 24.04 & Win2019
 
 ## ⚖️ Global Environment Baseline
-- **Security Posture:** Default Private-IP only; restricted Public entry-points.
-- **Hardware Profile:** Ubuntu 24.04 LTS / Win2019 SmallDisk on Standard HDD.
+- **Security:** Default Private-IP only; restricted Public entry-points.
+- **Performance:** Standard HDD utilized for Trial/Student quota stability.
 
 ---
 **Disclaimer:** *These labs are for educational use. Always validate configurations against the Microsoft Cloud Security Benchmark before production deployment.*
