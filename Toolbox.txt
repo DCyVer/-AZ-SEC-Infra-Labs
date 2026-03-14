@@ -1,0 +1,138 @@
+===========================================================================
+    AZ-SEC INFRA LABS: DIAGNOSTIC & ROOT CAUSE TOOLBOX (V1.9)
+===========================================================================
+NOTE: This toolbox is the standardized diagnostic protocol for all units 
+within the AZ-SEC Infrastructure Labs. It is designed to provide 100% 
+functional verification of Azure Fabric security, routing, and L7 policy 
+enforcement while maintaining a minimalist, high-fidelity testing posture.
+
+Maintainer: Dimitri Veraar (@DCyVer) | Amsterdam SecOps
+===========================================================================
+0. THE "FOUNDATION" (NIC STATUS, LOCAL IP, & LOOPBACK)
+---------------------------------------------------------------------------
+- PURPOSE: Verifies Local IP, Interface Status, and Loopback (lo) health.
+- LOGIC: Confirms "Who am I?" before testing the fabric.
+
+[BASH / LINUX]  ip addr
+[POWERSHELL]    Get-NetIPAddress -AddressFamily IPv4
+
+- SUCCESS: Interface <eth0> is UP; Shows Private IP (e.g., 10.0.1.4).
+- FAILURE: Interface is DOWN or Missing IP (Check DHCP/Azure Provisioning).
+
+
+1. THE L3/L4 "HANDSHAKE" (PORT, SERVICE, & SECURITY RULES)
+---------------------------------------------------------------------------
+- PURPOSE: Verifies NSGs, Firewall DNAT, and Service Availability.
+- LOGIC: Confirms the TCP/UDP path is open and the target is listening.
+- GUI PATH: Network Watcher > IP flow verify
+
+[BASH / LINUX]  nc -zv <IP> <Port>
+[POWERSHELL]    Test-NetConnection -ComputerName <IP> <Port>
+
+- SUCCESS: "Connection succeeded" / "TcpTestSucceeded : True"
+- FAILURE: "Connection refused" / "TcpTestSucceeded : False"
+- RECOMMENDATION: Check Inbound NSG rules or Firewall DNAT port mapping.
+
+
+2. THE L7 "POLICY" (WEB, APP, & PATH-BASED ROUTING)
+---------------------------------------------------------------------------
+- PURPOSE: Verifies WAF, App Gateway Paths, and Firewall Application Rules.
+- LOGIC: Confirms the L7 device is inspecting and allowing specific URL paths.
+- GUI PATH: Firewall Policy > Application Rules
+
+[BASH / LINUX]  curl -I <URL/path>
+[POWERSHELL]    Invoke-WebRequest -Uri <URL/path> -Method Head
+
+- SUCCESS: HTTP/1.1 200 OK
+- FAILURE: HTTP/1.1 403 (Forbidden) or 470 (Firewall Deny)
+- RECOMMENDATION: Add FQDN to Firewall Policy or check WAF/NSG logs.
+
+
+3. THE "FABRIC" HIJACK (ROUTING, GATEWAY, & TOPOLOGY)
+---------------------------------------------------------------------------
+- PURPOSE: Verifies UDRs, Hub Hijacks, and "Next Hop" Topology.
+- LOGIC: Confirms the packet is hitting the intended Security Hub (The Path).
+- GUI PATH: VM > Networking > [NIC Name] > Effective routes
+
+[BASH / LINUX]  ip route
+[POWERSHELL]    Get-NetRoute
+
+- SUCCESS: default via <Firewall-Private-IP> (e.g., 10.2.64.4)
+- FAILURE: default via <VNet-Gateway-IP> (e.g., 10.0.1.1)
+- RECOMMENDATION: Enable "Default Route Propagation" in Hub Connections.
+
+
+4. THE "IDENTITY" LINK (DNS & RESOLUTION)
+---------------------------------------------------------------------------
+- PURPOSE: Verifies Private DNS Zones and Firewall DNS Proxy.
+- LOGIC: Confirms the VM is using the correct resolver for the private zone.
+- GUI PATH: Private DNS zones > Virtual network links
+
+[BASH / LINUX]  nslookup <FQDN>
+[POWERSHELL]    Resolve-DnsName -Name <FQDN>
+
+- SUCCESS: Returns the correct Internal/Private IP address.
+- FAILURE: NXDOMAIN / DNS_ERROR_RCODE_NAME_ERROR
+- RECOMMENDATION: Link VNet to Private DNS Zone or Enable DNS Proxy.
+
+
+5. THE "PERSISTENCE" CHECK (LATENCY & PACKET LOSS)
+---------------------------------------------------------------------------
+- PURPOSE: Detects intermittent "flaky" connections or high-latency hops.
+- LOGIC: Combines Ping and Traceroute for continuous real-time monitoring.
+
+[BASH / LINUX]  mtr -rw <IP/FQDN> (Requires: sudo apt install mtr-tiny)
+[POWERSHELL]    Test-Connection -ComputerName <IP/FQDN> -Count 10
+
+- SUCCESS: 0% Packet Loss; Stable Round-Trip Time (RTT).
+- FAILURE: Loss > 0% at specific hops or high RTT spikes.
+- RECOMMENDATION: Check for NVA/Firewall throttling or ISP-level peering issues.
+===========================================================================
+
+
+===========================================================================
+    AZ-SEC INFRA LABS: GUI Diagnostics reference map
+===========================================================================
+When a diagnostic command fails, navigate to these specific locations to
+identify the underlying configuration error.
+
+1. CATEGORY: CONNECTIVITY & SECURITY (L3/L4)
+---------------------------------------------------------------------------
+[PROBLEM]: Port 22/80/443 is blocked or "Connection Refused".
+- Resource: Virtual Machine > [VM-Name] > Networking
+- Blade:   "Inbound port rules" (Verify if port is explicitly allowed)
+- Blade:   "Application security groups" (Verify if VM is a member of the ASG)
+- Tool:    Network Watcher > "IP flow verify" (Standard for NSG troubleshooting)
+
+2. CATEGORY: POLICY & CONTENT (L7)
+---------------------------------------------------------------------------
+[PROBLEM]: Access is "403 Forbidden" or "470 Denied".
+- Resource: Firewall Policy > [Policy-Name] > Settings > Application rules
+- Blade:   "Rule collections" (Check for FQDN whitelist vs Deny-all)
+- Resource: Application Gateway > [AppGW-Name] > Settings > Web application firewall
+- Blade:   "WAF Policy" (Check for OWASP rule triggers or SQLi blocks)
+
+3. CATEGORY: FABRIC & ROUTING (THE PATH)
+---------------------------------------------------------------------------
+[PROBLEM]: Traffic is "Leaking" or "Next Hop" is incorrect.
+- Resource: Virtual Machine > [VM-Name] > Networking > [NIC-Name]
+- Blade:   "Effective routes" (The ultimate truth for UDR vs System routes)
+- Resource: Virtual WAN > [vWAN-Name] > Virtual network connections
+- Blade:   "[Connection-Name]" (Verify "Propagate Default Route" is Enabled)
+
+4. CATEGORY: IDENTITY & RESOLUTION (DNS)
+---------------------------------------------------------------------------
+[PROBLEM]: "NXDOMAIN" or Internal name resolution failure.
+- Resource: Private DNS zone > [Zone-Name] > DNS Management
+- Blade:   "Virtual network links" (Verify if the VNet is linked to the zone)
+- Resource: Azure Firewall > [Firewall-Name] > Settings > DNS
+- Blade:   "DNS Proxy" (Verify if Enabled to allow FQDN filtering)
+
+5. CATEGORY: DIAGNOSTICS & LOGGING
+---------------------------------------------------------------------------
+[PROBLEM]: "Why did it fail?" (Post-Mortem Analysis).
+- Resource: Any Network Resource > Monitoring
+- Blade:   "Diagnostic settings" (Ensure logs are sent to Log Analytics)
+- Resource: Log Analytics Workspace > General > Logs
+- Blade:   "Kusto Queries" (Search 'AzureDiagnostics' for Firewall/WAF drops)
+===========================================================================
