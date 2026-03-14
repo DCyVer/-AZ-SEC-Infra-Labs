@@ -1,0 +1,138 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": {
+                "type": "String",
+                "value": "norwayeast"
+            }
+        },
+        "networkInterfaceName": {
+            "value": {
+                "type": "String",
+                "value": "srv-work992"
+            }
+        },
+        "enableAcceleratedNetworking": {
+            "value": {
+                "type": "Bool",
+                "value": true
+            }
+        },
+        "networkSecurityGroupName": {
+            "value": {
+                "type": "String",
+                "value": "Srv-Work-nsg"
+            }
+        },
+        "networkSecurityGroupRules": {
+            "value": {
+                "type": "Array",
+                "value": []
+            }
+        },
+        "subnetName": {
+            "value": {
+                "type": "String",
+                "value": "Workload-SN"
+            }
+        },
+        "virtualNetworkId": {
+            "value": {
+                "type": "String",
+                "value": "/subscriptions/815fb1a7-d584-44f4-ad61-72c3a8b8edbf/resourceGroups/Test-FW-RG/providers/Microsoft.Network/virtualNetworks/Test-FW-VN"
+            }
+        },
+        "virtualMachineName": {
+            "value": {
+                "type": "String",
+                "value": "Srv-Work"
+            }
+        },
+        "virtualMachineComputerName": {
+            "value": {
+                "type": "String",
+                "value": "Srv-Work"
+            }
+        },
+        "virtualMachineRG": {
+            "value": {
+                "type": "String",
+                "value": "Test-FW-RG"
+            }
+        },
+        "osDiskType": {
+            "value": {
+                "type": "String",
+                "value": "Standard_LRS"
+            }
+        },
+        "osDiskDeleteOption": {
+            "value": {
+                "type": "String",
+                "value": "Delete"
+            }
+        },
+        "diskControllerType": {
+            "value": {
+                "type": "String",
+                "value": "NVMe"
+            }
+        },
+        "virtualMachineSize": {
+            "value": {
+                "type": "String",
+                "value": "Standard_D2als_v6"
+            }
+        },
+        "nicDeleteOption": {
+            "value": {
+                "type": "String",
+                "value": "Delete"
+            }
+        },
+        "hibernationEnabled": {
+            "value": {
+                "type": "Bool",
+                "value": false
+            }
+        },
+        "adminUsername": {
+            "value": {
+                "type": "String",
+                "value": "DverCyLab"
+            }
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "enablePeriodicAssessment": {
+            "value": {
+                "type": "String",
+                "value": "ImageDefault"
+            }
+        },
+        "customData": {
+            "value": null
+        },
+        "securityType": {
+            "value": {
+                "type": "String",
+                "value": "TrustedLaunch"
+            }
+        },
+        "secureBoot": {
+            "value": {
+                "type": "Bool",
+                "value": true
+            }
+        },
+        "vTPM": {
+            "value": {
+                "type": "Bool",
+                "value": true
+            }
+        }
+    }
+}

@@ -1,0 +1,134 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "String"
+        },
+        "resourceGroup": {
+            "type": "String"
+        },
+        "firewallPolicyName": {
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/firewallPolicies",
+            "apiVersion": "2022-07-01",
+            "name": "[parameters('firewallPolicyName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "sku": {
+                    "tier": "Standard"
+                },
+                "threatIntelMode": "Alert",
+                "dnsSettings": {
+                    "enableProxy": true
+                },
+                "threatIntelWhitelist": {
+                    "fqdns": [],
+                    "ipAddresses": []
+                }
+            },
+            "resources": [
+                {
+                    "type": "ruleCollectionGroups",
+                    "apiVersion": "2022-07-01",
+                    "name": "DefaultNetworkRuleCollectionGroup",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/firewallPolicies',parameters('firewallPolicyName'))]"
+                    ],
+                    "properties": {
+                        "priority": 200,
+                        "ruleCollections": [
+                            {
+                                "name": "Net-Coll01",
+                                "priority": 200,
+                                "action": {
+                                    "type": "Allow"
+                                },
+                                "rules": [
+                                    {
+                                        "name": "Allow-DNS",
+                                        "ipProtocols": [
+                                            "UDP"
+                                        ],
+                                        "destinationPorts": [
+                                            "53"
+                                        ],
+                                        "sourceAddresses": [
+                                            "10.0.2.0/24"
+                                        ],
+                                        "sourceIpGroups": [],
+                                        "ruleType": "NetworkRule",
+                                        "destinationIpGroups": [],
+                                        "destinationAddresses": [
+                                            "*"
+                                        ],
+                                        "destinationFqdns": []
+                                    }
+                                ],
+                                "ruleCollectionType": "FirewallPolicyFilterRuleCollection"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "ruleCollectionGroups",
+                    "apiVersion": "2022-07-01",
+                    "name": "DefaultApplicationRuleCollectionGroup",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/firewallPolicies/', parameters('firewallPolicyName'), '/ruleCollectionGroups/', 'DefaultNetworkRuleCollectionGroup')]",
+                        "[resourceId('Microsoft.Network/firewallPolicies',parameters('firewallPolicyName'))]"
+                    ],
+                    "properties": {
+                        "priority": 300,
+                        "ruleCollections": [
+                            {
+                                "name": "App-Coll01",
+                                "priority": 300,
+                                "action": {
+                                    "type": "Allow"
+                                },
+                                "rules": [
+                                    {
+                                        "name": "Allow-Google",
+                                        "protocols": [
+                                            {
+                                                "protocolType": "http",
+                                                "port": 80
+                                            },
+                                            {
+                                                "protocolType": "https",
+                                                "port": 443
+                                            }
+                                        ],
+                                        "terminateTLS": false,
+                                        "sourceAddresses": [
+                                            "10.0.2.0/24"
+                                        ],
+                                        "sourceIpGroups": [],
+                                        "targetFqdns": [
+                                            "www.google.com"
+                                        ],
+                                        "targetUrls": [],
+                                        "fqdnTags": [],
+                                        "webCategories": [],
+                                        "ruleType": "ApplicationRule"
+                                    }
+                                ],
+                                "ruleCollectionType": "FirewallPolicyFilterRuleCollection"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
