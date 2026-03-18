@@ -1,0 +1,105 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>New note</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>New note</h1>
+
+      <div class="ck-content">
+        <p><span style="background-color:rgb(5,75,22);color:rgb(255,255,255);">Scale units for VPN are in 500 Mbps increments,</span>
+        </p>
+        <p>&nbsp;</p>
+        <p><span style="background-color:rgb(5,75,22);color:rgb(255,255,255);">bassic standard (v)WAN</span>
+        </p>
+        <p>&nbsp;</p>
+        <p><span style="background-color:rgb(5,75,22);color:rgb(255,255,255);">Application rules: FQDN tag, GQDN rule Ip Rule Service tag&nbsp;</span>
+        </p>
+        <p>&nbsp;</p>
+        <p><span style="background-color:rgb(9,31,44);color:rgb(255,255,255);">Web Application Firewall (WAF)&nbsp;</span>
+        </p>
+        <p><span style="background-color:rgb(5,75,22);color:rgb(255,255,255);">preference order is global -&gt; per-site -&gt; per-URI.&nbsp;</span>
+        </p>
+        <p>&nbsp;</p>
+        <p style="margin-left:0px;">In the initial phase of setting up a custom IP address prefix, you are
+          required to ensure that the prefix range is under your ownership in the
+          RIR, such as ARIN or RIPE. Then you will need to create a self-sign certificate
+          to authorize Microsoft to associate the public IP address with the subscription.
+          This must be done before you can go into the deployment phase, which requires
+          this information to configure the prefix in the Azure portal.</p>
+        <p style="margin-left:0px;">You cannot provision the IP prefix without first ensuring ownership or
+          creating the certificate. You need this information to deploy it in the
+          portal. You do not need to request the certificate from the ISP, you can
+          create the certificate yourself. The ASN associated with the IP address
+          must be 8075 for public and 8070 for US Gov Cloud.</p>
+        <p style="margin-left:0px;">&nbsp;</p>
+        <p style="margin-left:0px;">Azure private DNS Resolver</p>
+        <ol>
+          <li data-list-item-id="ead624b0d8ebc8f3ba56370735413df5e">
+            <p style="margin-left:0px;"><span><strong>Provisioning Requirements</strong>: Must be deployed in a specific virtual network and region; only one resolver is allowed per VNet.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e6c9a583bdcc5117cc0c91b5a600a40ee">
+            <p style="margin-left:0px;"><span><strong>Subnet Delegation</strong>: Every inbound and outbound endpoint requires a dedicated subnet delegated to </span>
+              <code
+              spellcheck="false"><span>Microsoft.Network/dnsResolvers</span>
+                </code><span>.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ee6ae67380d2f30741f554a07a0281a6c">
+            <p style="margin-left:0px;"><span><strong>Inbound Endpoints</strong>: Provide a private IP address to receive queries from on-premises or other VNets to resolve Azure Private DNS zones.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ebfba89d32a636e036f70fa4cf23eb813">
+            <p style="margin-left:0px;"><span><strong>Outbound Endpoints</strong>: Used to send DNS queries from Azure to on-premises or external DNS servers.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ebf0c9f0962a58fe64fe5ee0ee14787e0">
+            <p style="margin-left:0px;"><span><strong>DNS Forwarding Rulesets</strong>: Required for outbound resolution to define which domain queries go to which target IP addresses.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e5452057b515bfa5a13b83facc66b2dc4">
+            <p style="margin-left:0px;"><span><strong>VNet Linking</strong>: Rulesets must be linked to a VNet for its resources to use the forwarding logic; Private DNS Zones must be linked to the resolver's VNet to be resolvable via the inbound endpoint.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e9d65fd42fb6d83845e46fef610af599c">
+            <p style="margin-left:0px;"><span><strong>Subnet Sizing</strong>: Minimum subnet size of /28 is required for each endpoint.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e9a1e92778202a80dd6d2862169603d0e">
+            <p style="margin-left:0px;"><span><strong>Hybrid Connectivity</strong>: Requires an active VPN or ExpressRoute to facilitate traffic between on-premises and the Azure inbound/outbound endpoints.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e5a3d36be03fd477f9db861f792d69031">
+            <p style="margin-left:0px;"><span><strong>NSG Rules</strong>: Network Security Groups must allow traffic on port 53 (TCP/UDP) for the endpoint subnets.</span>
+            </p>
+          </li>
+          <li data-list-item-id="eaf67b44fda0b23e42ed4ae3802d5a497">
+            <p style="margin-left:0px;"><span><strong>Regionality</strong>: The resolver and its endpoints must reside in the same region as the VNet they are provisioned in.</span>
+            </p>
+          </li>
+        </ol>
+        <p style="margin-left:0px;">&nbsp;</p>
+        <p style="margin-left:0px;">routing protocols:</p>
+        <ul>
+          <li data-list-item-id="e37867b3d977e34dc0d5b1a9bfd79662a">
+            <p style="margin-left:0px;">RIP</p>
+          </li>
+          <li data-list-item-id="e573da14ce6d72f82c7bff92b6d25ace8">
+            <p style="margin-left:0px;">BGP</p>
+          </li>
+          <li data-list-item-id="e5125d3aadfa233e2a581aa197bfa5b54">
+            <p style="margin-left:0px;">EGP</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

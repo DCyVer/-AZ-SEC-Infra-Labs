@@ -1,0 +1,43 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>DNS</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>DNS</h1>
+
+      <div class="ck-content">
+        <div><strong>Private DNS Zone {Microsoft.Network/privateDnsZones}</strong>
+          <br>Resolves privatelink namespaces | Max. 100k records.</div>
+        <div>&nbsp;</div>
+        <div><strong>Virtual Network Link {virtualNetworkLinks}</strong>
+          <br>VM Name Resolution | 1,000 VNets / Zone | Auto-Registration: 1 / VNet
+          | <strong>Max 100 Auto-Reg Links per Zone</strong>.</div>
+        <div>&nbsp;</div>
+        <div><strong>Private DNS Zone Group</strong>
+          <br>Auto-Sync Private Endpoint IP to A-record.
+          <br>Mandatory Role: Network Contributor | Permission: <code spellcheck="false">Microsoft.Network/privateDnsZones/join/action</code>.</div>
+        <div>&nbsp;</div>
+        <div><strong>DNS Private Resolver [Microsoft.Network/dnsResolvers]</strong>
+          <br>For: Hybrid S2S/ExpressRoute bridge | Max 10k QPS.
+          <br>Subnet delegation: <code spellcheck="false">Microsoft.Network/dnsResolvers</code> =&gt;
+          /28.
+          <br>Exclude: NSG | UDR.</div>
+        <div>&nbsp;</div>
+        <div><strong>Inbound Endpoint [On-Prem ➔ Azure (Static IP)]</strong>
+          <br><strong>Outbound Endpoint [Azure ➔ Forwarding ruleset (Max 1,000 Rules | 500 VNet Links) ➔ On-Prem]</strong>
+        </div>
+        <div><strong>VNet DNS Proxy [Azure Firewall]</strong>
+          <br>For: Network rules (FQDN) and centralized logging.
+          <br>Flow: Default Upstream (168.63.129.16) ➔ Custom (Firewall Private IP).</div>
+      </div>
+    </div>
+  </body>
+
+</html>

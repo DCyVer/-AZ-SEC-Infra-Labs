@@ -1,0 +1,162 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <base target="_parent">
+    <title data-trilium-title>AZ700</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>AZ700</h1>
+
+      <div class="ck-content">
+        <p>&nbsp;</p>
+        <p>
+          <br>Route Tables
+          <br>
+          <br>Availability Zones
+          <br>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div><strong>🌐 2. DNS Private Resolver (The Hybrid Bridge)</strong>
+        </div>
+        <div>While we touched on DNS, the <strong>Private Resolver</strong> is the modern
+          "favored" solution for hybrid name resolution.<span>&nbsp;</span>
+        </div>
+        <ul>
+          <li data-list-item-id="e370d4cebb7101a3e09a82e5c2dbd9133">
+            <p style="margin-left:0px;"><span><strong>Inbound Endpoint:</strong> Allows <strong>On-Prem</strong> to resolve Azure Private DNS zones.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e8697d44d39754b3fafc6db552dd24862">
+            <p style="margin-left:0px;"><span><strong>Outbound Endpoint:</strong> Allows <strong>Azure</strong> to resolve On-Prem domains via <strong>Forwarding Rules</strong>.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ec8c3707efd6135f447a497591d74bacf">
+            <p style="margin-left:0px;"><span><strong>The "Thief" Intel:</strong> Use this when the prompt mentions "resolving Private Endpoints from a local data center".</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <figure class="image">
+          <img style="aspect-ratio:781/286;" src="22_AZ700_image.png"
+          width="781" height="286">
+        </figure>
+        <figure class="image">
+          <img style="aspect-ratio:545/214;" src="14_AZ700_image.png"
+          width="545" height="214">
+        </figure>
+        <figure class="image">
+          <img style="aspect-ratio:531/329;" src="18_AZ700_image.png"
+          width="531" height="329">
+        </figure>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <figure class="image">
+          <img style="aspect-ratio:547/714;" src="2_AZ700_image.png"
+          width="547" height="714">
+        </figure>
+        <figure class="image">
+          <img style="aspect-ratio:529/651;" src="21_AZ700_image.png"
+          width="529" height="651">
+        </figure>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>📉 4. THE "TRIVIA" HARD-STOPS (SKUs &amp; RATIOS)</strong>
+        </div>
+        <div><em>The arbitrary gates that you cannot "calculate" logically.</em>
+        </div>
+        <ul>
+          <li data-list-item-id="e09f28c311f33cd51659fda4d3a79245a">
+            <p style="margin-left:0px;"><span><strong>SNAT Ratio:</strong> 1-50 VMs = <strong>1,024</strong> ports. (Halve the ports for every doubling of VMs).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e8d73561e2af7a64dfdcb49d04f35100e">
+            <p style="margin-left:0px;"><span><strong>Routing King:</strong> <strong>UDR</strong> always beats BGP and System routes for the same prefix.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ef4731ff4d67b2837d084b75f23d141ea">
+            <p style="margin-left:0px;"><span><strong>Global Failover (Logic):</strong> </span><code spellcheck="false"><span>If (Region - Fastest) &lt;= Threshold -&gt; Use Weight</span></code><span>. Otherwise, use <strong>Fastest</strong>.</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>🔍&nbsp;</strong>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div><strong>1. The "Azure Virtual Network Manager" (AVNM)</strong>
+        </div>
+        <div>This is a high-priority 2026 topic for <strong>Scale</strong> and <strong>Governance</strong>.
+          It replaces manual peering for large environments.<span>&nbsp;</span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.934px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>FEATURE</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>PRIMARY PURPOSE</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>EXAM "TRIGGER" PHRASE</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Connectivity Group</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Automatic Mesh/Hub-Spoke.</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Dynamically manage peering between 100+ VNets."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Security Admin Rule</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Global "Mandatory" rules.</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Enforce a security rule that <strong>cannot</strong> be overridden by local
+                    NSGs."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Network Group</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Dynamic membership.</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">"Automatically group VNets based on <strong>tags</strong> or naming."</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <p style="margin-left:0px;">
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

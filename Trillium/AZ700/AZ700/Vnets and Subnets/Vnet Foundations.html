@@ -1,0 +1,154 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Vnet Foundations</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Vnet Foundations</h1>
+
+      <div class="ck-content">
+        <div>
+          <figure class="table" style="width:651.997px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>ENTITY</strong>
+                  </th>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>VALUE</strong>
+                  </th>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>ROLE / RESTRICTION</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>DNS Port</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>53</strong> / UDP &amp; TCP</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Used by <strong>168.63.129.16</strong> for internal resolution.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>WireServer Port</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>32526</strong> / TCP</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Mandatory for VM Agent communication with Azure Platform.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Azure Platform IP</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>168.63.129.16</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>DHCP, DNS, &amp; Health Probes.</strong> Never block in NSGs.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Reserved IPs</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>First 4 &amp; Last 1</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><code spellcheck="false">.0</code> (Network) | <code spellcheck="false">.1</code> (Gateway)
+                    | <code spellcheck="false">.2/.3</code> (DNS) | <code spellcheck="false">.255</code> (Broadcast).</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Azure Public ASN</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>12076</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Reserved for ExpressRoute and Microsoft Peering.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Coexistence ASN</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>65515</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">Mandatory for VPN/ExRoute coexistence transit routing.</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.934px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;">&nbsp;</th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;">&nbsp;</th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">&nbsp;</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>🧱 PIXEL-TRUTH (MS-LEARN HARD-LOCKS)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e6cb791ec2d2d789cb8694dba24d0668d">
+            <p style="margin-left:0px;"><span><strong>Subnet Reservations:</strong> You cannot assign the first four or the last IP of any subnet. This is a non-negotiable Azure platform constraint.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e80bfcd23decea70ab75dbc3390b18ebc">
+            <p style="margin-left:0px;"><span><strong>168.63.129.16:</strong> This is a <strong>virtual public IP</strong> used across all regions. It is essential for Load Balancer Health Probes. Blocking it in an NSG will cause health probes to fail and take the backend offline.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e7ee241cc17a4c145810bbece13428218">
+            <p style="margin-left:0px;"><span><strong>ASN 65515:</strong> If using a route-based VPN for coexistence, the gateway uses this specific ASN to manage the path selection between VPN and ExpressRoute.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e3c4f70311b34271578da14841de017ea">
+            <p style="margin-left:0px;"><span><strong>ASN 12076:</strong> Required when configuring BGP for ExpressRoute circuits (Private or Microsoft Peering).</span>
+            </p>
+          </li>
+        </ul>
+        <p style="margin-left:0px;">&nbsp;</p>
+        <figure class="image">
+          <img style="aspect-ratio:1182/348;" src="Vnet Foundations_image.png"
+          width="1182" height="348">
+        </figure>
+      </div>
+    </div>
+  </body>
+
+</html>

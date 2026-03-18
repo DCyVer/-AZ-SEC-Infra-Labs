@@ -1,0 +1,112 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Network Access: Security &amp; Identity</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Network Access: Security &amp; Identity</h1>
+
+      <div class="ck-content">
+        <div><strong>SECURITY &amp; IDENTITY STACK: SCOPE-BASED MATRIX (V5.2.0)</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.997px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>SERVICE</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>PROTOCOL</strong>
+                  </th>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>IDENTITY / AUTH</strong>
+                  </th>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>OS SUPPORT</strong>
+                  </th>
+                  <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>EXAM "TRIGGER"</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Front Door (WAF)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>HTTPS (Global L7)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">WAF Policy</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Any</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Global acceleration + SQLi protection at the Edge."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>App Gateway (WAF)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>HTTPS (Regional L7)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">WAF Policy</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Any</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"URL-path routing / Regional WAF enforcement."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Firewall (Prem)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>L3-L7 / TLS</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">IDPS / Signature</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Any</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"TLS Inspection / Signature-based IDPS / FQDN filtering."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>P2S (OpenVPN)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>SSL / TLS</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Entra ID (Azure AD)</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Cross-Platform</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"<strong>Conditional Access</strong> / Modern Auth / Firewall Friendly."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>P2S (IKEv2)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>IPsec</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Cert / RADIUS</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Native (iOS/Android)</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Native Mobile support without 3rd party clients."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>P2S (SSTP)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>SSL (TCP 443)</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Cert / RADIUS</td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Windows Only</strong>
+                  </td>
+                  <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"TCP 443 firewall bypass for legacy Windows clients."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>NSG / ASG</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>TCP / UDP / ICMP</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Service Tags / ASG</td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Any</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">"Micro-segmentation / Filter traffic between subnets."</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

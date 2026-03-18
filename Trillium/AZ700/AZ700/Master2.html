@@ -1,0 +1,272 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Master2</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Master2</h1>
+
+      <div class="ck-content">
+        <div><strong>1. NAME RESOLUTION &amp; DNS (HYBRID BRIDGE)</strong>
+        </div>
+        <div><em>Modern Azure exams prioritize the <strong>DNS Private Resolver</strong> over the old-school "VM with Forwarders" approach.</em>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.934px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>FEATURE</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>PURPOSE</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>REGION / BOUNDARY</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>SURGICAL TIP</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Private DNS Zone</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Internal VNet resolution</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>VNet Level</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">VMs auto-register only if <strong>Auto-Registration</strong> is checked.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Private Resolver</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Hybrid</strong> resolution</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Inbound/Outbound</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Use <strong>Inbound Endpoint</strong> to allow On-Prem to see Private IPs.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Conditional Forward</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Target specific domains</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Cross-Network</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Forward <code spellcheck="false">*.corp.com</code> to On-Prem IP via Outbound
+                    Endpoint.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>DNS Proxy (FW)</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Centralized filtering</td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Firewall Level</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">Required to use <strong>FQDN filtering</strong> in Firewall Network Rules.</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>2. ADVANCED EXPRESSROUTE (THE TURBO BUTTONS)</strong>
+        </div>
+        <div><em>Standard ExpressRoute moves data; these features move it faster or further.</em>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.934px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>FEATURE</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>PRIMARY PURPOSE</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>EXAM "TRIGGER"</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>FastPath</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Bypass Gateway</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Improve data path performance between on-prem and VNet."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Global Reach</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">On-Prem to On-Prem</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Allow two on-premises data centers to talk over Azure backbone."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>ER Direct</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">High-Speed (100Gbps)</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">"Connect directly to Microsoft's edge router (Compliance/Speed)."</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>BFD (Bidirectional)</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Fast Failure Detection</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">"Detect link failures in sub-second intervals."</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>3. MONITORING &amp; THE "FIX-IT" TOOLKIT</strong>
+        </div>
+        <div><em>Microsoft tests the specific log name. If you pick "Log Analytics" instead of the "Diagnostic Log," you lose points.</em>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.934px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>TOOL</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>SYMPTOM</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>SURGICAL ACTION / LOG NAME</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Next Hop</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Traffic is blackholed</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Verify the <strong>System Route</strong> vs <strong>UDR</strong> destination.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>IP Flow Verify</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Connection Refused</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Check the specific <strong>NSG Rule ID</strong> blocking the port.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>VPN Troubleshoot</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Tunnel "Down"</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Check <code spellcheck="false"><strong>IKEDiagnosticLog</strong></code> for
+                    Phase 1/2 mismatches.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Connection Monitor</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Sluggish/Laggy</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">Run <strong>End-to-End</strong> synthetic pings to find the bottleneck.</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>NSG Flow Logs</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Security Auditing</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">Mandatory to feed into <strong>Traffic Analytics</strong> for visualization.</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>4. GOVERNANCE &amp; SCALE (THE "HUB" LOGIC)</strong>
+        </div>
+        <div><em>When a single VNet isn't enough.</em>
+        </div>
+        <ul>
+          <li class="ck-list-marker-bold" data-list-item-id="ea226be6d37fb0a69360318b85624ab23">
+            <p style="margin-left:0px;"><span><strong>Virtual Network Manager (AVNM):</strong></span>
+            </p>
+            <ul>
+              <li data-list-item-id="e9ef740c410670ba0e08e90dc3a1573a0">
+                <p style="margin-left:0px;"><span><strong>Trigger:</strong> "Manage 100+ VNets dynamically."</span>
+                </p>
+              </li>
+              <li data-list-item-id="e3d40cf73f9d13a8a5b496e611ca4b4be">
+                <p style="margin-left:0px;"><span><strong>Tip:</strong> Use <strong>Security Admin Rules</strong> to enforce "Mandatory" rules that local admins can't override.</span>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="efec1f19dacf45d64e4e6211354de2271">
+            <p style="margin-left:0px;"><span><strong>Gateway Transit:</strong></span>
+            </p>
+            <ul>
+              <li data-list-item-id="e866b5fd187ce0011cf2f886343e6e90d">
+                <p style="margin-left:0px;"><span><strong>Trigger:</strong> "Spokes need to reach On-Prem via Hub."</span>
+                </p>
+              </li>
+              <li data-list-item-id="e8fc658098537fa77de8704a6aae2fa2c">
+                <p style="margin-left:0px;"><span><strong>Tip:</strong> Hub must check <strong>"Allow Gateway Transit"</strong>; Spoke must check <strong>"Use Remote Gateway."</strong></span>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e98d106b4ba338969d985154210e2f7b1">
+            <p style="margin-left:0px;"><span><strong>VNet Peering Limits:</strong></span>
+            </p>
+            <ul>
+              <li data-list-item-id="e15ab8a573f4101ef50578c003c497ffe">
+                <p style="margin-left:0px;"><span><strong>Tip:</strong> 500 Peers max. If the question says 1,000, the answer is <strong>Virtual WAN</strong>.</span>
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>🕵️ THE "FINAL PASS" CHECKLIST (THE TRAPS)</strong>
+        </div>
+        <ol>
+          <li data-list-item-id="ea6c0ce16b100b2d93173e1c536296544">
+            <p style="margin-left:0px;"><span><strong>Public IP SKUs:</strong> You cannot mix <strong>Basic Public IPs</strong> with <strong>Standard Load Balancers</strong>. They must both be Standard.</span>
+            </p>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e1ee688f7935f37d06506aea9789e552b">
+            <p style="margin-left:0px;"><span><strong>App Gateway vs. Front Door:</strong></span>
+            </p>
+            <ul>
+              <li data-list-item-id="ead2da5fff6dc786d47d14b95b2d3086f">
+                <p style="margin-left:0px;"><span><strong>App Gateway</strong> = Regional (VNet Internal).</span>
+                </p>
+              </li>
+              <li data-list-item-id="e34ebfcb1068632c9a89882fdf56f014c">
+                <p style="margin-left:0px;"><span><strong>Front Door</strong> = Global (Edge).</span>
+                </p>
+              </li>
+              <li class="ck-list-marker-italic" data-list-item-id="ed7e4e5d2b9d4431bffbb1e738539d1cb">
+                <p style="margin-left:0px;"><em><span>If the app is in Norway East and needs to stay there, pick App Gateway.</span></em>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li data-list-item-id="e5c429a5f4f84c0ab43d9bf49142524ff">
+            <p style="margin-left:0px;"><span><strong>WAF Mode:</strong> <strong>Prevention</strong> blocks traffic; <strong>Detection</strong> only logs it. If the goal is to "Stop the attack," pick Prevention.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e3f25e5271eef3a33c1382baf2029216c">
+            <p style="margin-left:0px;"><span><strong>Route Server:</strong> Used to "exchange" BGP routes between an NVA (like a Cisco Cloud Router) and the Azure VNet. It does <strong>not</strong> route the data itself; it just shares the "gossip."</span>
+            </p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+
+</html>

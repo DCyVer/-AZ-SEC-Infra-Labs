@@ -1,0 +1,38 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Vnet Peering | Hub | VWAN</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Vnet Peering | Hub |  VWAN</h1>
+
+      <div class="ck-content">
+        <p><em><span>VNet Peering [Direct Route| least Latency | $/GB | Max: 500 links]</span></em>
+          <br><em><span>Else &gt; Virtual WAN (Standard) [Automated Any-to-Any | Hub-Mesh | Scale: 2000 VNets/Hub | 50Gbps Router]</span></em>
+        </p>
+        <p><em><span>V-WAN* SKU Hierarchy {Automated-transit}</span></em>
+          <br><em><span>* Routing Intent MUST be enabled on all involved hubs.</span></em>
+        </p>
+        <p><em><span>( ! ) RECONSIDER if:</span></em>
+          <br><em><span>Unlimited data or 1GB/s+ | &nbsp;1 Geopolitical region (Vnet←&gt;Circuit&nbsp;peer) {0$/Egress} &gt; ExpressRoute Local.</span></em>
+          <br><em><span>branch-to-branch (no VPN/SD-WAN) &gt; Global Reach (ExpressRoute).</span></em>
+        </p>
+        <p><em><span>Basic; Branch only (Legacy) [ VPN=S2S ]</span></em>
+          <br><em><span>Standard +[ VPN+P2S &amp; ExpressRoute{Global Reach} (&lt;20Gb/s) | VNet-to-VNet Transit (&lt;50Gb/s) | Hub2hub Mesh ]</span></em>
+          <br><em><span>Routing Intent +[ Secured Hub ] [ Azure FW | Centralized Policy | Next-Hop (Internet/Private) | Symmetrical Inter-hub Inspection*]</span></em>
+          <br>*<em><span>DNS auto-reg not supported for vWAN spokes &gt; Manually configure Private DNS Zone links.</span></em>
+          <br>&nbsp;</p>
+        <p>
+          <br>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

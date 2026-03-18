@@ -1,0 +1,26 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Security Groups</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Security Groups</h1>
+
+      <div class="ck-content">
+        <div><strong>The Security Object Logic</strong>
+        </div>
+        <div>NetSG [Subnet/NIC level; 5-tuple (IP/Port/Protocol)]
+          <br>Else &gt; AppSG [Object-based; Groups VMs by Role (Web/DB); No IP management]</div>
+        <div>IF Multiple Caveats: If rule needs to cross VNet boundaries, RECONSIDER:
+          ASGs are limited to single VNet; use NSG with IP tags instead.</div>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,78 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Azure VPN Gateway</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Azure VPN Gateway</h1>
+
+      <div class="ck-content">
+        <div>
+          <p style="margin-left:0px;">EXAM-TRAP: NSG and UDR exclusively reroute through NVA/Firewall to gateway
+            over ER Direct/Fastpath
+            <br><strong>( ! ) RECONSIDER if:&nbsp;</strong>
+          </p>
+          <ol>
+            <li data-list-item-id="e38de2a9460895326209b96cd975b293c">
+              <p style="margin-left:0px;"><span>if [auto-scale hub-and-spoke (≤2k VMs hub capacity)&nbsp; | &gt;500 vnets | 1,25Gb/tunnel | 20Gb/s /hub] &nbsp;➔ <strong>Virtual WAN</strong>.</span>
+              </p>
+            </li>
+          </ol>
+          <p>Basic (no SLA, active/passive ~90s failover):&nbsp;
+            <br>-Policy [static/single IP; IKEv1]*
+            <br><em>*use </em><code spellcheck="false"><em>UsePolicyBasedTrafficSelectors</em></code><em> flag on <strong>GW 1+ to c</strong>onnect to legacy on-prem (CISCO, ASA)</em>
+            <br>- if [ &gt; 1 S2S | Any2Any, P2S* (IKEv2) ] &nbsp;&gt; Route
+            <br>
+            <br>*<strong>P2S Protocols</strong>
+            <br>[<strong>Cert, Radius (On-Prem RADIUS Proxy for MFA excludes ms Entra/AD ]&nbsp;</strong>
+            <br><span>&gt; Universal &gt; OpenVPN UDP/TCP 1194 () [</span><strong>Entra ID(AD) / MFA*] </strong><span>OR SSL/TLS (Crossplatform (OS) compatible)&nbsp;</span>
+            <br><em><span>*Exclusive to Azure VPN Gateway (Explicit configuration of </span></em>
+            <code
+            spellcheck="false"><em>Tenant</em>
+              </code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em>, </em></span>
+              <code
+              spellcheck="false"><em>Audience</em>
+                </code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em>, and </em></span>
+                <code
+                spellcheck="false"><em>Issuer</em>
+                  </code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em> values is mandatory)</em></span>
+                  <br>&gt;(+Stackable) Mobile<span>: </span><strong>I</strong><span><strong>KEv2 UDP </strong>500/4500<strong>(</strong>public Wi-fi often blocks) <strong>)&nbsp;</strong> [Android, iOS | Best performance, Less reliable]</span>
+                  <br><span>&gt;[Single Solution) Firewall Bypass: SSTP (TCP 443, HTTPS)&nbsp; [Windows (AD only)]&nbsp;</span>
+          </p>
+          <p>VpnGW&nbsp;
+            <br>if [ &gt; 10 S2S | &gt;128P2S [ &gt; 100 / &gt; 650 / &gt; 1k Mb/s} |
+            Active-Active* (2xPublic IP) ] &gt; GW { 1 / 2 / 3+AZ}**&nbsp;
+            <br>*Aggregate total bandwith (Tunnels+P2S in&amp;out) caps&nbsp;
+            <br>**Gen1 cannot upgrade to Gen2 without a complete rebuild
+            <br>+Option &gt; BGP {0 Downtime with A-A | Equal Cost Multi Pathing (ECMP|
+            (unless ER | VPN Coexistance |Custom route propagation)&nbsp;
+            <br>+Addon &gt; AZ (Availability Zones) &gt; 99.99% SLA / High Availability
+            <br>if [ &gt; 30 S2S | &gt;250P2s | { &gt; 1,25 / &gt; 5 Gb/s } | Gen2* ]
+            &gt; GW {4 / 5+AZ}</p>
+          <div>&nbsp;</div>
+          <div><strong>( ! ) RECONSIDER if:</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="e3ab238edd26b26e68383d679aa8b2705">
+              <p style="margin-left:0px;"><span>&gt;10Gb/s ‘Expressroute’ and/or vWAN&nbsp;</span>
+              </p>
+            </li>
+            <li data-list-item-id="e609b8003c72001668930be06689f8c16">
+              <p style="margin-left:0px;"><span>Connect multiple separate On-Prem sites without a Hub VNet &gt; <strong>Virtual WAN (Standard)</strong>.</span>
+              </p>
+              <p style="margin-left:0px;">
+                <br>&nbsp;</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

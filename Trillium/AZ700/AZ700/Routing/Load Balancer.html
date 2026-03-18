@@ -1,0 +1,72 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Load Balancer</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Load Balancer</h1>
+
+      <div class="ck-content">
+        <p>( ! ) RECONSIDER if:
+          <br>Global failover for HTTP/S (Web) apps &gt; Front Door.
+          <br>URL path-based routing (e.g., /images vs /video) &gt; Application Gateway.
+          <br>
+          <br><em>//</em> <em>Basic is retired; Single availability HTTP, open-by-default (insecure)&nbsp;</em>
+        </p>
+        <p>[Secure-by-default]
+          <br>IF &nbsp;single region
+          <br>&nbsp;1. Standard (single region traffic distribution) [ hi-availability
+          (0-65535 TCP(HTTPS)/UDP) Port specific | Source NAT* | Private Link; Global
+          Peering]
+          <br><em>*NAT gateway overrides SNAT</em>
+          <br>IF Transparent (no NAT)&nbsp;
+          <br>2. Gateway [Preserve Source IP | Off-Topology NVA/Firewall sees original
+          headers ]&nbsp;</p>
+        <p>2. <strong>Standard : Backend selection&nbsp;</strong>
+        </p>
+        <div><strong>( ! ) RECONSIDER if:</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ef768d0b1b3d4b174d4f44f35cdbc91ae">
+            <p style="margin-left:0px;"><span>Backend = PaaS service (e.g., Azure SQL) &gt; &nbsp;<strong>Private Link</strong></span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>Backend Pool Configuration : 2 VM &nbsp;NIC&nbsp;</strong>
+        </div>
+        <div><strong>&gt;Multi VNET/region VNet IP(+2ndary)</strong> &nbsp;[Containers,
+          nonstandard VMs]
+          <br>&nbsp;</div>
+        <p>ELSE 3. Global nested Load balancing &nbsp;[ Anycast IP | Non-HTTP (TCP/UDP)
+          protocols]</p>
+        <ol>
+          <li data-list-item-id="e57d52bda9d27f0f55963939da45eb681">Prio 1 Primary, Lower priorities only kick in when higher priorities are
+            not available&nbsp;</li>
+          <li data-list-item-id="e99efa529b08dd18d75f24cb7c6ed8284">Latency sensitivity threshold = &nbsp;microseconds (closest - Fastest)
+            &nbsp;</li>
+          <li data-list-item-id="e0c3c99509615428067f36025ef9ae869">if tied: Weight (Distribution Ratio of total sum across servers, higher
+            weight, higher distribution (%))</li>
+        </ol>
+        <div>Rules for:
+          <br>Load Balancing &gt; &nbsp;Distribute (general web/app) traffic to a Backend
+          Pool(VMs) Map port symmetric Front-2Backend
+          <br>Inbound NAT &gt; Unique port (assymetric2single VM) &nbsp;on Private IP
+          for SSH/RDP
+          <br>
+          <br>EXAM-TRAPS
+          <br>Floating IP Always On: &nbsp;SQL / NVA Chaining. Load balancer = IP proxy
+          for VM&nbsp;
+          <br>Outbound Rules: to manage SNAT seperately from inbound rules</div>
+        <p>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>
