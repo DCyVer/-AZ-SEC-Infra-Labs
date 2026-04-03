@@ -1,0 +1,97 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Azure VPN Gateway</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Azure VPN Gateway</h1>
+
+      <div class="ck-content">
+        <div>
+          <p style="margin-left:0px;"><strong>( ! ) RECONSIDER</strong>
+            <br><span>&gt; [auto-scale hub-and-spoke (≤2k VMs hub capacity)&nbsp; | &gt;500 vnets | 1,25Gb/tunnel | 20Gb/s /hub] &nbsp;➔ <strong>Virtual WAN</strong>.</span>
+            <br><span>&gt;10Gb/s → ‘Expressroute’ and/or vWAN&nbsp;</span>
+            <br><span>&gt; Connect multiple separate On-Prem sites without a Hub VNet &gt; <strong>Virtual WAN (Standard)</strong>.</span>
+          </p>
+          <p>! EXAM !&nbsp;
+            <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Tunnel won't connect due to matching IP ranges" ➔ </span><strong>Must use VPN NAT</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">rules.</span>
+              <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Send all Azure VM internet traffic to On-Prem" ➔ </span><strong>Enable Forced Tunneling</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">via UDR on GatewaySubnet.</span>
+                <br>"Need to inspect Gateway traffic with a Firewall" ➔ Disable Fastpath.
+                ( ! NSG /UDR bypass ! )
+                <br>&nbsp;"On-prem BGP peer cannot reach Azure" ➔ Check if APIPA(/<span><strong>169.254.21+22.0/24</strong>)</span> BGP
+                IP is configured. /
+                <br>"Spoke VNet needs to use Hub VPN Gateway" ➔ Must use VpnGw1 or higher.
+                <br><strong>"VPN Client 403 Forbidden" ➔ Correct Audience ID (Azure VPN App ID).</strong>
+                <br><strong>"Inspect VPN traffic with Azure Firewall" ➔ Disable Fastpath + Add UDR to GatewaySubnet.</strong>
+                <br><strong>"MFA for Linux/Mac/Windows" ➔ OpenVPN + Entra ID Auth.</strong>
+          </p>
+          <hr>
+          <p>
+            <br>Requirements:
+            <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Dedicated </span>
+            <code
+            spellcheck="false">GatewaySubnet</code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> | Min </span><strong>/27</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+                <br><strong>Public IP = Standard SKU (Basic = no)</strong>
+                <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">VPN Gw default ASN &nbsp;</span><strong>65515</strong>
+                <span
+                style="background-color:rgb(16,18,24);color:rgb(230,232,240);">. &nbsp;//ER &amp; GW cannot use same ASN</span>
+          </p>
+          <p>&nbsp;</p>
+          <p>Basic (no SLA, active/passive ~90s failover: no hub/peering/Gw Transit):&nbsp;
+            <br>-Policy [static/single IP; IKEv1(S2S)]*
+            <br><em>*use </em><code spellcheck="false"><em>UsePolicyBasedTrafficSelectors</em></code><em> flag on <strong>GW 1+ to c</strong>onnect to legacy on-prem (CISCO, ASA)</em>
+            <br>- if [ &gt; 1 S2S | Any2Any, P2S* (IKEv2) ] &nbsp;&gt; Route-based
+            <br>
+            <br>*<strong>P2S Protocols</strong>
+            <br>[<strong>Cert, Radius (On-Prem RADIUS Proxy for MFA excludes ms Entra/AD ]&nbsp;</strong>
+            <br><span>&gt; Universal &gt; OpenVPN UDP/TCP 1194 () [</span><strong>Entra ID(AD) / MFA*] </strong><span>OR SSL/TLS (Crossplatform (OS) compatible)&nbsp;</span>
+            <br><em><span>*Exclusive to Azure VPN Gateway (Explicit configuration of </span></em>
+            <code
+            spellcheck="false"><em>Tenant</em>
+              </code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em>, </em></span>
+              <code
+              spellcheck="false"><em>Audience</em>
+                </code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em>, and </em></span>
+                <code
+                spellcheck="false"><em>Issuer</em>
+                  </code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em> values is mandatory)</em></span>
+                  <br>&gt;(+Stackable) Mobile<span>: </span><strong>I</strong><span><strong>KEv2 UDP </strong>500/4500<strong>(</strong>public Wi-fi often blocks) <strong>)&nbsp;</strong> [Android, iOS | Best performance, Less reliable]</span>
+                  <br><span>&gt;[Single Solution) Firewall Bypass: SSTP (TCP 443, HTTPS)&nbsp; [</span><strong>Certificate / RADIUS &nbsp;/ </strong><span>Windows (AD)]&nbsp;</span>
+          </p>
+          <ul>
+            <li class="ck-list-marker-italic" data-list-item-id="ed7afe2eeb67f56997c0566c24a9047c3">
+              <p style="margin-left:0px;"><em><span><strong>Kill-Switch:</strong> If the exam scenario shows a "403 Forbidden" or "Mismatched" error in the VPN Client, the fix is correcting the <strong>Audience ID</strong> (which must be the specific Azure VPN App ID).</span></em>
+              </p>
+            </li>
+          </ul>
+          <p>VpnGW&nbsp;(Gen1 EOL → Gen2 only)
+            <br>if [ &gt; 10 S2S | &gt;128P2S [ &gt; 100 / &gt; 650 /  &gt; 1k Mb/s} |
+            Active-Active* (2xPublic IP) ] &gt; GW { 1 / 2 / 3+AZ}**&nbsp;
+            <br>//NAT Rules supported from GW2+
+            <br>*Aggregate total bandwith (Tunnels+P2S in&amp;out) caps&nbsp;&nbsp;
+            <br>+Option &gt; BGP {0 Downtime with A-A | Equal Cost Multi Pathing (ECMP
+            | &nbsp;ER / VPN Coexistance &nbsp;→ Custom route propagation)
+            <br>//Active-Active BGP → 2 unique Peer IPs → 1/Gw&nbsp;
+            <br>+Addon &gt; AZ (Availability Zones) &gt; 99.99% SLA / High Availability
+            <br>if [ &gt; 30 S2S | &gt;1000P2S | { &gt; 1,25 / &gt; 5 Gb/s* } | &nbsp;]
+            &gt; GW Gen2* { 4 / 5+AZ}
+            <br>*<strong>Scale Unit Increment</strong> | <strong>500 Mbps</strong> | Added
+            to the base as needed. - Automate with Gateway Manager (~10-15 mins)</p>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

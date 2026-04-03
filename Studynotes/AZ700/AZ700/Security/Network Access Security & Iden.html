@@ -1,0 +1,118 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Network Access: Security &amp; Identity</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Network Access: Security &amp; Identity</h1>
+
+      <div class="ck-content">
+        <div><strong>SECURITY &amp; IDENTITY STACK (2026)</strong>
+        </div>
+        <div><strong>Front Door (WAF)</strong> ➔ HTTPS (Global L7) | WAF Policy | <strong>Global acceleration + SQLi/XSS Edge protection</strong>
+          <br><strong>App Gateway (WAF)</strong> ➔ HTTPS (Regional L7) | WAF Policy | <strong>URL-path routing + Regional WAF</strong>
+          <br><strong>Firewall (Premium)</strong> ➔ L3-L7 | IDPS/TLS Signature | <strong>Signature-based IDPS / FQDN filtering</strong>
+          <br><strong>P2S (OpenVPN)</strong> ➔ SSL/TLS | <strong>Entra ID</strong> | <strong>Conditional Access</strong> /
+          Modern Auth //Firewall-friendly
+          <br><strong>P2S (IKEv2)</strong> ➔ IPsec | Cert/RADIUS | <strong>Native Mobile Support</strong> (No
+          3rd party client)
+          <br><strong>P2S (SSTP)</strong> ➔ SSL (TCP 443) | Cert/RADIUS | <strong>Legacy Windows 443 bypass</strong>
+          <br><strong>NSG / ASG</strong> ➔ TCP/UDP | Service Tags | <strong>Micro-segmentation</strong> /
+          Filter between subnets</div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>🔑 AUTH &amp; PROTOCOL MATRIX</strong>
+        </div>
+        <div><strong>Kerberos</strong> ➔ Dev/Std Bastion | Entra Domain Services //<strong>Legacy auth on VNet</strong> (No
+          DC VMs)
+          <br><strong>mTLS (Mutual TLS)</strong> ➔ App Gateway v2 | Front Door Prem //<strong>Verify Client Identity at the WAF</strong>
+          <br><strong>RADIUS</strong> ➔ P2S (IKEv2/SSTP) | VPN Gateway //Connects to <strong>On-Prem NPS</strong> for
+          auth
+          <br><strong>Certs (Self-Signed/CA)</strong> ➔ P2S (IKEv2/SSTP) | App Gateway
+          //<strong>End-to-end SSL/TLS</strong>
+          <br><strong>FIDO2 / Passwordless</strong> ➔ P2S (OpenVPN + Entra ID) //Requires <strong>Modern Auth</strong> via
+          Conditional Access
+          <br><strong>BGP Password</strong> ➔ ExpressRoute / VPN Gateway //<strong>MD5 Hash auth</strong> for
+          BGP peering</div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>🔍 2026 IDENTITY “HARD-LOCKS”MACsec (802.1AE)</strong> ➔ <strong>ExpressRoute Direct</strong> |
+          Encryption at Layer 2 (Link layer)
+          <br><strong>PIM</strong> ➔ <strong>Just-In-Time (JIT)</strong> access for Azure
+          Roles (e.g., Network Contributor)
+          <br><strong>JIT (VM Access)</strong> ➔ <strong>Microsoft Defender for Cloud</strong> |
+          Dynamic NSG port opening (3389/22)
+          <br><strong>TLS Inspection</strong> ➔ <strong>Azure Firewall Premium</strong> |
+          Required for <strong>IDPS</strong> on encrypted payloads
+          <br><strong>Double Encryption</strong> ➔ <strong>ExpressRoute + IPsec</strong> |
+          Required for high-compliance (L2 + L3 encryption)
+          <br><strong>Bastion Shareable Links</strong> ➔ Access VMs via URL <strong>without</strong> Entra
+          ID/Azure account</div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>🎯 DETERMINISTIC AUDIT (EXAM TRIGGERS)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ee965e6bbf060c8019c34b9e65b16513f">
+            <p style="margin-left:0px;"><span>"SQLi protection for Global site" ➔ <strong>Front Door (WAF)</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e0b3e8556db44728ed7c54175cb7a6493">
+            <p style="margin-left:0px;"><span>"Legacy LDAP / Kerberos support" ➔ <strong>Entra Domain Services</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e4a446082dca2751dc35cd676df9c1301">
+            <p style="margin-left:0px;"><span>"Block specific URLs in VNet" ➔ <strong>Azure Firewall (App Rules)</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e63b8bc5da70b458d342e4730f326c281">
+            <p style="margin-left:0px;"><span>"Encrypt ExpressRoute at Layer 2" ➔ <strong>MACsec</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="ee5e41ace6540308928551f94ee7c0add">
+            <p style="margin-left:0px;"><span>"Encrypt ExpressRoute at Layer 3" ➔ <strong>IPsec (VPN over ER)</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e3fa75db7e0c3edd38971a22e0effb009">
+            <p style="margin-left:0px;"><span>"Temp RDP access to VM" ➔ <strong>JIT (VM Access)</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="ecb24239b792ab1d113fd16c14bc60b5e">
+            <p style="margin-left:0px;"><span>"Network Admin role for 2 hours" ➔ <strong>PIM</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="eebd9f232d80c251d76b4ecea9e13dd3f">
+            <p style="margin-left:0px;"><span>"Authenticate VNet users via On-Prem NPS" ➔ <strong>RADIUS</strong></span>
+            </p>
+          </li>
+        </ul>
+        <p style="margin-left:0px;">&nbsp;</p>
+        <ul>
+          <li data-list-item-id="e67855d6d4fa6769d1f9bc96f8f51e29d">
+            <p style="margin-left:0px;"><span><strong>P2S Protocol limit:</strong> Remember <strong>SSTP</strong> is <strong>Windows-only</strong>. If the scenario says "Mac/Linux/Windows" and "TCP 443," the answer is <strong>OpenVPN</strong>, not SSTP.</span>
+            </p>
+          </li>
+          <li data-list-item-id="eef9b379be8d23334b55c7feeeb0b905d">
+            <p style="margin-left:0px;"><span><strong>WAF tiers:</strong> <strong>Front Door WAF</strong> is always "Global/Edge" (Static + Dynamic); <strong>App Gateway WAF</strong> is "Regional" (Dynamic/VNet-bound).</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <p>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,64 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Vnet Foundations</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Vnet Foundations</h1>
+
+      <div class="ck-content">
+        <div><strong>Magic IP: 168.63.129.16</strong>
+          <br><strong>Trigger:</strong> DHCP, DNS, &amp; <strong>LB Health Probes</strong>.
+          <br><strong>Hard-Lock:</strong>  <strong>Never block in NSG</strong>. Blocking
+          = Backend Offline.</div>
+        <div>&nbsp;</div>
+        <div><strong>IP Reservations (Subnet)</strong>
+          <br><strong>First 4:</strong>  <code spellcheck="false">.0</code> (Net) |
+          <code
+          spellcheck="false">.1</code>(GW) | <code spellcheck="false">.2/.3</code> (DNS)
+            <br><strong>Last 1:</strong>  <code spellcheck="false">.255</code> (Broadcast)
+            <br><strong>Hard-Lock:</strong> Cannot assign these to any resource.</div>
+        <div>&nbsp;</div>
+        <div><strong>BGP / ASN (Routing)</strong>
+          <br><strong>ASN 12076:</strong> Microsoft Public/Private/Microsoft Peering
+          (ExpressRoute).
+          <br><strong>ASN 65515:</strong> Mandatory for <strong>VPN/ER Coexistence</strong> &amp;
+          Default VNet ASN.
+          <br><strong>Reserved ASNs (Internal):</strong> 8074, 8075, 65517-65520. //<strong>Never use these for On-Prem BGP</strong>.</div>
+        <div><strong>Ports</strong>
+          <br><strong>TCP 53 / UDP 53:</strong> DNS resolution via Magic IP.
+          <br><strong>TCP 32526:</strong>  <strong>WireServer Port</strong> (VM Agent ↔
+          Platform).</div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>&nbsp;2026 Exam Triggers:</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ebb6ec10e07122be685158c0a575c2b8e">
+            <p style="margin-left:0px;"><span><strong>LB Health Probes failing?</strong> Check NSG for </span>
+              <code
+              spellcheck="false"><span>168.63.129.16</span>
+                </code><span>.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e43fd2a24df0cb87385f329a3372fef72">
+            <p style="margin-left:0px;"><span><strong>VPN &amp; ExpressRoute together?</strong> ASN <strong>65515</strong> must be used for transit logic.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ee2d489a338eddd0c703695d64756529f">
+            <p style="margin-left:0px;"><span><strong>BGP Peering failing?</strong> Check if On-Prem is using a <strong>Reserved ASN</strong> (e.g., 8074).</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

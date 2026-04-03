@@ -1,0 +1,160 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Traffic Manager/ Front door</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Traffic Manager/ Front door</h1>
+
+      <div class="ck-content">
+        <div>Basic/https/multisite listener
+          <br>X-Powered-By header
+          <br>Request and response header rewrite, "URL path and query string",&nbsp;</div>
+        <div>Front Door frontend Rule Matching, Certificates.
+          <br>Note: Use Rewrites to strip the X-Powered-By header for security. Front
+          Door matching prioritizes exact paths over wildcards.
+          <br>
+          <br>!RECONSIDER&nbsp;
+          <br>If Internal VNet IP required &gt; App Gateway. ( FD/Traffic mgr are Global/Public)</div>
+        <div>“0 Downtime + Global Load Balancing Non-HTTP (TCP/UDP)” → or <strong>Cross-Region Load Balancer (StD)</strong>
+        </div>
+        <hr>
+        <div>
+          <br>"INSTANT" DECISIONS
+          <br>Traffic Manager:&nbsp;</div>
+        <p>“Global Load Balancing Non-HTTP (TCP/UDP) (DNS-based)”
+          <br>"Min. costs for failover"a ➔ Traffic Manager.
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Route by </span><strong>Geographic</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">location first, then</span><strong>Priority</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> failover within that region." ➔ </span><strong>Nested &nbsp;Profiles</strong>
+            <br>
+            <br><span>Front door&nbsp;</span>
+            <br><strong>"IPv6 clients to IPv4 backend"</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">&nbsp;</span>
+            <br>"SSL Offload + WAF at &nbsp;Global Edge"&nbsp;
+            <br><span>“Modify Response Headers.” &nbsp;→ </span><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">explicitly </span><strong>Associated</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">with a</span><strong>Route</strong>
+              <br><span>"Managed certificates for 100 domains" ➔ <strong>Front Door Standard/Premium</strong>.</span>
+              <br><span>"App requires a specific path but users use a different one" ➔ <strong>URL Rewrite</strong>.</span>
+              <br><span>“Redirect HTTP to HTTPS at the Edge” → Rule Engine</span>
+              <br>"Edge Cache" ➔ verify X-Cache header. (<span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">TCP_HIT)</span>
+              <br>"Private backend" ➔ Premium SKU (Private Link).
+              <br>&nbsp;</p>
+        <hr>
+        <div>
+          <br>Traffic Manager [DNS-based | Any Protocol | Failover (TTL) = 30s | Cheapest]
+          <br>&gt; Front Door Standard: [HTTP/S; TLS ≥ 1.0+(Manual) | Failover (Anycast)
+          = &lt;10 sec ; CDN/Caching; ; WAF(managed rules) &nbsp;SSL Offload | IPv6
+          to IPv4(backend) ]</div>
+        <div>&gt;&gt; Premium [ Private link/origin | TLS 1.2+ | advanced WAF (DRS)
+          / Managed OWASP / Bot Protection ]</div>
+        <div>&nbsp;</div>
+        <div>Traffic Manager&nbsp;(<strong>IPv4/IPv6</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> , no FQDN)&nbsp;</span>
+          <br><strong>➔ FORWARDING&nbsp;</strong>
+        </div>
+        <div>1 &nbsp;<strong>Priority</strong>: single primary endpoint, Next if fail
+          <br>2 <strong>Weighted</strong>: Assigned value (1-1000/endpoint) //gradual
+          rollouts and A/B testing
+          <br>3 <strong>Performance</strong>: <strong>lowest latency</strong>
+          <br>4 <strong>Geographic</strong>: user<strong> location</strong> /sovereignty
+          and &nbsp;localized content
+          <br>5 <strong>Subnet</strong>: Map user IP address ranges to endpoint //corporate-only
+          traffic
+          <br>6 <strong>MultiValue</strong>: Multi-IP response //allows client preference
+          <br>
+          <br>Global routing (Region - Fastest) &lt;= Threshold&nbsp; (Priority, if
+          tied → weight else → round-robin
+          <br>&nbsp;</div>
+        <div><strong>Front Door</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e1277a829db90108cd4e99d24068057d3">
+            <div>does not obscure <strong>App Gateway</strong> or <strong>Backend IP</strong>
+            </div>
+          </li>
+          <li data-list-item-id="eb98efa2c48c5a0a37fc3dd0a6952e56d">
+            <div><strong>response Header Rewrite</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> to </span><strong>Delete/Strip</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">the</span><code spellcheck="false"><strong>X-Powered-By</strong></code>
+                <span
+                style="background-color:rgb(16,18,24);color:rgb(230,232,240);">header (hides backend tech from attackers).</span>
+            </div>
+          </li>
+          <li data-list-item-id="e9924107a276230e9b706c03c70b8f7a3">
+            <div><span><strong>URL Rewrite:</strong> Modify the <strong>URL Path</strong> or <strong>Query String</strong> before it hits the origin.</span>
+            </div>
+          </li>
+          <li data-list-item-id="ea58dc4b45e330ebb15d47937fc45854e">
+            <div>{<strong>Protection</strong>} = Origin <strong>Service Tag: AzureFrontDoor.Backend</strong> →
+              verify <strong>X-Azure-FDID</strong> header. drop if no match</div>
+          </li>
+          <li data-list-item-id="e2f65101e67a1d162744571c5c10e9a0d">
+            <div><code spellcheck="false"><span><strong>X-Cache</strong></span></code><span> header <strong>(TCP_MISS) = Origin ; (TCP_HIT) =</strong> <strong>Edge //</strong></span><strong>Route</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">caching enabled + defined</span><strong>TTL</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+            </div>
+          </li>
+          <li data-list-item-id="ee002903f37f8f300424b9f9c7add3cae">
+            <p style="margin-left:0px;"><span><strong>Mobile user support →&nbsp;</strong> <strong>Brotli</strong> and <strong>Gzip Compression</strong> (≥1kb ≤ 8mb) //Optimize bandwidth for mobile</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>Frontend Rule Matching (The Priority)</strong>
+        </div>
+        <ol>
+          <li data-list-item-id="ef0d844c9be1a10d3644c9c2250a0ac63">
+            <p style="margin-left:0px;"><span><strong>Exact Path Match</strong> (</span><code spellcheck="false"><span>/images/logo.png</span></code><span>) wins over...</span>
+            </p>
+          </li>
+          <li data-list-item-id="e2f943cd1ad4f33b9ce776012e03c48bc">
+            <p style="margin-left:0px;"><span><strong>Wildcard Path Match</strong> (</span><code spellcheck="false"><span>/images/*</span></code><span>) wins over...</span>
+            </p>
+          </li>
+          <li data-list-item-id="ec9169b812b36988df71af18932e766b6">
+            <p style="margin-left:0px;"><span><strong>Default Path</strong> (</span><code spellcheck="false"><span>/*</span></code><span>).</span>
+            </p>
+          </li>
+        </ol>
+        <ul>
+          <li data-list-item-id="ea7e3a240dc7ed0c7a63b66a70fcf381f">
+            <p style="margin-left:0px;"><span><strong>First</strong> rule in the processing order applies</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>Certificates &amp; Listeners</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="eb862c331ae62714451461969e7c876f3">
+            <p style="margin-left:0px;"><span><strong>Multi-site Listener:</strong> Host multiple domains (e.g., </span>
+              <code
+              spellcheck="false"><span>a.com</span>
+                </code><span>, </span><code spellcheck="false"><span>b.com</span></code><span>) on a single Front Door frontend.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e82ba20f5f2b61c1cb4d5615f7f1cac72">
+            <p style="margin-left:0px;"><span><strong>Certificates:</strong> Supports <strong>Front Door Managed</strong> (Auto-rotates) or <strong>Bring Your Own (BYOC)</strong> via <strong>Azure Key Vault</strong>.</span>
+            </p>
+          </li>
+        </ul>
+        <p><strong>Origin Groups</strong>: (equivalent to Backend Pools).&nbsp;
+          <br>Priority and Weight configured at the Origin level within these groups.&nbsp;
+          <br>≥2 for &lt;10sec failover. Health probes assigned to origin groups
+          <br>
+          <br>Health Probe requestss: HEAD (default) or GET. /Health probes fail if
+          app = GET and not configured
+          <br><strong>Probe Success:</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> Front Door </span><strong>ONLY</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">accepts</span><strong>200 OK</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">. (AppGW/LB accept 200-399</span>
+        </p>
+        <p>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

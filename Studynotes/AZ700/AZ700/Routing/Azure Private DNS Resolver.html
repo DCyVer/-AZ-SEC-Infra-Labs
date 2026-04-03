@@ -1,0 +1,62 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Azure Private DNS Resolver</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Azure Private DNS Resolver</h1>
+
+      <div class="ck-content">
+        <div><strong>[On-Prem DNS](Conditional Forward) &nbsp;➔ [Inbound Endpoint IP] ➔ [Azure Private DNS Zone]</strong>
+        </div>
+        <div><strong>[Azure VM] ➔ [Outbound Endpoint([Forwarding Ruleset) ➔ [On-Prem DNS]</strong>
+        </div>
+        <div>
+          <br><strong>Forwarding Ruleset</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ Must be </span><strong>Linked</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">to the VNet where the Azure VM lives.</span>
+            <br><strong>Inbound Endpoint</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ The </span><strong>Private IP</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">you give to the On-Prem DNS admin.</span>
+              <br>&nbsp;</div>
+        <div><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><strong>INSTANT DECISIONS</strong></span>
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"On-prem cannot resolve Private Endpoint FQDN" ➔ </span><strong>Inbound Endpoint</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+            <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Azure VMs need to resolve on-prem .local domains" ➔ </span><strong>Outbound Endpoint + Forwarding Ruleset</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+              <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Centralize DNS for multiple VNets" ➔ Link the </span><strong>Forwarding Ruleset</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">to all VNets.</span>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <p style="margin-left:0px;"><strong>Inbound Endpoint</strong> ➔ Receives queries from On-Prem/VNets
+          via <strong>Private IP</strong>.
+          <br><strong>Outbound Endpoint</strong> ➔ Forwards queries from Azure ➔ On-Prem
+          DNS servers.
+          <br><span><strong>Subnet Capacity:</strong> Only <strong>ONE</strong> endpoint (Inbound OR Outbound) per subnet.</span>
+          <br><span><strong>VNet Capacity:</strong> Only <strong>ONE</strong> DNS Private Resolver per Virtual Network.</span>
+          <br><strong>Forwarding Rules</strong> ➔ Applied to Outbound Endpoints | Matches
+          domains to target IPs.
+          <br><strong>Forwarding Ruleset</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ A separate resource from the Resolver.</span> You
+          can link one Ruleset to multiple VNets, but a VNet can only have one Ruleset
+          linked at a time.</p>
+        <div><strong>Subnet Lock</strong> ➔ Dedicated subnets required (Min <strong>/28</strong>).
+          <br><strong>VNet Link</strong> ➔ Mandatory to connect a <strong>Forwarding Ruleset</strong> to
+          a VNet.
+          <br><strong>Scale</strong> ➔ Max <strong>10</strong> Inbound / <strong>10</strong> Outbound
+          endpoints per resolver.</div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

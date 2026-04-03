@@ -1,0 +1,89 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Azure Firewall</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Azure Firewall</h1>
+
+      <div class="ck-content">
+        <p>Gap Items: Microsoft Threat Intelligence Collection, Microsoft.KeyVault,
+          Microsoft.Storage, Microsoft.Web, Microsoft.AzureActiveDirectory.
+          <br>Integration Logic: These are your Protection Sources and Service Tags.
+          <br>Note: Threat Intel is a specific "Alert/Deny" toggle in the Firewall.
+          The Microsoft.XYZ items are the Service Tags used in your Network Rules
+          to avoid managing dynamic IPs.</p>
+        <hr>
+        <div>(!) <strong>RECONSIDER</strong>: if WAF then <strong>App Gateway</strong> or <strong>Front Door</strong>.</div>
+        <div><span>➔ <strong>RECONSIDER</strong>: if "<strong>Filter by URL path (/images)"</strong>&nbsp;" → &nbsp;<strong>App Gateway</strong></span>
+        </div>
+        <div>&nbsp;</div>
+        <div><span><strong>"Stop traffic to Gambling sites"</strong> ➔ <strong>Premium SKU</strong> (Web Categories).</span>
+          <br><span><strong>"Inbound Port Forwarding"</strong> ➔ <strong>DNAT Rule</strong>.</span>
+        </div>
+        <div>
+          <br>SKUs
+          <br>Basic</div>
+        <div>&gt; &nbsp;[≥ 250 Mb/s DNS Proxy | Block Threat] &nbsp;&gt; Standard&nbsp;</div>
+        <div>&gt;&gt; [≥ 30 Gb/s | IDPS (Alert/deny inspect B4 filter) &nbsp;| TLS
+          inspection | URL (Gambling) &nbsp;Filter] &gt; Premium&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>FW Rule = <strong><u>1st 2 match in priority order only.</u></strong>&nbsp;</div>
+        <ol>
+          <li data-list-item-id="e15e6760813103e6948402afba61ff64c">
+            <p style="margin-left:0px;"><span><strong>DNAT = </strong>[IN B4 OUT ] &nbsp;/ ext- to int. IP translation</span>
+            </p>
+          </li>
+          <li data-list-item-id="ea4bed757cdb4d0df96d8d678f338901e">
+            <p style="margin-left:0px;"><span><strong>Network </strong>[OSI 3/4] &nbsp;/ filters by IP/Port/Protocol.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ed25796d36a9b56a01f0740be090ae5eb">
+            <p style="margin-left:0px;"><span><strong>Application </strong>[OSI 7] / filters by FQDN or Web Categories.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ebe4cd542e25bc5f9425c719c920bb363">
+            <p style="margin-left:0px;"><span>Deny by default*</span>
+            </p>
+            <p style="margin-left:0px;"><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">* </span><em>Exception: Azure Firewall allows internal platform traffic by default. (2nd lowest prio)&nbsp;</em><span>&nbsp;</span>
+              <br>&nbsp;</p>
+          </li>
+        </ol>
+        <div><strong>Azure Firewall Policy Hierarchy</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e8c68da2b0e23fcfdc53f8bb7228f6ed6">
+            <p style="margin-left:0px;"><span><strong>Inheritance:</strong> Child policies inherit all rules from a Parent policy [5].</span>
+            </p>
+          </li>
+          <li data-list-item-id="e2dd7475b40e671b1011f688c848f3984">
+            <p style="margin-left:0px;"><span><strong>Processing Order:</strong> Parent rules always evaluate before Child rules [5].</span>
+            </p>
+          </li>
+          <li data-list-item-id="e48ca4c2c99df8e789a0325537cfdac22">
+            <p style="margin-left:0px;"><span><strong>Rule Conflict:</strong> A "Deny" in a Parent policy cannot be overridden by an "Allow" in a Child policy [5].</span>
+            </p>
+          </li>
+          <li data-list-item-id="ecc68b9e4ba854b37e77e6db7850941a2">
+            <p style="margin-left:0px;"><span><strong>Priority Numbers:</strong> Lower numerical values (e.g., 100) have higher priority and process before higher values (e.g., 1000) [6].</span>
+            </p>
+          </li>
+        </ul>
+        <p style="margin-left:0px;">&nbsp;</p>
+        <p style="margin-left:0px;"><span><strong>FQDNs:</strong> <strong>Application Rules only</strong>. Network Rules do not support FQDNs.</span>
+          <br><span><strong>DNS Proxy:</strong> <strong>Mandatory</strong> for FQDN filtering to prevent IP spoofing/mismatch.</span>
+          <br><span><strong>Forced Tunneling:</strong> If ::/0 ➔ On-Prem, you <strong>must</strong> deploy</span>
+        </p>
+        <p style="margin-left:0px;">
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

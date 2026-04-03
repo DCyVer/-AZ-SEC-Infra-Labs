@@ -1,0 +1,98 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>SaaS (Mged IP/ PaaS (Svc./Priv. Endpts) and Private Link</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>SaaS (Mged IP/ PaaS (Svc./Priv. Endpts) and Private Link</h1>
+
+      <div class="ck-content">
+        <div><strong>&nbsp;(INSTANT DECISIONS)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ebba7bf99f53798f045bf51d5e5feb27d">
+            <p style="margin-left:0px;"><span><strong>"Access Azure SQL from On-Premises"</strong> ➔ <strong>Private Link</strong> (Endpoint).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e0fee962227b7917bfdf40df07a0ccef8">
+            <p style="margin-left:0px;"><span><strong>"Block access to all Storage except Prod-Account"</strong> ➔ <strong>Service Endpoint + EP Policy</strong>.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e4777a45fd5b31cdf6121472f94071dd5">
+            <p style="margin-left:0px;"><span><strong>"Minimize cost for VNet-only traffic"</strong> ➔ <strong>Service Endpoint</strong> ($0).</span>
+            </p>
+          </li>
+          <li data-list-item-id="ec68be538e0a11d4d602fe25cc00ef458">
+            <p style="margin-left:0px;"><span><strong>"Use NSG to filter traffic to a PaaS service"</strong> ➔ <strong>Private Link</strong> (with NIC Policy).</span>
+            </p>
+          </li>
+        </ul>
+        <hr>
+        <p>&nbsp;</p>
+        <p>Service Endpoint | Public IP | $0
+          <br>vNet (Enable on subnet → routing) → Azure Backbone(Bypass UDR) → PaaS(Virtual
+          Network Rule: Allow Subnet ID)
+          <br>EP Policy: Anti-Exfiltration → Limit access to specific resource ID.
+          <br>Excludes: &nbsp;Hybrid Access (VPN/ER).</p>
+        <div><strong>Private Link (Endpoint) | Private IP | $Cost</strong>
+        </div>
+        <p style="margin-left:0px;"><span>Assigns a <strong>Private IP</strong> from your VNet. to connect <strong>On-Prem (VPN/ER)</strong> and <strong>Peered VNets</strong>.</span>
+          <br>Uses: <span><strong>Private DNS Zone + vNet Link</strong> for resolution.</span>
+          <br>I<span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">dentity needs </span><strong>Network Contributor</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">role on the</span><strong>Private DNS Zone</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> (Hub) to auto-sync A-records</span>
+            <br><span><strong>Exception:</strong> Must enable </span><code spellcheck="false"><span>PrivateEndpointNetworkPolicies</span></code><span> for <strong>NSG/UDR</strong> support.</span>
+        </p>
+        <div><strong>Service Tags | Managed IP | $0</strong>
+          <br>IP-Group: &nbsp; multiple IP set for service-specific NSG rules (e.g.
+          <code
+          spellcheck="false">Storage.EastUS</code>). // No FQDN</div>
+        <div>&nbsp;</div>
+        <div><strong>FQDN Filtering | Domain Name | $Cost</strong>
+          <br>{App-Rules} = <strong>Az Fw ; f</strong>iltering by <code spellcheck="false">*.microsoft.com</code>.
+          for (Microsoft 365 / Windows Update / GitHub traffic)&nbsp;
+          <br>{Web-Categories} = Filter content (e.g. Social, Hacking, gambling).</div>
+        <div>&nbsp;</div>
+        <div><strong>SaaS Connectivity (M365/Dynamics)</strong>
+          <br>{BGP-Communities} = Route tagging to select specific SaaS regions.</div>
+        <div><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Tag specific services (Exchange / SharePoint) or regions. Minimize route tables</span>
+          <br><strong>{Route Filter}: allowed list of BGP communities</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span><strong>Required to advertise routes &nbsp;and receive</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">the M365 routes on-prem.</span>
+              <br><strong>{Custom-Community}:</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> vNet tag &nbsp;(12076:20001). //ID &amp; </span><strong>filter traffic </strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">onPrem from specific vNets.</span>
+        </div>
+        <div>*Deprecated(( {Public-Peering}(High Performance = ER) &nbsp;))
+          <br>&nbsp;</div>
+        <div><strong>SaaS (M365/Dynamics)</strong>
+          <br><strong>{Microsoft Peering}</strong>: Required for high-perf SaaS/PaaS
+          access
+          <br><strong>{BGP-Communities}</strong>: Tagging to select specific SaaS regions/services</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div><strong>🎯 DETERMINISTIC AUDIT</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <p>&nbsp;</p>
+        <div>&nbsp;</div>
+        <p>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

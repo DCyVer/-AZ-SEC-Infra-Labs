@@ -1,0 +1,113 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>ExpressRoute (+Fastpath)</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>ExpressRoute (+Fastpath)</h1>
+
+      <div class="ck-content">
+        <hr>
+        <div><em><strong>( ! ) RECONSIDER if:</strong></em>
+        </div>
+        <ul>
+          <li class="ck-list-marker-italic" data-list-item-id="ec3176debf8a5884d60b586fdc2585b03">
+            <p style="margin-left:0px;"><em><span>Low- cost/bandwidth 2 VNet &nbsp;&gt; <strong>VPN Gateway (S2S)</strong>.</span></em>
+            </p>
+          </li>
+          <li class="ck-list-marker-italic" data-list-item-id="e7dc7957f5027623d8bcc8a15511a8bc7">
+            <p style="margin-left:0px;"><em><span>3rd party Cloud/SD-WAN without ER-Direct &gt; <strong>IPsec VPN</strong>.</span></em>
+            </p>
+          </li>
+          <li class="ck-list-marker-italic" data-list-item-id="e08ad31e14ffdafd6f15439cee415aa18">
+            <p style="margin-left:0px;"><em><span>Public PaaS/SaaS (No dedicated circuit) &gt; <strong>Public Internet</strong>.</span></em>
+            </p>
+          </li>
+        </ul>
+        <hr>
+        <p style="margin-left:0px;">EXAM:
+          <br><span>Connect On-Prem Site A to On-Prem Site B over ER" ➔ ExpressRoute Global Reach (Premium SKU).</span>
+          <br><span>"Access O365 but limit to SharePoint only" ➔ Microsoft Peering + Route Filter (Select SharePoint Community).</span>
+          <br><span>"Gateway Subnet UDR not working" ➔ FastPath is enabled (Bypassing Gateway) or ER Direct is missing.</span>
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Need sub-second link failure detection" ➔ </span><strong>Enable BFD</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">on your on-premises edge devices.</span>
+            <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">//(Bidirectional Forwarding Detection)</span>
+            <br><span>"100 VNets connected to one circuit" ➔ ExpressRoute Premium.</span>
+        </p>
+        <hr>
+        <div>SKU Hierarchy&nbsp;
+          <br>Local [ ≤4k Routes | $0 / Egress&nbsp;
+          <br>+Addon: <strong>GwScale [≤40 units (1Gb/s)]&nbsp;</strong>
+        </div>
+        <div>^if Bottleneck: <strong>Direct &nbsp;[ 10 / 100 / 400 Gb/s physical port pair (mult-child circuit support) | MACsec L2 HW encryption] //Supports BFD Peering by default</strong>
+        </div>
+        <div>&gt; Standard + [ Metered Egress ($/GB) | Single Continent | ≤10 VNets]
+          <br>+<strong>[if GwScale &gt;10 units / Ultra] Addon: </strong>FastPath [
+          Peer 2 VM (Gateway &amp; NVA/Firewall bypass)**]
+          <br>*Excludes Global Vnet peering</div>
+        <div><em><strong>**ExpressRoute (std/ultra gen2) Direct</strong></em>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em> is required to enable UDR on GatewaySubnet - &gt; Fastpath must be disabled.&nbsp;</em>
+            </span>
+            <br>&gt;&gt; Premium + [≤10k Routes | Global | ≤100 VNets | Global Reach {&gt;1
+            Onsite-Prem]</div>
+        <div>&nbsp;</div>
+        <p>ExpressRoute (private) Peering &nbsp;for On-Prem 2 Azure Vnets/VMs (Private
+          IP) Endpoints&nbsp;
+          <br>Else: &nbsp;Microsoft Peering: PaaS {dedicated Circuit} &nbsp;&amp; SaaS
+          (Office 365 / Dynamics 365 / Storage PEs)
+          <br>→ <span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Public IP + NAT ➔ Dedicated Circuit ➔ Microsoft Public Edge.</span>
+          <br>//<span><strong>Public IPs</strong> must be owned by customer/svc provider. &nbsp;<strong>NAT b</strong>efore MS edge</span>
+          <br><em>EXAM TRAP: Microsoft Peering(Private not supported) requires route filters to select specific BGP communities (e.g., O365)</em>
+          <br>
+          <br><span><strong>Route Filters for &nbsp;</strong>standalone resource <strong>only</strong> with Microsoft Peering.&nbsp;</span>
+          <br><span>create the filter → add <strong>BGP Communities</strong> (e.g., </span>
+          <code
+          spellcheck="false"><span>12076:5030</span>
+            </code><span> for Storage) → <strong>attach</strong> to peering. No filter = No routes advertised.</span>
+        </p>
+        <div>
+          <div><strong>BGP Path Selection [Route Tie-Breaker]</strong>
+          </div>
+          <div><em><strong>( ! ) RECONSIDER if:</strong></em>
+          </div>
+          <ul>
+            <li class="ck-list-marker-italic" data-list-item-id="e08f14fd1306739932e763d2888f2ed99">
+              <p style="margin-left:0px;"><em><span>Forcing a specific NVA/Firewall path regardless of BGP ➔ <strong>User Defined Routes (UDR)</strong>.</span></em>
+              </p>
+            </li>
+            <li class="ck-list-marker-italic" data-list-item-id="e2674e47d8f0161955ade41b6fa8a0716">
+              <p style="margin-left:0px;"><em><span>Path selection required for Non-BGP / Static traffic ➔ <strong>UDR</strong>.</span></em>
+              </p>
+            </li>
+          </ul>
+          <div><strong>LPM Smallest IP Range [Specific (/24) &gt; General (/16)] // </strong>if
+            LPM tied → onPrem incoming → Local preference
+            <br><strong>If /x == /y</strong> ➔ <strong>Highest Weight [Azure Portal Override (0-32767) | Per Connection]</strong>
+            <br><strong>If weight ==</strong> ➔ <strong>Highest BGP Value [Local Preference | Default = 100]</strong>
+            <br><strong>If BGP ==</strong> ➔ <strong>Shortest Azure Network Path [AS Path | Shortest Wins | On-Prem Influence]</strong>
+            <br><strong>Else</strong> ➔ <strong>Lowest Multi-Exit Discriminator (MED)</strong>
+            <br>
+            <br>ExpressRoute Gateway</div>
+          <p style="margin-left:0px;"><span><strong>99.95% SLA</strong>. → <strong>AZ SKU</strong> → <strong>ErGw1-3 AZ</strong></span>
+            <br><span>Precedence: <strong>UDR</strong> ➔ <strong>ExpressRoute</strong> ➔ <strong>VPN</strong> ➔ <strong>System Routes</strong>. //when multiple exist</span>
+            <br>Azure Route Server combination → /27 sNet
+            <br>&nbsp;</p>
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+          <p>&nbsp;</p>
+          <p>
+            <br>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

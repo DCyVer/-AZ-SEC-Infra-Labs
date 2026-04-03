@@ -1,0 +1,47 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Azure Extended Network</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Azure Extended Network</h1>
+
+      <div class="ck-content">
+        <div>//allows on-premises VMs to migrate to Azure without changing their IP
+          addresses.<span>&nbsp;</span>
+        </div>
+        <div>
+          <br><strong>Prereq:</strong>  <strong>S2S VPN</strong> or <strong>ExpressRoute</strong> (Layer
+          3 pipe)
+          <br><strong>Subnets:</strong> VNet has <strong>GatewaySubnet</strong> + <strong>Target Subnet</strong> (match
+          On-Prem CIDR)
+          <br>
+          <br><strong>[onPrem¹] ➔ [NIC⁸] (L2 Extension)</strong>
+        </div>
+        <div><strong>[onPrem¹][Az. Extended Nw⁷] ➔ [WAC VM Appliance¹¹] ➔ [WAC Extension¹²] ➔ [VpnGw¹¹ | ErGw¹¹] ➔ [NIC⁸]</strong>
+        </div>
+        <div>&nbsp;</div>
+        <p style="margin-left:0px;"><span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">Use Windows Admin Center to configure the server onprem and in azure and orchestrate.</span>
+        </p>
+        <p style="margin-left:0px;"><span><strong>Routing:</strong> Azure WAC VM acts as the <strong>"Next Hop"</strong> for the stretched subnet.</span>
+          <br><span><strong>Limit:</strong> Only for <strong>Windows Server</strong> workloads (2012 R2+).</span>
+          <br><span><strong>Dependency:</strong> If the <strong>WAC Extension</strong> is deleted, the L2 bridge breaks.</span>
+        </p>
+        <p style="margin-left:0px;"><strong>Hardware:</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> </span><strong>Azure WAC VM</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">requires</span><strong>Nested Virtualization</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> (Dv3/Ev3 series or newer).</span>
+            <br><strong>MAC Spoofing:</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> Must be </span><strong>Enabled</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">on the</span><strong>Azure VM NIC</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> to allow the same IP address.</span>
+        </p>
+      </div>
+    </div>
+  </body>
+
+</html>

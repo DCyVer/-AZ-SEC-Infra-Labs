@@ -1,0 +1,125 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Load Balancer (internal, Std. Gw)</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Load Balancer (internal, Std. Gw) </h1>
+
+      <div class="ck-content">
+        <div><strong>[Global Anycast IP] ➔ [Standard LB] ➔ [Health Probe] ➔ [Backend Pool: VM/NIC/IP]</strong>
+          <br>
+          <br><strong>INSTANT DECISIONS</strong>
+        </div>
+        <div>"Backend running but LB shows Offline" ➔ <strong>Allow 168.63.129.16 in NSG</strong>.
+          <br>"Balance all 65k ports to a firewall cluster" ➔ <strong>Internal Standard LB + HA Ports</strong>.
+          <br>"SQL Cluster requires Direct Server Return" ➔ <strong>Floating IP (DSR) = ON</strong>.
+          <br>"Insert NVA into traffic without manual UDRs" ➔ <strong>Gateway LB</strong>.
+          <br>"High connection failure under load" ➔ <strong>SNAT Exhaustion</strong> ➔
+          Deploy <strong>NAT Gateway</strong>.</div>
+        <div>&nbsp;</div>
+        <div><strong>ExamTip</strong>
+          <br>Floating IP Always On: SQL / NVA Chaining → Load balancer = IP proxy for
+          VM
+          <br>Outbound Rules → &nbsp;manage SNAT seperately from inbound rules &nbsp;//
+          NATgw Or OB rules needed for internet (Default = not allowed)&nbsp;
+          <br>HA Ports (int. std. LB) ➔ Balance 0-65535 (NVA Hub/Firewalls).</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>(!) RECONSIDER if:&nbsp;</strong>
+        </div>
+        <div><strong>Global failover for HTTP/S (Web) apps ➔ Front Door.</strong>
+        </div>
+        <div><strong>URL path-based routing (e.g., /images vs /video) ➔ Application Gateway.</strong>
+          <br><strong>Dynamic Port Allocation</strong> - NAT Gateway //scales better
+          than LB Outbound Rules</div>
+        <div>&nbsp;</div>
+        <div><strong>RULES FOR:</strong>
+          <br>Load Balancing ➔ Distribute (general web/app) traffic to a Backend Pool(VMs)
+          Map port symmetric Front-2Backend
+          <br>Inbound NAT ➔ Unique port (assymetric2single VM) on Private IP for SSH/RDP</div>
+        <div>Outbound Rules ➔ Manage SNAT separately from inbound rules; manually allocate
+          ports to prevent exhaustion.</div>
+        <div>&nbsp;</div>
+        <div><strong>Load Balancer SKU </strong>// Basic is retired; Single availability
+          HTTP, open-by-default (insecure)
+          <br>[Secure-by-default]&nbsp;</div>
+        <div>{1 Region} - &gt; Std.&nbsp;<span> [ high availability (0-65535 TCP(HTTPS)/UDP) Port specific | SNAT(Non-transparent) | Private Link | Global Peering ]</span>
+        </div>
+        <p style="margin-left:0px;"><span>{Transparent}→ Gateway LB [Preserve Source IP | Off-Topology NVA/Firewall sees original headers ]</span>
+        </p>
+        <p style="margin-left:0px;"><span>Backend selection (Std.) //</span><strong>(!) RECONSIDER if:&nbsp; </strong><span><strong>Backend = PaaS service (e.g., Azure SQL) ➔ Private Link</strong></span>
+          <br>{<span><strong>NIC-based} → Max. 1</strong>VNet(noPeers)/Region | 1000VM&nbsp;</span>
+          <br><span>|| {<strong>IP-based}: </strong>Multi-VNet / Cross-Region / Containers</span>
+          <br><span>|| </span>Global nested Load balancing [ Anycast IP | Non-HTTP (TCP/UDP)
+          protocols]
+          <br>- <span>Prio 1 Primary, Lower priorities only kick in when higher priorities are not available</span>
+          <br><span>- Latency sensitivity threshold = microseconds (closest - Fastest)</span>
+          <br><span>- if tied: Weight (Distribution Ratio of total sum across servers, higher weight, higher distribution (%))</span>
+        </p>
+        <div><strong>METHODS &amp; BEHAVIOR</strong>
+          <br><strong>Geographic</strong> ➔ Global LB | Traffic to <strong>closest region</strong>.
+          <br><strong>Performance</strong> ➔ Latency-based routing (Standard/Global).
+          <br><strong>Priority</strong> ➔ Primary/Secondary failover | <strong>Lower # = Active</strong>.
+          <br><strong>Weighted</strong> ➔ Distribution ratio (%) across healthy backends.
+          <br><strong>Floating IP (DSR)</strong> ➔ Backend replies <strong>directly</strong> to
+          client&nbsp;
+          <br>&nbsp;</div>
+        <div><strong>HEALTH PROBES</strong>
+          <br><span><strong>NSG:</strong> You must not have a <strong>Manual Inbound Deny</strong> (destination any) (Desination e.g. 80 /8080/443 TCP/UDP (LB config match) (Priority &lt; 65001) from IP </span>
+          <code
+          spellcheck="false"><span>168.63.129.16</span>
+            </code><span>.</span>
+            <br>TCP Probe ➔ Success = 3-way handshake.
+            <br>HTTP(S) Probe ➔ Success = <strong>Status 200 OK</strong>.
+            <br>&nbsp;</div>
+        <hr>
+        <div>INSTANT DECISIONS
+          <br>"Inspect traffic without changing Backend IP or UDRs" ➔ <strong>Service Chaining (GWLB)</strong>&nbsp;</div>
+        <div>&nbsp;"NVA needs to see original Client Source IP" ➔ <strong>GWLB</strong>&nbsp;</div>
+        <div>&nbsp;"TCP connection drops after 5 minutes of inactivity" ➔ Increase <strong>Idle Timeout</strong>&nbsp;</div>
+        <div>"Traffic won't failover to a nearby region" ➔ Check <strong>5ms Latency Threshold</strong>.</div>
+        <p>
+          <br>GATEWAY LOAD BALANCER (GWLB) ➔ [TRANSPARENT INSPECTION]
+          <br><strong>Standard SKU Only</strong> ➔ GWLB and the consumer LB/NIC must
+          both be Standard SKU and in the <strong>Same Region</strong>.
+          <br><strong>Service Chaining</strong> ➔ GwLB <strong>Frontend</strong> &nbsp;add
+          on to Std.<strong> LB Frontend IP Config</strong> (or VM NIC)&nbsp;
+          <br><strong>VXLAN (Port 10800)</strong> ➔ traffic encapsulation (NVA must be
+          GWLB-aware)&nbsp;</p>
+        <div>SESSION PERSISTENCE &amp; TIMEOUTS
+          <br><strong>None (Default)</strong> ➔ 5-tuple hash ←→ any healthy VM&nbsp;
+          <br><strong>IP (2-tuple)</strong> ➔ Same IP ←→ backend VM&nbsp;
+          <br><strong>IP +port (3-tuple)</strong> ➔ Same &nbsp;IP + Port ←→ backend VM&nbsp;
+          <br><strong>Idle Timeout</strong> ➔ 4–30 minutes (Default 4); Increase for
+          long-running DB/TCP sessions.</div>
+        <div>&nbsp;</div>
+        <div>GLOBAL LB (CROSS-REGION) ➔ [ANYCAST / MULTI-REGION]
+          <br><strong>5ms Latency Threshold</strong> ➔ shift region if latency &gt; 5ms
+          |&nbsp;
+          <br><strong>Regional vs. Global</strong> ➔ Single Region / Static IP vs. Multi-Region
+          / Anycast</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <p>&nbsp;</p>
+        <p>
+          <br>
+          <br>
+          <br>&nbsp;</p>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <p>&nbsp;</p>
+        <p>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

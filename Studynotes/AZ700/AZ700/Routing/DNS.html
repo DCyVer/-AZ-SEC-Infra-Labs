@@ -1,0 +1,130 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>DNS</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>DNS</h1>
+
+      <div class="ck-content">
+        <p>INSTANT DECISIONS
+          <br>"Private Link resolving to Public IP" ➔ Missing vNet Link or Private DNS
+          Zone Group.
+          <br>"Azure VM cannot find .local" ➔ Forwarding Ruleset not linked to vNet.
+          <br>"On-prem cannot see Azure Zone" ➔ Inbound Endpoint IP missing from On-prem
+          Conditional Forwarder.
+          <br>"FQDN Filter fails (Az Firewall)" ➔ Enable DNS Proxy + Point vNet DNS
+          to Firewall IP.
+          <br>"Windows VM (Custom DNS)" ➔ Obsolete/Inefficient ➔ Use Azure Private DNS
+          Resolver.</p>
+        <hr>
+        <p>
+          <br><strong>THE DNS RESOLUTION SEQUENCE (THE PING)</strong>
+        </p>
+        <ol>
+          <li class="ck-list-marker-bold" data-list-item-id="e3ac876c8c5ad7efd4ef272febb95e1a0">
+            <p style="margin-left:0px;"><span><strong>Stored (Local Cache -/ Hosts)&nbsp;</strong></span>
+            </p>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e8b0e848d8e20ef5a9cd976b1daed9e74">
+            <p style="margin-left:0px;"><span><strong>No cache? → DNS Proxy (Firewall)</strong></span>
+            </p>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e8e3f5834d88d83e6e9acbc681028ecc7">
+            <p style="margin-left:0px;"><span><strong>No FwProxy → VNet Link →</strong></span>
+            </p>
+            <ol>
+              <li data-list-item-id="e7fc503ae142edd1de2b5e6db1fe25ae5">
+                <p style="margin-left:0px;"><span><strong>Fwd Ruleset (</strong></span><code spellcheck="false"><span>corp.local</span></code><span>) match associated <strong>Endpt out (DNS Private Resolver)</strong> → (onPrem.)</span>
+                </p>
+              </li>
+              <li class="ck-list-marker-bold" data-list-item-id="e9fcfcae70d493f1626cb13c7aee1be0f">
+                <p style="margin-left:0px;"><span><strong>no match? → Private DNS Zone&nbsp;</strong></span>
+                </p>
+              </li>
+            </ol>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e53a010a1e4653ccabdcd5cfe520e7b5b">
+            <p style="margin-left:0px;"><span><strong>No VNetLink? → Public DNS &gt; Return public IP (implicit Fw Deny applies to internet traffic)&nbsp;</strong></span>
+            </p>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e4d4f3e1e23953025ad9ab78ce4d175b8">
+            <p style="margin-left:0px;"><span><strong>Public Inet accessible? &nbsp;(</strong></span><strong>Split-Horizon )</strong>
+            </p>
+            <p style="margin-left:0px;"><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">→ internal → Private IP (via Zone Link),</span>
+            </p>
+            <p style="margin-left:0px;"><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">external → Public IP (</span><span><strong>Azure Recursive Resolver (168.63.129.16)</strong></span>
+            </p>
+          </li>
+        </ol>
+        <div>//Private DNS Zones use A records for Private Endpoints. Use CNAMEs to
+          alias the public service name to the private link name.
+          <br>&nbsp;</div>
+        <p>CNAME: PaaS service (e.g., blob.core.windows.net) (← CNAME to the .privatelink.
+          sub-domain) → Private DNS Zone.
+          <br>
+          <br>Cross-VNet: Hub Resolver serves spokes with vNet links in it's forwarding
+          ruleset</p>
+        <p>Private DNS Zone [Microsoft.Network/privateDnsZones]
+          <br><strong>Resolves:</strong>  <code spellcheck="false">privatelink</code> namespaces
+          | <strong>Max:</strong> 100k records. ➔ A (Private Endpoint) | CNAME (Alias)
+          | PTR (Reverse).
+          <br><span><strong>Reverse DNS (PTR):</strong> Private DNS Zones support <strong>PTR records</strong>; required if the app does a reverse lookup of the Private Endpoint IP. !</span>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Private DNS Zone name</span><strong>must</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> follow the </span>
+            <code
+            spellcheck="false">in-addr.arpa</code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> format (e.g., </span>
+              <code
+              spellcheck="false">10.in-addr.arpa</code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">).</span>
+                <br>
+                <br>vNet Link: Connects vNet to Zone | Limits/Zone: 1k Links (100 Auto-Reg)
+                | Limits/vNet: 1 Auto-Reg Zone max.
+                <br><span><strong>Zone Group:</strong> Auto-Syncs Endpoint IPs to A-records | <strong>Role:</strong> <strong>Network Contributor</strong> on the Zone.</span>
+        </p>
+        <p><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">//Zone Group sync, requires user/ID </span><strong>Network Contributor</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">role on</span><strong>Private DNS Zone</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> resource</span>
+        </p>
+        <hr>
+        <p>
+          <br>DNS PRIVATE RESOLVER
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">1 per vNet | 10 Endpoints max | </span><strong>Subnet:</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Dedicated</span><strong>/28</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> (delegated to </span>
+            <code
+            spellcheck="false">Microsoft.Network/dnsResolvers</code><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">).</span>
+              <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Same Region for vNet + Resolver + Endpts</span>
+              <br><strong>NSG/UDR:</strong> Do not block <strong>UDP/TCP 53</strong> on endpoint
+              subnets
+              <br>
+              <br>Endpoints
+              <br>In= &nbsp;[On-Prem DNS](Cond. Fwd) ➔ [Inbound Endpoint IP(Static, definitive]
+              ➔ [Azure Private DNS Zone]
+              <br><em>// only listen on Port 53 (TCP/UDP), </em><span><strong>only services internal azure/onprem, excludes public internet sites</strong></span>
+              <br>
+              <br>Out=&nbsp;<strong> [Azure ➔ Forwarding ruleset (≤ 1,000 Rules | 500 VNet Links | 1/vNet ) ➔ On-Prem]</strong>
+              <br>Associate &nbsp;'Forwarding Ruleset' + link vNets to outbound endpoints.
+              <br>
+              <br>Hybrid → active VPN or ER &nbsp;onPrem ←→ &nbsp;Azure in/out endpt.
+              <br>
+              <br><strong>VNet DNS Proxy [Azure Firewall] → &nbsp;Network rules (FQDN) and centralized logging.</strong>
+              <br>Default Upstream (168.63.129.16) / Custom (Firewall Private IP)</p>
+        <hr>
+        <div><strong>🛠️ MONITORING &amp; TOOLS</strong>
+        </div>
+        <div><strong>Next Hop:</strong> Troubleshoot UDR/Routing.
+          <br><strong>IP Flow Verify:</strong> Troubleshoot NSG/ASG (Port blocking).
+          <br><strong>VPN Troubleshoot:</strong> Check <strong>IKEDiagnosticLog</strong> for
+          Phase 1/2 negotiation failures.</div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

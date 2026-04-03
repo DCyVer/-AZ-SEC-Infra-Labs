@@ -1,0 +1,1439 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Architecture and traffic flow</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Architecture and traffic flow</h1>
+
+      <div class="ck-content">
+        <div><strong>Architecture design mapping</strong>
+        </div>
+        <div>100% Accuracy required for all items and interrelations from start to
+          finish&nbsp;
+          <br>
+          <br><strong>THE TREE:</strong>
+        </div>
+        <div><strong>A: Context </strong>(Scenario intent)&nbsp;
+          <br>(1) <strong>SOURCE</strong> ➔ (Origin definition) [ Int.(Cloud/Azure) |
+          On-Prem &nbsp;| Ext. ] &nbsp;+ Define Type → [Server | User | Service]</div>
+        <div><strong>(2) VISIBILITY → </strong>[Public | Private]</div>
+        <div><strong>(3) LAYER ➔ </strong>[ L3/L4 &nbsp;(IP / ICMP/TCP/UDP | SSH |
+          RDP) | L7 (HTTP/S) ]</div>
+        <div>(4) <strong>GEOGRAPHY</strong> ➔ Region scope [Global | Continental | &nbsp;Regional
+          | Local ]</div>
+        <div>(5) PATH → [Azure (default) | Hub-Spoke | Spoke-Spoke| Vnet-Vnet<strong> </strong>(VPN) <strong>]</strong> Internet
+          | Forced Tunneling ]
+          <br>(6) PAYLOAD → [GB/s | #connections]</div>
+        <div><strong>(7) BRIDGES ➔ </strong>[ VNet Peering | VNet Injection | Priv.
+          Link | vWAN | ER Circuit (Private | Microsoft) ]
+          <br><strong>(8) DESTINATION ➔ </strong>[ NIC-Host (VM/VMSS/NVA) | Backend
+          Pool | Managed-IP (PaaS/Service) | Remote-Host (On-Prem) | SaaS-Endpt (Ext)
+          ]</div>
+        <div>
+          <br>B: NAME RESOLUTION( &amp; PERMISSION)
+          <br>(9) FORWARDING (DNS) ➔ [Traffic Manager || <strong>Private Resolver</strong> (in-/Outbound
+          endpts) |&nbsp;<span style="background-color:rgb(16,18,24);"> Private DNS Zones | Virtual Link&nbsp;| FW FQDN Proxy ]</span>
+          <br>(10) PERMISSIONS ➔ [ [AVNM] | [NSG] | [ASG] ]</div>
+        <div>&nbsp;</div>
+        <div><span style="background-color:rgb(16,18,24);">C: PHYSICAL/LOGICAL PATH</span>
+          <br>(11) EDGE <strong>GATEWAY Inbound </strong>➔ <span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">[ Bastion | Public LB | Front Door | VpnGw | ErGw | vWAN Hub ] + </span><strong>SKUs</strong>
+        </div>
+        <div><em><strong>// [PUBLIC LB¹¹] is an Edge when it owns the Public IP, but an [INTERNAL LB¹⁵] when it’s inside the VNet.</strong></em>
+          <br><strong>(12) AUTHENTICATION ➔ [ [PSK] | [BGP KEY] | [CERTIFICATE] | [AAD/MFA] ]</strong>
+          <br>(13) &nbsp;ROUTE &nbsp;(Next-Hop) ➔ [ LPM | UDR | BGP | NVA | &nbsp;VNet
+          Gateway | Route Server ]
+          <br>
+          <br>
+          <br><span style="background-color:rgb(16,18,24);">D: INSPECTOR (Layered Security stack) &nbsp;//Stackable</span>
+          <br>(14) L7 SECURITY ➔ [ APP GW | FRONT DOOR | CDN ]→WAF +SKUs</div>
+        <div>(15) DISTRIBUTION → &nbsp;[Internal LB | Service Mesh | +SKUs]&nbsp;</div>
+        <div>(16) L4 SECURITY → [ Azure FW/NVA &nbsp;| NAT GW | DDoS | +SKUs]&nbsp;</div>
+        <p><strong>(17) RECEIVER ➔ [ [PRIVATE ENDPOINT] | [SERVICE ENDPOINT] | [VNET INTEGRATION] &nbsp;//not stackable</strong>
+          <br>
+          <br>E: AUDITING
+          <br>(18)<span style="background-color:rgb(16,18,24);"> </span><strong>OBSERVER</strong>
+          <span
+          style="background-color:rgb(16,18,24);">(Audit) → [Flow Logs | Net Watcher | Traffic Analytics | Connection Monitor
+            | Packet Capture]</span>
+            <br>(19) &nbsp;INVESTIGATOR→ [IP flow verify | Next Hop | Diagnostics]
+            <br>&nbsp;</p>
+        <div><strong>A: Context (Scenario intent)&nbsp;</strong>
+          <br>(1) <strong>SOURCE</strong> ➔ Define origin [Internal (Cloud/Azure)] | On-Prem
+          &nbsp;| [External] &nbsp;+ Define Type → [Server | User(device) | Service]
+          <br>&nbsp;</div>
+        <blockquote>
+          <blockquote>
+            <div><strong>[INTERNAL]¹</strong>
+              <br>Server¹ (VM) ➔ VM⁸ Subnet ➔ VNET⁷ ➔ NSG¹⁰
+              <br>Server¹ (Remote VM) ➔ Spoke-Spoke⁵ ➔ VNET⁷ ➔ UDR¹³ ➔ Hub FW¹⁶
+              <br><span>Service¹ (PaaS) ➔ [ Vnet Injection⁷ ➔ [Private Link¹⁷ | VNet Integration¹⁷] ➔ VNet⁷ ]</span>
+              <br>User¹ (Identity) ➔ AAD¹² | MFA¹² ➔ Bastion¹¹</div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[ON-PREM]¹</strong>
+              <br>On-Prem¹ (Branch/Office) ➔ [ VpnGw¹¹ | ErGw¹¹ ] ➔ VNet Peering⁷ (Allow
+              Gateway Transit) ➔ Spoke VM⁸
+              <br>Server¹ (Data Center) ➔ Global Reach¹³ ➔ ErGw¹¹
+              <br><span>User¹ (Office) ➔ Hub-Spoke⁵ ➔ vWAN Hub¹¹ ➔ NVA¹⁶ | Azure FW¹⁶</span>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[EXTERNAL]</strong>
+              <br>User¹ (Device) ➔ Internet⁵&nbsp;</div>
+            <div>➔ VpnGw¹¹ ( ⟷ Entra ID¹² | Cert¹² ) ➔ VNet⁷
+              <br>➔ Public LB¹¹ | Front Door¹¹ ➔ NSG¹⁰
+              <br>Service¹ (SaaS) ➔ Microsoft Peering⁷ ➔ App Gateway¹¹</div>
+          </blockquote>
+        </blockquote>
+        <div><strong>(2) VISIBILITY ➔ [ Private | Public ]</strong>
+        </div>
+        <blockquote>
+          <blockquote>
+            <div><strong>[PRIVATE]</strong>  <em>//Internal / RFC 1918</em>
+            </div>
+            <blockquote>
+              <p style="margin-left:0px;">[Local⁴] ➔ Internal VM¹ ➔ Vnet⁷ ➔ Nsg¹⁰ ➔ Nic-Host⁸</p>
+            </blockquote>
+            <blockquote>
+              <p style="margin-left:0px;"><em>[Regional⁴]&nbsp;</em>
+                <br>Internal VM¹ ➔ Private Access ➔ Managed-IP (Private link/Svc endpt.)⁸
+                <br>Internal VM¹ ➔ Peering⁷ ➔ Udr¹³ ➔ Nic-Host⁸
+                <br>On-Prem¹ ➔ [ Er Circuit⁷ | Vnet Peering⁷ ] ➔ Vpn/Er Gateway¹¹ ➔ On-Prem(Host)⁸</p>
+            </blockquote>
+            <blockquote>
+              <p><em>[Global⁴]</em>
+                <br>Internal VM¹ ➔ Vnet Peering⁷ (Global*)➔ Nic-Host⁸ &nbsp;//*(Gateway Transit
+                &amp; UDR= !FAIL!)
+                <br><em>On-Prem¹ ➔ Er Circuit⁷ ➔ Global Reach¹³ ➔ On-Prem(Host)⁸</em>
+                <br><em>On-Prem¹ ➔ vWAN Hub¹¹ ➔ Hub Mesh⁷ ➔ On-Prem(Host)⁸</em>
+              </p>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <p style="margin-left:0px;"><strong>[PUBLIC]</strong> //Internet / External</p>
+            <blockquote>
+              <p style="margin-left:0px;">[Regional⁴]&nbsp;</p>
+              <p>Internal VM¹ ➔ [ Lpm¹³ | Udr¹³ ➔ Azure Fw/Nva¹⁶ ] (➔ Nat Gw¹⁶) ➔ Internet⁵
+                ➔ Ext. (SaaS/Svc endpt.)⁸
+                <br>Internal VM¹ ➔ Service Endpoint ➔ Managed-IP (Private link/Svc endpt.)⁸
+                <br>External Source¹ ➔ [ Public Lb¹¹ | App Gw¹¹ ] ➔ Backend Pool⁸ ➔ Nic-Host⁸
+                <br>External Source¹ ➔ [ Azure Fw/Nva¹⁶ (Dnat) ] ➔ Nic-Host⁸
+                <br>On-Prem¹ ➔ [ VpnGw¹¹ ] | [ Er Microsoft Peering⁷ ] ➔ Ext. (SaaS/Svc endpt.)⁸</p>
+            </blockquote>
+            <blockquote>
+              <p style="margin-left:0px;">[Global⁴]&nbsp;
+                <br>External Source¹ ➔ Front Door¹¹ ➔ [ App Gw¹¹ | Public Lb¹¹ | Managed-IP
+                (Private link/Svc endpt.)⁸ ]
+                <br>External Source¹ ➔ Traffic Manager⁹ ➔ [ Nic-Host⁸ | Backend Pool⁸ | Managed-IP
+                (Private link/Svc endpt.)⁸ ]</p>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        <div><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(3) LAYER ➔ [ </span><strong>L3/L4 &nbsp;(IP / ICMP/</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">TCP/UDP | SSH | RDP) | L7 (HTTP/S) ]</span>
+        </div>
+        <blockquote>
+          <div><strong>[L3/L4]</strong>&nbsp;</div>
+          <p>Internal VM¹ ➔ [ Nat Gw¹⁶ | Azure Fw (Network Rule)¹⁶ ] ➔ Internet⁵ ➔
+            Ext. (SaaS/Svc endpt.)⁸
+            <br>On-Prem¹ ➔ [ VpnGw¹¹ | ErGw¹¹ ] ➔ Bgp¹³ ➔ [ Nic-Host⁸ | On-Prem(Host)⁸
+            ]
+            <br>External¹ ( ⟷ Traffic Manager⁹ ) ➔ [ Public Lb¹¹ | Azure Fw/Nva¹⁶ ] ➔
+            [ Nic-Host⁸ | Backend Pool⁸ ]
+            <br>&nbsp;</p>
+          <div><strong>[L7]</strong> ➔ (HTTP / HTTPS)</div>
+          <p>Internal VM¹ ➔ Azure Fw (App Rule)¹⁶ ➔ Internet⁵ ➔ Ext. (SaaS/Svc endpt.)⁸
+            <br>External¹ ( ⟷ Traffic Manager⁹ ) ➔ (Front Door →) [ Public Lb¹¹ | Managed-IP
+            ⁸ | App Gw] ➔ [ Nic-Host⁸ | Backend Pool⁸ ]&nbsp;
+            <br>[ Front Door¹¹ ➔ [ App Gw¹¹ | Public Lb¹¹ | Managed-IP⁸ ] &nbsp;| &nbsp;[
+            &nbsp;App Gw¹¹ ]&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>
+            <br>[External¹]➔ [ App Gw¹¹ ➔ [ Nic-Host⁸ | Backend Pool⁸ ] ] | [ Front Door¹¹
+            ➔ [ App Gw¹¹ | Public Lb¹¹ | Managed-IP⁸ ] ]
+            <br>[! MANDATORY]: Front Door¹¹ ➔ Nic-Host⁸ requires intermediate Branch 11
+            regional gate.
+            <br>
+            <br>&nbsp;</p>
+        </blockquote>
+        <div>(4) <strong>GEOGRAPHY</strong> ➔ Region scope [Global | Continental | &nbsp;Regional
+          | Local ]</div>
+        <blockquote>
+          <div><strong>[GLOBAL]</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="eae799c9fa4614295a5ab75e4433f4450">
+              <p style="margin-left:0px;"><span><strong>[Ext¹ | Public² | L7³]</strong> ( ⟷ <strong>Traffic Manager⁹</strong> ) <strong>App Gateway¹¹</strong> | <strong>Public LB¹¹</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e8b653d96bd4c6dc68be866c6139dc880">
+              <p style="margin-left:0px;"><span><strong>[Ext¹ | Public² | L7³]</strong> <strong>Front Door¹¹</strong> ➔ <strong>Private Link¹⁷</strong> | <strong>App Gateway¹¹</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e2866c68848774712cf4838840c90a7f5">
+              <p style="margin-left:0px;"><span><strong>[On-Prem¹ | Private² | L4³]</strong> <strong>ErGw¹¹</strong> (Premium) ➔ <strong>Global Reach¹³</strong> ➔ <strong>ErGw¹¹</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="ec5ab9a20667082d82d66e3e77af63879">
+              <p style="margin-left:0px;"><span><strong>[Internal¹ | Private² | L4³]</strong> <strong>Global Peering⁷</strong> ➔ <strong>VNet⁷</strong> (<strong>Binary Kill: No Gateway Transit¹¹</strong>)</span>
+              </p>
+            </li>
+          </ul>
+          <div><strong>[CONTINENTAL]</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="e387ed5a82be0b6f0a0672c5ea3a1bf12">
+              <p style="margin-left:0px;"><span><strong>[On-Prem¹ | Private² | L4³]</strong> <strong>ErGw¹¹</strong> (Standard) ➔ <strong>VNet Peering⁷</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e26b7fcd647066757e943cc19b386a0d2">
+              <p style="margin-left:0px;"><span><strong>[Internal¹ | Private² | L4³]</strong> <strong>vWAN Hub¹¹</strong> ➔ <strong>Hub-to-Hub Mesh⁷</strong> ➔ <strong>vWAN Hub¹¹</strong></span>
+              </p>
+            </li>
+          </ul>
+          <div><strong>[REGIONAL]</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="e9042eb75452b69be1d30b72ba3f441c3">
+              <p style="margin-left:0px;"><span><strong>[Ext¹ | Public² | L7³/L4³]</strong> <strong>App Gateway¹¹</strong> | <strong>Public LB¹¹</strong> ➔ <strong>Internal LB¹⁵</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="eeaf496771e16253fd97b9324d2318ede">
+              <p style="margin-left:0px;"><span><strong>[On-Prem¹ | Private² | L4³]</strong> <strong>Vpn/Er Gateway¹¹</strong> ➔ <strong>VNet Peering⁷</strong> [Allow Transit]</span>
+              </p>
+            </li>
+            <li data-list-item-id="e9481df06c5f22a4247f16f3e0c5567e1">
+              <p style="margin-left:0px;"><span><strong>[Internal¹ | Private² | L4³]</strong> <strong>Bastion¹¹</strong> ➔ <strong>VNet Peering⁷</strong></span>
+              </p>
+            </li>
+          </ul>
+          <div><strong>[LOCAL]</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="e47a792659b0de3940d4fd6d0205a55eb">
+              <p style="margin-left:0px;"><span><strong>[Ext¹ | Public² | L4³]</strong> <strong>Public LB¹¹</strong> (Zonal) ➔ <strong>VM⁸</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e72769473b8b58e6564b4dfa9fe668dcb">
+              <p style="margin-left:0px;"><span><strong>[Internal¹ | Private² | L4³]</strong> <strong>LPM¹³</strong> ➔ <strong>VNet⁷</strong> ➔ <strong>VM⁸</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="ec5bbf3fec18f0ea507db5cd1bcb7e723">
+              <p style="margin-left:0px;"><span><strong>[On-Prem¹ | Private² | L4³]</strong> <strong>ER Local SKU¹¹</strong> ➔ <strong>ErGw</strong></span>
+                <br>&nbsp;</p>
+            </li>
+          </ul>
+        </blockquote>
+        <div>(5) PATH → [AZURE DEFAULT | HUB-SPOKE | SPOKE-SPOKE| INTERNET | <strong>VNET-TO-VNET(VPN) </strong>|
+          FORCED TUNNELING]</div>
+        <blockquote>
+          <div>//The Header in the image lists VNET-TO-VNET(VPN), but the Twigs below
+            use [HYBRID TUNNEL].
+            <br>Recommendation: Update the Header in your Trillium note to include [PRIVATE
+            ACCESS | HYBRID TUNNEL] so it matches the twigs.
+            <br>
+            <br>
+            <br><strong>[Internal¹ | On-Prem¹ | Private² | L4³]</strong>&nbsp;</div>
+          <blockquote>
+            <div><strong>[REGIONAL⁴]</strong> ➔</div>
+            <blockquote>
+              <div><strong>[AZURE DEFAULT⁵]</strong>
+                <br>➔ VNet Injection⁷ ➔ NSG¹⁰ ➔ LPM¹³ ➔ VM⁸
+                <br>➔ Private Link¹⁷ ( ⟷ Private DNS⁹ ) ➔ Service⁸</div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[HUB-SPOKE⁵]</strong>
+                <br>➔ VNet Peering⁷ ([Use Remote Gateway]⁷) ➔ Er/Vpn Gateway¹¹ (⟷PSK¹² | BGP
+                Key¹² )➔BGP¹³➔On-Prem⁸
+                <br>➔ Er/Vpn Gateway¹¹ ( ⟷ PSK¹² ) ➔ VNet Peering⁷ ([Allow Transit]⁷) ➔ VM⁸</div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[SPOKE-SPOKE⁵] ➔ VNet Peering⁷ ➔ UDR¹³ ➔ Hub FW¹⁶ ➔ VNet Peering⁷(Forwarded Traffic) ➔ VM⁸</strong>
+              </div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[INTERNET⁵]</strong>
+                <br>( ⟷ Azure FW DNS Proxy⁹ ) ➔ UDR¹³ ➔ Azure FW¹⁶ ➔ Ext. Endpt. (SaaS)⁸
+                <br>➔ VNet Injection⁷ ➔ NAT GW¹⁶ ➔ Ext. Endpt. (SaaS)⁸</div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[FORCED TUNNELING⁵] ➔ NSG¹⁰ ➔ UDR¹³ ([0.0.0.0/0]¹³) ➔ Er/Vpn Gateway¹¹ ( ⟷ PSK¹² ) ➔ On-Prem⁸</strong>
+              </div>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <div><strong>[GLOBAL⁴]</strong> ➔
+              <br>&nbsp;</div>
+            <blockquote>
+              <div><strong>Hub-Spoke⁵ ➔ Global Peering⁷ ➔ Er/Vpn Gateway¹¹ // [BINARY KILL: No Gateway Transit¹¹]</strong>&nbsp;</div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[VNET-TO-VNET⁵ (VPN)] ➔ VNet Injection⁷ ➔ Vpn Gateway¹¹ (⟷PSK¹² )➔ BGP¹³ ➔ Vpn Gateway¹¹ ➔ VM⁸</strong>
+              </div>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <p>[Ext¹ | Public² | L7³ | Global⁴] ➔
+            <br>[INTERNET⁵]
+            <br>➔ ( ⟷ Traffic Manager⁹ ) ➔ App Gateway¹¹ | Public LB¹¹ ➔ VM⁸
+            <br>➔ Front Door¹¹ ( ⟷ Cert¹² ) ➔ WAF¹⁴ (X-Azure-FDID) ➔ Private Link¹⁷ (
+            ⟷ Approval¹² ) ➔ Service⁸</p>
+        </blockquote>
+        <div>6 → PAYLOAD → [GB/s | #connections]</div>
+        <blockquote>
+          <div>- Gb/s ➔ [ VpnGw (10) &lt; | 1.25 - 10 ER (10) | &gt; +Direct (10) ]
+            <br>- S2S ➔ [ Basic (10) &lt; | 11 - 30 VpnGw1-5 (10) | &gt; vWAN (10) ]
+            <br>- P2S ➔ [ Basic (10) &lt; | 129 - 250 VpnGw1-5 (10) | &gt; vWAN (10) ]
+            <br>- SNAT ➔ &gt; 64,000 [ NAT Gateway (16) ]</div>
+          <div>&nbsp;</div>
+          <div><strong>[Gb/s]</strong>&nbsp;</div>
+          <ul>
+            <li data-list-item-id="eedc32ba161c28d07969d9567bf0d13cc">
+              <p style="margin-left:0px;"><span><strong>VpnGw¹¹</strong> ➔ [0.65 Gb/s (Basic) &lt; <strong>1.25 – 10 Gb/s (VpnGw1-5)</strong>]</span>
+              </p>
+            </li>
+            <li data-list-item-id="e3829b2f1e9d598e05aca42a0439ca627">
+              <p style="margin-left:0px;"><span><strong>ErGw¹¹</strong> ➔ [0.5 Gb/s (Basic) &lt; <strong>1.25 – 10 Gb/s (Std/High/Ultra)</strong>] ➔ <strong>Direct¹¹ [100 Gb/s]</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="eddbd4b86b355eff1ce51ec8cca174516">
+              <p style="margin-left:0px;"><span><strong>NAT Gateway¹⁶</strong> ➔ [Outbound Exit] ➔ <strong>50 Gb/s</strong> per resource</span>
+              </p>
+            </li>
+          </ul>
+          <div><strong>[# CONNECTIONS]</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="ef4a42211824bf9f43e81047920c9dd7d">
+              <p style="margin-left:0px;"><span><strong>S2S Tunnels¹¹</strong> ➔ [10 (Basic) &lt; <strong>30 (VpnGw1-5)</strong>] ➔ <strong>vWAN¹¹ [1,000+]</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="ef9c81373702dcba03021bcf6e4c577b8">
+              <p style="margin-left:0px;"><span><strong>P2S Users¹¹</strong> ➔ [128 (Basic) &lt; <strong>250 (VpnGw1-5)</strong>] ➔ <strong>vWAN¹¹ [10,000+]</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e782683b34db12f17eae8abf76dac7b52">
+              <p style="margin-left:0px;"><span><strong>SNAT Ports¹⁶</strong> ➔ [IP exhaustion] ➔ <strong>64,512</strong> per Public IP ➔ <strong>NAT Gateway¹⁶</strong></span>
+              </p>
+            </li>
+          </ul>
+        </blockquote>
+        <div><strong>(7) BRIDGES ➔ [ VNet Peering | VNet Injection | Priv. Link | vWAN | ER Circuit (Private | Microsoft) ]</strong>
+        </div>
+        <blockquote>
+          <div>[PRIVATE<strong>²][L4³]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <blockquote>
+            <div>[Internal¹]</div>
+            <div>&nbsp;</div>
+            <blockquote>
+              <p><strong>[GLOBAL⁴] ➔</strong>
+                <br>VNet-to-Vnet (VPN)⁵ ➔ <strong>[VNET INJECTION] </strong>➔ Vpn Gateway¹¹
+                ( ⟷ PSK¹² ) ➔ BGP¹³ ➔ Vpn Gateway¹¹ ➔ VM⁸
+                <br>Hub-Spoke⁵ ➔ <strong>[VWAN (Hub Mesh)]</strong> ➔ vWAN Hub¹¹ ➔ vWAN Hub¹¹
+                ➔ vWAN ➔ VM⁸
+                <br>Hub-Spoke⁵ ➔<strong> [VNET PEERING]</strong> ➔ Er/Vpn Gateway¹¹ // [BINARY
+                KILL: No Gateway Transit¹¹]</p>
+            </blockquote>
+            <blockquote>
+              <p>[REGIONAL⁴] ➔
+                <br>Hub-Spoke⁵ ➔ <strong>[VNET PEERING(Use Remote Gateway)]</strong> ➔ Er/Vpn
+                Gateway¹¹ ➔ BGP¹³ ➔ On-Prem⁸
+                <br>Spoke-Spoke⁵ ➔ <strong>[VNET PEERING]</strong> ➔ UDR¹³ ➔ Hub FW¹⁶ ➔ VNet
+                Peering (Forwarded Traffic) ➔ VM⁸</p>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <div>[ON-PREM¹]</div>
+            <div>&nbsp;</div>
+            <blockquote>
+              <p>[REGIONAL⁴] ➔ ER(Direct)⁵ ➔ <strong>[ER CIRCUIT (Microsoft)]</strong> ➔
+                BGP¹³ ➔ Ext. Endpt. (SaaS)⁸</p>
+            </blockquote>
+            <blockquote>
+              <div>[GLOBAL⁴] ➔ Hub-Spoke⁵ ➔ <strong>[ER CIRCUIT(Global Reach)]</strong> ➔ BGP¹³
+                ➔ On-Prem⁸</div>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        <div><strong>(8) DESTINATION ➔ [ NIC-Host (VM/VMSS/NVA) | Backend Pool | Managed-IP (PaaS/Service) | Remote-Host (On-Prem) | SaaS-Endpt (Ext) ]</strong>
+        </div>
+        <blockquote>
+          <ul>
+            <li data-list-item-id="ef723b2af09de14a62c06acdd76cfab6b">
+              <p style="margin-left:0px;"><span>[ <strong>Local Subnet⁷</strong> ➔ <strong>NSG¹⁰</strong> ] | [ <strong>Remote Spoke⁷</strong> ➔ <strong>UDR¹³</strong> ➔ <strong>NSG¹⁰</strong> ] | [ <strong>Inbound Edge¹¹/¹⁴</strong> ➔ <strong>NSG¹⁰</strong> ] ➔ <strong>VM⁸</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e27a4729c6620ac7d754dbe61b2e2973a">
+              <p style="margin-left:0px;"><span>[ <strong>L4 LB¹¹/¹⁵</strong> | <strong>L7 AppGW¹⁴</strong> | <strong>Front Door¹¹</strong> ] ➔ [ <strong>VIP</strong> ] ➔ [ <strong>Health Probe¹⁵</strong> ] ➔ <strong>BACKEND POOL⁸</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="eb2920753f143b0623cb35fbe669792a4">
+              <p style="margin-left:0px;"><span>[ <strong>Hub-Spoke Transit⁷</strong> ] ➔ [ <strong>Vpn/Er Gateway¹¹</strong> ] ➔ [ <strong>BGP / Static Route¹³</strong> ] ➔ <strong>ON-PREM⁸</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e98bad1c0a7bc584d4c571f9bbaf9b3b8">
+              <p style="margin-left:0px;"><span>[ <strong>Private Link¹⁷</strong> (Private IP) ] | [ <strong>Service EP¹⁷</strong> (Public IP) ] | [ <strong>VNet Injection¹⁷</strong> (Subnet IP) ] ➔ <strong>SERVICE⁸</strong></span>
+              </p>
+            </li>
+            <li data-list-item-id="e91622eb4ebc12710382ff57dd6e43419">
+              <p style="margin-left:0px;"><span>[ <strong>Internet⁵</strong> ➔ <strong>NAT GW¹⁶</strong> ] | [ <strong>Forced Tunnel⁵</strong> ➔ <strong>Gateway Handshake⁷</strong> ➔ <strong>UDR¹³</strong> ] ➔ <strong>EXTERNAL ENDPT⁸</strong></span>
+              </p>
+            </li>
+          </ul>
+          <div><strong>Surgical Logic Sync: The "Binary" Check</strong>
+          </div>
+          <ul>
+            <li data-list-item-id="e2103271b02c64fa9cb182d03c90f44a9">
+              <p style="margin-left:0px;"><span><strong>VM⁸</strong> ➔ The <strong>Inbound NSG¹⁰</strong> is the final "Yes/No" gate before the packet terminates at the NIC.</span>
+              </p>
+            </li>
+            <li data-list-item-id="e50e99ecbd9e53eff34e8d0dcdf882b6b">
+              <p style="margin-left:0px;"><span><strong>BACKEND POOL⁸</strong> ➔ The packet hits the <strong>VIP/FQDN</strong> and terminates only if the <strong>Health Probe</strong> is green.</span>
+              </p>
+            </li>
+            <li data-list-item-id="eccef3857fce8472bb46e1fade617878f">
+              <p style="margin-left:0px;"><span><strong>ON-PREM⁸</strong> ➔ The packet clears the <strong>Edge Gateway¹¹</strong> and <strong>BGP¹³</strong> to exit the Azure fabric.</span>
+              </p>
+            </li>
+            <li data-list-item-id="eb459a462e73e608dff536acaa099a6a7">
+              <p style="margin-left:0px;"><span><strong>SERVICE⁸</strong> ➔ The <strong>Receiver¹⁷</strong> maps the packet to the PaaS backbone (Private IP or optimized Public path).</span>
+              </p>
+            </li>
+            <li data-list-item-id="e7a530a007896c1864f92f3bdc981b36c">
+              <p style="margin-left:0px;"><span><strong>EXTERNAL ENDPT⁸</strong> ➔ The packet clears the <strong>L4 Security¹⁶</strong> stack for an internet or SaaS exit.</span>
+              </p>
+            </li>
+          </ul>
+        </blockquote>
+        <p>&nbsp;</p>
+        <div>
+          <br>B: NAME RESOLUTION( &amp; PERMISSION)
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(9) FORWARDING (DNS) ➔ [Traffic Manager || Private Resolver (in-/Outbound endpts) | &nbsp;Private DNS Zones | Virtual Link&nbsp;| FW FQDN Proxy ]</span>
+        </div>
+        <blockquote>
+          <blockquote>
+            <div><strong>[PRIVATE² | L4³ | REGIONAL⁴]</strong>
+            </div>
+            <blockquote>
+              <div><strong>[INTERNAL¹ |&nbsp;</strong>
+                <br>Azure Default⁵ ( ⟷ [PRIVATE DNS ZONES (Virtual Link)] ➔ VNET INJECTION⁷
+                ) ➔ PRIVATE LINK¹⁷ ([Approved]¹²) ➔ SERVICE⁸
+                <br>Hub-Spoke⁵ ( ⟷ <strong>[PRIVATE RESOLVER (Outbound Endpoint)]</strong> ➔
+                Forwarding Ruleset ) ➔ Er/Vpn Gateway¹¹ ➔ On-Prem⁸</div>
+              <div>Hub-Spoke⁵ ( ⟷ (Custom DNS IP) ➔ [PRIVATE RESOLVER (Inbound IP)] ) ➔ [PRIVATE
+                DNS ZONES]</div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[ON-PREM¹ (Conditional Forwarder) ]</strong>
+                <br><span><strong>Hub-Spoke⁵</strong> ( ← <strong>[PRIVATE DNS ZONES]</strong> ← ) ➔ <strong>Er/Vpn Gateway¹¹</strong> ➔ ( ⟷ <strong>[PRIVATE RESOLVER (Inbound IP)]</strong> ) ➔ <strong>PRIVATE LINK(Approved)¹⁷</strong> ➔ <strong>SERVICE⁸</strong></span>
+              </div>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <p><strong>[INTERNAL¹ | PRIVATE² | L4³ | GLOBAL⁴] ➔</strong>
+              <br><strong>Hub-Spoke⁵ ( ⟷ [PRIVATE RESOLVER (Outbound Endpoint)] ➔ Forwarding Ruleset ) ➔ VNET PEERING⁷ ➔ ER/VPN GATEWAY¹¹ ➔ ON-PREM⁸</strong>
+            </p>
+            <p><strong>Hub-Hub⁵ ( ⟷ [PRIVATE RESOLVER (Outbound Endpoint)] ➔ Forwarding Ruleset ) ➔ [PRIVATE RESOLVER (Inbound IP)] ➔ [PRIVATE DNS ZONES]</strong>
+            </p>
+          </blockquote>
+          <blockquote>
+            <p><strong>[INTERNAL¹ | PUBLIC² | L7³ | REGIONAL⁴] ➔</strong>
+              <br><strong>Internet⁵ ( ⟷ [DNS PROXY (FQDN Listener)] ➔ AZURE FW¹⁶ ) ➔ UDR¹³ ➔ EXT. ENDPT. (SaaS)⁸</strong>
+              <br><strong>Linkage: The [DNS</strong>
+            </p>
+          </blockquote>
+          <blockquote>
+            <p><strong>[EXT¹ | PUBLIC² | GLOBAL⁴ | &nbsp;INTERNET⁵&nbsp;] ( ⟷ [TRAFFIC MANAGER] )]</strong>
+              <br>[<strong>L7³]</strong>
+              <br><strong>&nbsp;➔ Front Door¹¹ ➔ WAF¹⁴ ➔ Service⁸</strong>
+              <br><strong>&nbsp;➔ App Gateway¹¹ ➔ WAF¹⁴ ➔ VM⁸</strong>
+              <br><strong>[L4³]</strong>
+              <br><strong>⟷ Standard LB¹¹ (Public IP) &nbsp;➔ (←Healthy) Backend Pool⁸</strong>
+              <br><strong>&nbsp;➔ Public IP¹¹ ➔ VNET INJECTION⁷ ➔ VM</strong>
+              <br><strong>&nbsp;➔ On-Prem⁸(Server)</strong>
+            </p>
+          </blockquote>
+        </blockquote>
+        <div>&nbsp;</div>
+        <p>(10) PERMISSIONS ➔ [ [AVNM] | [NSG (ANVM: Allow / No Match) | [ASG] ]
+          <br>[PRIVATE² | L4³]</p>
+        <blockquote>
+          <p>AVNM ←{[1 Rule configuration/region ←[Rule collection←Security Admin Rules(100/configuration)]→
+            [Network group←] VNET &nbsp;
+            <br>- if [Deny | Always Allow] → NSG is not considered
+            <br>&nbsp;</p>
+          <blockquote>
+            <div>[INTERNAL¹ | REGIONAL⁴] ➔
+              <br>AZURE DEFAULT⁵ ➔ ( <strong>[AVNM]</strong> → <strong>[NSG]</strong> ) ➔ VM⁸
+              <br>HUB-SPOKE⁵ ➔ (<strong>[ANVM]</strong> →) Hub FW¹⁶ ➔ VNet Peering⁷ ➔ (<strong>[NSG]</strong> →)
+              &nbsp;VM⁸(Spoke)
+              <br><span>SPOKE-SPOKE⁵ ➔ VNet Peering⁷ ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG ([ASG])]</strong> ) ➔ VM⁸</span>
+              <br>VNET INJECTION⁷ ➔ <strong>[NSG (Private Endpoint Policy*)]</strong> ➔ Private
+              Link¹⁷ ➔ Service⁸
+              <br>//*<em>(PrivateEndpointNetworkPolicy) must be enabled on Subnet for [NSG]</em>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div>[INTERNAL¹ | GLOBAL⁴] ➔
+              <br>HUB-HUB⁵ ➔ <strong>[AVNM] (Rule Collection)</strong> ➔ Global Peering⁷ ➔ <strong>[NSG (IP/Service Tag*)] </strong>➔
+              Remote VM⁸
+              <br>//*GLOBAL⁴ excludes [ASG]&nbsp;</div>
+          </blockquote>
+          <blockquote>
+            <div>[ON-PREM¹ | REGIONAL⁴] ➔
+              <br>HUB-SPOKE⁵ ➔ (<strong>[ANVM] </strong>→) Er/Vpn Gateway¹¹ ➔<strong> [NSG]</strong> ➔
+              VM⁸
+              <br>Bypass Logic: Bastion¹¹, VPN¹¹, and SQL MI⁸ have default management bypass
+              rules.</div>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <div><strong>[EXT¹ | PUBLIC² | L4³ / L7³ | GLOBAL⁴ / REGIONAL⁴| </strong><span><strong>INTERNET⁵</strong> </span><strong>]</strong>  <span>(</span>➔<span> <strong>[AVNM]&nbsp;</strong></span>
+          </div>
+          <p style="margin-left:0px;"><span>→ Standard LB¹¹ ➔ <strong>[NSG]</strong> ) ➔ VM⁸</span>
+            <br><span>→&nbsp;Front Door¹¹ ➔ WAF¹⁴ ➔ <strong>[NSG (Port 443)]</strong> ) ➔ VM⁸</span>
+            <br><span>→&nbsp;App Gateway¹¹ ➔ WAF¹⁴ ➔ <strong>[NSG (Port 443)]</strong> ) ➔ VM⁸</span>
+            <br><span>→&nbsp;Public IP¹¹ ➔ <strong>[NSG]</strong> ) ➔ VM⁸</span>
+          </p>
+        </blockquote>
+        <blockquote>
+          <p>[ON-PREM¹ | PRIVATE² | L4³ | REGIONAL⁴] ➔ HUB-SPOKE⁵ ➔ ( <strong>[AVNM ]</strong> ➔)
+            Er/Vpn Gateway¹¹ ➔(<strong>[NSG]</strong> )➔ VM⁸</p>
+        </blockquote>
+        <p style="margin-left:0px;"><em><span><strong>// Azure WireServer (168.63.129.16):</strong> Mandatory Allow; provides DNS/DHCP/Health Probes.</span></em>
+          <br><em><span>// <strong>Managed Services:</strong> [ <strong>Bastion¹¹ | VPN¹¹ | SQL MI⁸</strong> ] have default "Bypass" rules to ensure management connectivity.</span></em>
+          <br><em><span>// <strong>SMTP (Port 25):</strong> Default Deny. <strong>No Override</strong>.</span></em>
+        </p>
+        <div><span style="background-color:rgb(16,18,24);">C: PHYSICAL/LOGICAL PATH</span>
+          <br>(11) ➔ EDGE <strong>GATEWAY Inbound </strong>➔ [APpGW | Bastion | Public
+          LB | Front Door] | &nbsp;<strong>Bidirectional </strong>→ VpnGw | ErGw
+          | vWAN ] &nbsp;+ SKUs</div>
+        <blockquote>
+          <div>[Ext¹(user) ]</div>
+          <div>→ [Private²] [ L7³] → Front Door (Premium) ➔ Private Link¹⁷ ➔ Service⁸</div>
+          <div>→ [Public²]</div>
+          <blockquote>
+            <p>&nbsp;[ L7³ ]&nbsp;
+              <br>→ [Front Door¹¹ | App GW¹¹] ➔ WAF¹⁴ (Custom: Access Restriction) ➔ VM⁸</p>
+            <blockquote>
+              <div>[ Front Door¹¹ (Standard)]</div>
+              <div>&nbsp;➔ (*X-Azure-FDID¹²→) Service⁸ (Access Restriction [Allow: ServiceTag])
+                //*avoids direct bypass</div>
+              <div>➔ App Gateway¹¹&nbsp;
+                <br>➔ NSG¹⁰ (Service Tag:AzureFrontDoor.Backend) ➔ VM⁸
+                <br>→ WAF^#?(v2*) ➔ &lt;cert-key?&gt;¹² ➔ VNET⁷ ➔ Backend Pool⁸
+                <br>//mandatory for Autoscaling and Zone-Redundancy⁴</div>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <div>[ L4³ ] ➔
+              <br>→ Bastion¹¹ (Std. / Premium) ➔ Peering⁷ ➔ VM⁸
+              <br>➔ Public LB¹¹ (*Std.)(Public IP) ➔ Inbound NAT Rule ➔ NSG¹⁰ ➔ VM⁸
+              <br>//for HA Ports and Availability Zones⁴</div>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <p>[ON-PREM]¹
+            <br>Server¹ (Data Center) ➔ VpnGw¹¹(Public IP) ➔ BGP¹³ ➔ Handshake⁷ [Allow
+            Transit] ➔ Spoke VM⁸ <em>// Basic SKU blocks BGP¹³ and Transit⁷</em>
+            <br>User¹ (Office) ➔ ErGw¹¹ (High/Ultra) ➔ Global Reach¹¹ ➔ Office B⁸
+            <br>// ER Premium (Circuit) + High/Ultra (Gateway) required for Global Reach¹¹</p>
+        </blockquote>
+        <blockquote>
+          <p>[INTERNAL]¹
+            <br>Server¹ (VM) ➔ vWAN Hub¹¹ (Standard) ➔ Hub-to-Hub Mesh ➔ Cross-Region⁵
+            <br>// Standard vWAN mandatory for automated transitive routing// Standard
+            vWAN mandatory for automated transitive routing</p>
+        </blockquote>
+        <p><strong>(12) AUTHENTICATION ➔ [ PSK | Cert | Entra ID | MFA | RADIUS | BGP Key | Approved | JIT | Conditional Access ]</strong>
+        </p>
+        <blockquote>
+          <blockquote>
+            <p>&nbsp;[On-Prem¹ (Server) | Private²| <em>//<strong>(PSK/BGP) - TUNNEL &amp; ROUTING&nbsp;</strong></em>
+            </p>
+            <blockquote>
+              <p>&nbsp;[L3³] Regional⁴]&nbsp;</p>
+              <div>➔ VpnGw¹¹ (S2S) (⟷ [<strong>PSK</strong>¹²]) ➔ VNet Peering⁷ ➔ VM⁸
+                <br>➔ ErGw¹¹ (→(←<strong>[BGP¹³]</strong>←) ➔ Route Server¹³ ) ➔ VM⁸</div>
+            </blockquote>
+            <blockquote>
+              <p>&nbsp;| L4³ | Local⁴] ➔ ErGw¹¹ (Std) ( ⟷ [BGP KEY¹²] ) ➔ ASG¹⁰ ➔ VM⁸</p>
+            </blockquote>
+            <p>//ExamTrap &nbsp;[Internal¹ (Service) | Private² | L4³ | Local⁴] ➔ [<strong>PSK</strong>¹²( <strong>! No Vnet Peering !</strong> )]
+              ➔ [<strong> ! FAIL ! </strong>] ➔ VM⁸</p>
+          </blockquote>
+          <blockquote>
+            <div><em><strong>//CLOUD NATIVE IDENTITY (ENTRA ID / MFA / CA)</strong></em>
+            </div>
+            <blockquote>
+              <div>[Ext.¹ | Public²]</div>
+              <blockquote>
+                <div>&nbsp;| L4³]&nbsp;
+                  <br>➔ Bastion¹¹ ( ⟷ [ENTRA ID¹²] ⟷ [MFA¹²] ) ➔ VM⁸</div>
+                <div>➔ VpnGw¹¹ ( ⟷ ( [ENTRA ID¹²] ⟷ [CONDITIONAL ACCESS¹² (Compliant)] ) )
+                  ➔ VM⁸</div>
+              </blockquote>
+              <blockquote>
+                <p>&nbsp;[L7³]➔Front Door¹¹ (⟷(<strong>[CONDITIONAL ACCESS¹²]⟷ [MFA¹²]</strong>))
+                  ➔ Private Endpoint¹⁷ ➔ SaaS⁸</p>
+              </blockquote>
+            </blockquote>
+            <blockquote>
+              <div>[Internal¹ | Private² | L7³]App Gw¹⁴ ➔ ([CERT¹² (mTLS)] &nbsp;➔ ( [ENTRA
+                ID¹² (Managed Identity)] ←))→ VM⁸</div>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <p><strong>CERTIFICATE &amp; SECURE HANDSHAKES (mTLS / CERT)</strong>
+            </p>
+            <blockquote>
+              <p>[Internal¹ | Private² | L4³ | Regional⁴](←<strong>[CERT¹² (mTLS End-to-End)]</strong>⟷x)➔Int.
+                LB¹⁵➔ (x⟷)<strong> </strong>Backend Pool⁸</p>
+            </blockquote>
+            <blockquote>
+              <div>&nbsp;[Internal¹ | Private² | L7³]</div>
+              <blockquote>
+                <div>[ Local⁴] &nbsp;➔ &nbsp;App Gw¹⁴ ➔ ( ← <strong>[CERT¹² (mTLS)]</strong> ➔
+                  ) ➔ [Backend Pool⁸]</div>
+              </blockquote>
+              <blockquote>
+                <div>[Regional⁴]
+                  <br>➔ VNet Peering⁷ ( ← [CERT (mTLS)] ⟷x) ➔ Internal LB¹⁵ &nbsp;➔ (x⟷) Backend
+                  Pool⁸
+                  <br>➔ App Gw¹⁴ (WAF v2) ( ← <strong>[CERT (mTLS)]</strong> ➔ ) → Backend Pool⁸</div>
+              </blockquote>
+            </blockquote>
+            <blockquote>
+              <div>Ext.¹ | Public² | L4³ | Regional⁴] &nbsp;➔ VpnGw¹¹(P2S) ( ⟷ [CERT (Client)]
+                ) → VM⁸</div>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <p><strong>ACCESS WORKFLOWS (APPROVED / JIT)</strong>
+            </p>
+            <blockquote>
+              <div>[L4³ | Regional⁴]</div>
+              <div>[Internal¹ (Service) | Private²] ➔ Private Endpoint¹⁷ ➔ ( ⟷ [APPROVED¹²]
+                ⟷ Private Link Svc.⁷ ) ➔ Service⁸</div>
+              <div>[Ext.¹ (User) | Public² ] ➔ Bastion¹¹ ➔ [JIT¹²] ➔ NSG¹⁰ ➔ VM⁸</div>
+            </blockquote>
+            <blockquote>
+              <div>[Ext.¹ (User) | Public² | L7³]
+                <br>[Regional⁴] ➔ App Gw¹⁴ (➔ [APPROVED¹² (PIM)] ⟷ ENTRA ID¹²]) ➔ Backend
+                Pool⁸</div>
+              <div>[Global⁴] ➔ Front Door¹¹ ➔ ( ⟷ [APPROVED¹²] ⟷ Private Link Svc.⁷ ) ➔ VM⁸</div>
+            </blockquote>
+            <p>//ExamTrap [Ext.¹(User)|Public²|L4³|Local⁴]➔Public LB¹¹(!NoJIT!*)➔[JIT¹²]
+              ➔ [!FAIL!*requires NSG¹⁰/Azure FW] ➔ VM⁸</p>
+          </blockquote>
+          <blockquote>
+            <p>LEGACY &amp; HYBRID IDENTITY (RADIUS)</p>
+            <p>[| L4³ | Regional⁴]</p>
+            <blockquote>
+              <p>[On-Prem¹ (User) | Private²]
+                <br>➔ VpnGw¹¹ ➔ <strong>[RADIUS]</strong> ➔ [( ⟷ <strong>[RADIUS(NPS)] </strong>)
+                | ( ← <strong>[MFA (NPS Ext.)]</strong> ← )] ➔ VM⁸</p>
+            </blockquote>
+            <blockquote>
+              <p>[Ext.¹ (User) | Public²] ➔ VpnGw¹¹ (P2S) ➔ <strong>[RADIUS]</strong> ➔ (
+                ⟷ <strong>[RADIUS (NPS)]</strong> ) ➔ VM⁸</p>
+            </blockquote>
+            <p>//ExamTrap: [On-Prem¹ (User) | Private² | L4³ | Regional⁴] ➔ ErGw¹¹ ➔
+              [!FAIL!*RADIUS is not supported on ErGw¹¹] ➔ VM</p>
+          </blockquote>
+        </blockquote>
+        <p>&nbsp;</p>
+        <p><strong>(13) ROUTE ➔ [ UDR | BGP | LPM (System route) ]</strong>
+        </p>
+        <blockquote>
+          <div><strong>| Private² | L4³ |&nbsp;&nbsp;</strong>
+          </div>
+          <blockquote>
+            <div><strong>[Internal¹| Regional⁴]</strong> ➔&nbsp;</div>
+            <div><strong>&nbsp;Azure Default⁵ ➔ VNet Injection⁷ ➔ LPM (System route) ➔ VM⁸</strong>
+              <br><strong>Forced Tunneling⁵ ➔ VNet Injection⁷ ➔ UDR (0.0.0.0/0) ➔ Azure FW¹⁶ | NVA¹⁶ ➔ Ext. Endpt. (SaaS)⁸</strong>
+              <br><strong>Hub-Spoke⁵ ➔ VNet Injection⁷ ➔ UDR (Remote Subnet) ➔ VNet Gateway¹¹ | NVA¹⁶ ➔ On-Prem⁸</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <p>[On-Prem¹ ]
+              <br>[Regional⁴] ➔ Hub-Spoke⁵ ➔ Er/Vpn Gateway¹¹ ➔ BGP (Route Server) ➔ VNet
+              Peering⁷ ➔ VM⁸
+              <br>[Global⁴] ➔ Hub-Spoke⁵ ➔ ER Circuit⁷ (Global Reach) ➔ BGP ➔ On-Prem⁸</p>
+          </blockquote>
+        </blockquote>
+        <div>
+          <br><span style="background-color:rgb(16,18,24);">D: INSPECTOR (Layered Security stack) &nbsp;//Stackable</span>
+          <br>(14) L7 SECURITY ➔ [ APP GW | FRONT DOOR | CDN ]→WAF +SKUs</div>
+        <blockquote>
+          <div>[Internal¹ | Private² | L7³ | Regional⁴] ➔ [APP GW]¹⁴(v2) ➔&nbsp;</div>
+          <div>( ( ⟷ priv. resolver⁹ ) ➔ ( vpngw¹¹ | ergw¹¹ ) ➔ server (on-prem)⁸&nbsp;
+            <br>| ( ⟷ dns proxy⁹ ) ➔ azure fw¹⁶ ➔ ext. endpt. (saas)⁸ )
+            <br>&nbsp;</div>
+          <div>[ Ext.¹ | Public² | L7³ ]
+            <br>[Global⁴]</div>
+          <div>➔ [CDN]¹⁴➔ backend pool⁸
+            <br>&nbsp;</div>
+          <div>[⟷TRAFFIC MANAGER⁹(Opt.)] ➔<strong>[FRONT DOOR]</strong>¹⁴</div>
+          <div>( Std.➔<strong>[APP GW]</strong>¹⁴(X-Azure-FDID)➔nsg¹⁰&nbsp;</div>
+          <div>| Prem.➔ priv. link¹⁷ (⟷Priv. DNS Zone⁹) ) ➔backend pool⁸
+            <br>&nbsp;</div>
+          <div>[ Regional⁴] ➔ [APP GW]¹⁴(v2) ➔</div>
+          <div>(➔ nsg¹⁰ ➔ backend pool⁸&nbsp;
+            <br>| ( ⟷ Priv. Resolver⁹(Outbound) )➔ ( vpngw¹¹ | ergw¹¹ ) &nbsp;➔ &nbsp;server
+            (on-prem)⁸&nbsp;</div>
+          <div>| ( ⟷ DNS Proxy⁹ ) ➔ azure fw¹⁶ ➔ ext. endpt. (SaaS)⁸&nbsp;</div>
+        </blockquote>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <p style="margin-left:0px;">(15) DISTRIBUTION → &nbsp;[Internal LB | Service Mesh | +SKUs]&nbsp;</p>
+        <blockquote>
+          <div>Internal¹ | Private² | L4³ | Regional⁴ | Hub-Spoke⁵ ➔ [INTERNAL LB (STD)]¹⁵
+            ➔ Priv. Link¹⁷ ( ⟷ Traffic Analytics¹⁸ ) ➔ Storage/Paas⁸</div>
+          <div>
+            <br>On-Prem¹ | Private² | L3³ | Regional⁴ | Hub-Spoke⁵ ➔ Vpngw¹¹ ➔ Udr¹³ ➔
+            Azure Fw (prem)¹⁶ ➔ [INTERNAL LB (STD)]¹⁵ ➔ Backend Pool⁸</div>
+          <div>
+            <br>External¹ | Public² | L4³ | Regional⁴ | Hub-Spoke⁵ ➔ Standard Lb¹¹ ➔ [GATEWAY
+            LB]¹⁵ ➔ Nva¹⁷ ( ⟷ Vnet Flow Logs¹⁸ ) ➔ Vmss⁸</div>
+          <div>&nbsp;</div>
+          <div>External¹ | Public² | L7³ | Regional⁴ | Internet⁵ ➔ App Gw (v2)¹¹ ➔ [SERVICE
+            MESH]¹⁵ ➔ Vnet Integration¹⁷ ( ⟷ Next Hop¹⁹ ) ➔ Vm⁸</div>
+          <div>&nbsp;</div>
+        </blockquote>
+        <div>(16) L4 SECURITY → [ Azure FW/NVA &nbsp;| NAT GW | DDoS | +SKUs]&nbsp;</div>
+        <blockquote>
+          <ul>
+            <li data-list-item-id="ede16dcde0cad7923b4378141f78e65a0"><span><strong>[Internal¹ | Private² | L3³ | Regional⁴ | Hub-Spoke⁵] ➔ Vnet⁷ ➔ [AZURE FW (PREM)]¹⁶ (Dns Proxy) ➔ Priv. Dns Zone⁹ ➔ Fqd⁹</strong></span>
+              <br><span><strong>[Internal¹ | Private² | L3³ | Regional⁴ | Hub-Spoke⁵] ➔ Vnet⁷ ➔ Udr¹³ ➔ [AZURE FW (PREM)]¹⁶ ➔ Vnet⁸</strong></span>
+              <br><span><strong>[Internal¹ | Private² | L4³ | Regional⁴ | Vnet⁷] ➔ [NAT GW]¹⁶ ➔ Internet⁸</strong></span>
+              <br><span><strong>[On-Prem¹ | Private² | L3³ | Regional⁴] ➔ Vpngw¹¹ ➔ Udr¹³ ➔ [AZURE FW (PREM)]¹⁶ ➔ Internet⁸</strong></span>
+              <br><span><strong>[On-Prem¹ | Private² | L3³ | Regional⁴ | Hub-Spoke⁵] ➔ Vpngw¹¹ ➔ Udr¹³ ➔ [NVA]¹⁶ ➔ Vnet⁸</strong></span>
+              <br><span><strong>[External¹ | Public² | L3³ | Regional⁴ | Internet⁵] ➔ Standard Lb¹¹ ➔ [AZURE FW (PREM)]¹⁶ (Dnat) ➔ Vm⁸</strong></span>
+              <br><span><strong>[External¹ | Public² | L4³ | Global⁴ | Internet⁵] ➔ Standard Lb (global)¹¹ ➔ [DDOS (NETWORK PROTECTION)]¹⁶ ➔ Vmss⁸</strong></span>
+              <br>&nbsp;</li>
+          </ul>
+        </blockquote>
+        <p>17 → <strong>RECEIVER → [Service Entry) [Private EP (VPN/ER) | Service EP | VNet Integ] </strong>//
+          (Not stackable)
+          <br>&nbsp;</p>
+        <blockquote>
+          <ul>
+            <li data-list-item-id="ee0d74a023399c7559da5e33d2976fb38">
+              <div>[On-Prem¹ | Private² | L3³ | Regional⁴ | Hub-Spoke⁵] ➔ Vpngw¹¹ ➔ Udr¹³
+                ➔ Azure Fw (prem)¹⁶ ➔ [<strong>PRIVATE EP (VPN/ER)</strong>]¹⁷ ( ⟷ Vnet
+                Flow Logs¹⁸ ) ➔ Backend Pool⁸</div>
+            </li>
+            <li data-list-item-id="ea4e07532eb3d370ff1d4d543fcb61cf4">
+              <div>[Internal¹ | Private² | L4³ | Regional⁴ | Vnet⁷] ➔ Nsg¹⁰ ➔ [<strong>SERVICE EP</strong>]¹⁷
+                ( ⟷ Traffic Analytics¹⁸ ) ➔ Storage/Paas⁸</div>
+            </li>
+            <li data-list-item-id="e4548a8296980dfae6820e6af0bc7e8ed">
+              <div>[External¹ | Public² | L7³ | Global⁴ | Internet⁵] ➔ Front Door (prem)¹¹
+                ➔ [<strong>VNET INTEG</strong>]¹⁷ ( ⟷ Next Hop¹⁹ ) ➔ Vm⁸</div>
+            </li>
+            <li data-list-item-id="e13bc9b090a5803307a4810293779b8c5">
+              <div>[Internal¹ | Private² | L4³ | Regional⁴ | Cluster⁵] ➔ Bastion¹¹ ➔ Udr¹³
+                ➔ [<strong>VNET INTEG</strong>]¹⁷ ( ⟷ Next Hop¹⁹ ) ➔ Vmss⁸</div>
+            </li>
+            <li data-list-item-id="e70a3c2e5065fe3dc7f2cedbba6692f7e">
+              <div>[External¹ | Public² | L3³ | Regional⁴ | Internet⁵] ➔ Standard Lb¹¹ ➔
+                Azure Fw (prem)¹⁶ ➔ [<strong>PRIVATE EP (VPN/ER)</strong>]¹⁷ ( ⟷ Vnet Flow
+                Logs¹⁸ ) ➔ Storage/Paas⁸</div>
+            </li>
+          </ul>
+        </blockquote>
+        <p>
+          <br>E: AUDITING
+          <br>18<span style="background-color:rgb(16,18,24);"> ➔ </span><strong>OBSERVER</strong>
+          <span
+          style="background-color:rgb(16,18,24);">(Audit) → [Flow Logs | Net Watcher | Traffic Analytics | Connection Monitor
+            | Packet Capture]</span>
+        </p>
+        <blockquote>
+          <p>VNET⁷ ➔ NSG Flow Logs¹⁸ ➔ Traffic Analytics¹⁸ ➔ Log Analytics Workspace¹⁸
+            <br>VPN/ER¹¹ ➔ Connection Monitor¹⁸ ➔ [Path: Latency/Loss] ➔ On-Prem⁸
+            <br>VNET⁷ ➔ Packet Capture¹⁸ ➔ Storage Account⁸</p>
+        </blockquote>
+        <p>(19) INVESTIGATOR ➔ [ IP Flow Verify | Next Hop | Diagnostics ]
+          <br>SOURCE¹ ➔ IP Flow Verify¹⁹ ➔ [Check: Deny/Allow] ➔ NSG¹⁰
+          <br>SOURCE¹ ➔ Next Hop¹⁹ ➔ [Check: System vs UDR] ➔ Route¹³
+          <br>SOURCE¹ ➔ VPN Diagnostics¹⁹ ➔ [Check: IKELog/Tunnel] ➔ VpnGw¹¹</p>
+        <div>&nbsp;</div>
+        <div><strong>THE UNIFIED HYBRID SCENARIO MATRIX</strong><span><strong>\</strong></span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Scenario (The Business Case)</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>The Pipe (Tier 1)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>The Intelligence (Tier 2/3)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>The Access (Tier 4)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint (The "Answer")</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>"Global Enterprise"</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>ExpressRoute</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>BGP</strong> + <strong>Standard/Premium SKU</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Private Endpoint</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Private Circuit</strong> (No Internet)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>"Automated Multi-Branch"</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S VPN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Virtual WAN (Standard)</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Hub-to-Hub Routing</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Branch-to-Branch</strong> (Managed Mesh)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>"Secure App Service"</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S / ER</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>BGP</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>VNet Integration</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Outbound Only</strong> from App Service</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>"On-Prem ↔ PaaS DNS"</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S / ER</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>DNS Private Resolver</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Inbound Endpoint</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Conditional Forwarder</strong> (On-Prem)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>"NVA / SD-WAN Hub"</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S / ER</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Azure Route Server</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>UDR (Optional)</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>BGP Peering</strong> (No Data Path)</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>PHASE 1 ➔ WHITEBOARD: ADVANCED HYBRID SCENARIOS</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Scenario (The Business Case)</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>The Logic (Decision Fork)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint (The Answer)</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Encrypted ExpressRoute</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Run IPsec tunnel over ER Private Peering</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>S2S VPN over ExpressRoute</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Bypass Gateway Latency</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Send traffic directly from ER to VM Subnet</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>FastPath</strong> (Requires UltraPerformance/ErGw3Az)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>On-Prem ↔ On-Prem Transit</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Use MS Backbone to connect two physical sites</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>ExpressRoute Global Reach</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>High Availability (99.99%)</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Deploy Gateways across Availability Zones</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Zone-Redundant Gateway</strong> (Gateway SKU must have "Az")</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Legacy VPN Compatibility</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Static traffic selectors / No BGP support</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Policy-based VPN</strong> (Basic SKU only)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Overlapping IP Space</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Connect VNets with clashing CIDRs</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Privat</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 1: THE PHYSICAL "PIPES" (Connectivity)</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Service</strong><span><strong>&nbsp;</strong></span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>SKU / Type</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint (Scenario)</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>ExpressRoute</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Local | Standard | Premium</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Private Circuit</strong> (No Internet)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S VPN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Policy-based | Route-based</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Public Internet</strong> (IPSec Tunnel)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>P2S VPN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">OpenVPN | IKEv2 | SSTP</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Remote Users</strong> (0 On-Prem HW)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>ER Direct</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">10 Gbps | 100 Gbps</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Physical Ports</strong> at MS Edge</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 2: THE NETWORK HUB (Topology)</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Service</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Logic Gate</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Trigger ➔ Requirement</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Virtual WAN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Standard vs. Basic</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Standard</strong> = ExpressRoute + Transitive</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Hub-and-Spoke</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Peering + Gateway Transit</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Granular Control</strong> (Manual routing)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>VNet Peering</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Regional vs. Global</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Low Latency</strong> (No Gateway needed)</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 3: THE INTELLIGENCE (Routing &amp; Performance)</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Feature</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Function</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Exam Trigger (Scenario)</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Route Server</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">BGP Exchange</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>NVA / SD-WAN</strong> Integration</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Global Reach</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">On-Prem ↔ On-Prem</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>ER Backbone</strong> for Site-to-Site traffic</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>FastPath</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Performance Boost</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Bypass Gateway CPU</strong> for direct flow</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>BGP</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Dynamic Routing</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">Required for <strong>ExpressRoute</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 4: THE ENDPOINTS (Discovery &amp; Access)</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Service</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Implementation</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>DNS Resolver</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Inbound/Outbound Endpoints</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Cross-Premise</strong> Name Resolution</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Private Endpoint</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Inbound NIC (Private IP)</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>One-way access</strong> to Azure PaaS</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>VNet Integration</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Outbound from App Service</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>App Service</strong> reaching On-Prem</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Azure Bastion</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Secure Management</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Browser-based</strong> RDP/SSH (No Public IP)</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 1 ➔ FOUNDATION: THE PHYSICAL PIPES</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div><em>Decision Focus: Determining the primary connection method between On-Prem and Azure.</em><span><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Pathway</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Implementation (Stack)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Exam Trigger (Business Scenario)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>ExpressRoute</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Circuit ➔ Gateway ➔ Peering</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">High-bandwidth / Dedicated</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Private Circuit</strong> (No Internet)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S VPN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Gateway ➔ <strong>LNG</strong> ➔ Connection</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Encrypted Branch connection</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Public Internet</strong> (Unpredictable)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>P2S VPN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Gateway ➔ Client Cert/AAD</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Individual Remote Device</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>0 On-Prem HW</strong> (Software Client)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>ER Direct</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Physical Ports (10/100G)</td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Massive Scale / Compliance</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Direct physical connection</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 2 ➔ ARCHITECTURE: THE TOPOLOGY HUBS</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div><em>Decision Focus: Selecting the hub-spoke model and inter-VNet connectivity.</em><span><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Pathway</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Implementation (Stack)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Exam Trigger (Business Scenario)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Virtual WAN</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Managed Hub ➔ Standard/Basic</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Massive Scale</strong> / Global Mesh</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Microsoft-managed</strong> Hub</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Hub-and-Spoke</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Peering ➔ Gateway Transit</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Custom/Legacy Hub</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Customer-managed</strong> routing</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>VNet Peering</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Regional ↔ Global Peering</td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Low Latency / Same Backbone</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Non-overlapping CIDRs</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 3 ➔ INTELLIGENCE: ROUTING &amp; OVERLAY</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div><em>Decision Focus: How routes are exchanged and traffic performance is optimized.</em><span><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Routing Need</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Implementation (Stack)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Logic Gate (Trigger ➔ Requirement)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Dynamic Routes</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>BGP</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>ExpressRoute</strong> (Mandatory) | <strong>S2S</strong> (Multi-site)</td>
+                  <td
+                  style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Unique ASNs</strong> (Azure=65515)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Manual Path</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>UDR</strong> (Static)</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Force traffic through <strong>Firewall / NVA</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Override System Routes</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>NVA Integration</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Route Server (ARS)</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Sync BGP routes between NVA and VNet</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Control Plane ONLY</strong> (No data path)</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>S2S as Backup</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Coexistence</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">ExpressRoute (Primary) + S2S VPN (Failover)</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;">Must use <strong>Route-based VPN</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>BLOCK 4 ➔ ENDPOINTS: DISCOVERY &amp; RESOURCE ACCESS</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <div><em>Decision Focus: How On-Prem clients find and reach specific Azure services.</em><span><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </span>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+          <figure class="table" style="width:651.992px;">
+            <table style="border-style:none;">
+              <thead>
+                <tr>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Access Type</strong><span><strong> <button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                    </button>
+                    </strong>
+                    </span>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Implementation (Stack)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Exam Trigger (Business Scenario)</strong>
+                  </th>
+                  <th style="border-bottom:1.25px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>Killer Constraint</strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Inbound Access</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Private Endpoint</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">Access Azure PaaS (SQL/Blob) privately</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Private IP (NIC)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Outbound Access</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>VNet Integration</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">App Service/Function reaching On-Prem</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Outbound only</strong> to VNet</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Name Res (In)</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>DNS Resolver (Inbound)</strong>
+                  </td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">On-Prem resolving Azure Private Zones</td>
+                  <td style="border-bottom:1.25px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Conditional Forwarder</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Name Res (Out)</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>DNS Resolver (Outbound)</strong>
+                  </td>
+                  <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">Azure resolving On-Prem domains</td>
+                  <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Forwarding Rules</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <p>
+          <br>&nbsp;</p>
+        <div>&nbsp;</div>
+        <hr>
+        <div><strong>2. Azure Internal to Azure External (The "Safe Exit")</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <ul>
+          <li data-list-item-id="eab23c3e26ff194d7947a521b7a401327">
+            <p style="margin-left:0px;"><span><strong>Company Internal → Internet (Public):</strong> Traffic usually flows through an <strong>Azure Firewall</strong> in a Hub VNet using <strong>User-Defined Routes (UDRs)</strong>. This is where you perform "Egress Filtering."</span>
+            </p>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="ef8a6820c1a122dd0f9832763bf79ff50">
+            <p style="margin-left:0px;"><span><strong>Company Internal → Azure PaaS (e.g., SQL, Storage):</strong></span>
+            </p>
+            <ul>
+              <li data-list-item-id="e008c87a2d07852d4766e54a740de41bb">
+                <p style="margin-left:0px;"><span><strong>Service Endpoints:</strong> Traffic stays on the Azure backbone but reaches the <strong>Public IP</strong> of the service.</span>
+                </p>
+              </li>
+              <li data-list-item-id="ea7563bb5168fe819666653390a915ea1">
+                <p style="margin-left:0px;"><span><strong>Private Link / Private Endpoint:</strong> The Azure service gets a <strong>Private IP</strong> inside your VNet. This is the "Gold Standard" for NIS2 compliance in the Netherlands.<button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                  </button>
+                  </span>
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <div><strong>3. Azure Internal to Azure Internal (The East-West Flow)</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+          </button>
+          </strong>
+          </span>
+        </div>
+        <ul>
+          <li data-list-item-id="e196d6baccf3a1b9cb0d43db266ae8e57">
+            <p style="margin-left:0px;"><span><strong>VNet Peering:</strong> Connecting two VNets (e.g., Hub to Spoke). Low latency, high bandwidth.</span>
+            </p>
+          </li>
+          <li data-list-item-id="edb569764960e752cfa18504ee00d27f4">
+            <p style="margin-left:0px;"><span><strong>Virtual WAN (vWAN):</strong> For large-scale companies (like <strong>Philips</strong> or <strong>Shell</strong>), this automates the "Any-to-Any" connectivity between dozens of VNets and branches.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e8c6520b872292bf1fa3b7541cc4b6bd1">
+            <p style="margin-left:0px;"><span><strong>The "Exam" Detail:</strong> Remember <strong>Gateway Transit</strong>. If Spoke A wants to use the VPN Gateway in the Hub, the Hub must allow "Gateway Transit" and the Spoke must "Use Remote Gateway."</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

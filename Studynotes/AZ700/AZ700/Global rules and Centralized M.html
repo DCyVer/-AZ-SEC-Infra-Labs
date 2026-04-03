@@ -1,0 +1,389 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Global rules and Centralized Management</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Global rules and Centralized Management</h1>
+
+      <div class="ck-content">
+        <div><strong>CENTRALIZED MANAGEMENT STACK&nbsp;</strong>
+          <br><span>Enforce NSG-style rules globally (Admin rules)" or "Standardize network security across the entire organization," → <strong>AVNM</strong>.</span>
+        </div>
+        <div><span>“multiple <strong>Azure Firewalls</strong> or <strong>Secured Virtual Hubs</strong> (vWAN).” → Firewall Manager</span>
+        </div>
+        <div><span>"Manage multiple Azure Firewalls from a single pane" ➔ Firewall Manager.</span>
+          <br><span>"Regional policy must inherit from Corporate policy" ➔ Firewall Manager.</span>
+          <br><span>“Admin on premises, link local to azure” → WAC</span>
+          <br><span>"Connect a single on-prem server to Azure (no site-wide VPN)" ➔ WAC (Azure Network Adapter).</span>
+          <br>&nbsp;</div>
+        <figure class="table" style="width:95.49%;">
+          <table class="ck-table-resized" style="background-color:rgb(16, 18, 24);border-style:none;">
+            <colgroup>
+              <col style="width:27.67%;">
+                <col style="width:72.33%;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>Service</strong>
+                </th>
+                <th style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>THE ANCHOR VERBS (Pick these 3)</strong>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>AVNM</strong> (Security Admin)</td>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Network Group</strong> → <strong>Security Admin Config → </strong>D<strong>eploy</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>AVNM</strong> (Peering)</td>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Network Group</strong> → <strong>Connectivity Config</strong> → <strong>Deploy</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>AVNM Dynamic Groups</strong>:</td>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;">&nbsp;Use tags (e.g., Env:Prod) to auto-add VNets to Network Groups</td>
+              </tr>
+              <tr>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>AVNM Mesh</strong>
+                </td>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Mesh</strong> in Connectivity Config for instant any-to-any routing
+                  between all spokes.</td>
+              </tr>
+              <tr>
+                <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Firewall Manager</strong>
+                </td>
+                <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Parent Policy</strong> → <strong>Rule Collection</strong> → <strong>Associate (Hub/vWAN)</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Firewall Manager Inheritance</strong>
+                </td>
+                <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>Parent Policy</strong> (Global) + <strong>Child Policy</strong> (Local)
+                  to enforce corporate blocks while allowing regional teams to add their
+                  own rules.</td>
+              </tr>
+              <tr>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>WAC</strong> (Hybrid Adapter)</td>
+                <td style="border-bottom:1.11111px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>Register (Azure)</strong> → <strong>Networks Tool</strong> → <strong>Add Azure Network Adapter</strong>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>WAC Protoco</strong>
+                </td>
+                <td>Azure Network Adapter is a <strong>P2S VPN</strong>; it will fail if no
+                  VPN Gateway exists in the VNet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+        <div>
+          <br><strong>&nbsp;ROUTING PRECEDENCE</strong>
+        </div>
+        <blockquote>
+          <div><strong>LPM: default to narrowest IP Range /##)* </strong><em><strong>// Identical IP Ranges shift to UDR and/or BGP &nbsp; ← Private Endpoints (/32)</strong></em>
+          </div>
+          <div><em><strong>*Private Link/Endpoints default to narrowest /32 and need to enable </strong></em>
+            <code
+            spellcheck="false">PrivateEndpointNetworkPolicies</code>in route table</div>
+          <blockquote>
+            <div><strong>UDR: Next hop from Subnet to IP //Always</strong><em><strong> Overrides BGP even if routing nowhere</strong></em>
+            </div>
+            <blockquote>
+              <div><strong>Azure Expressroute Fastpath (Straight to VM)</strong>
+              </div>
+              <blockquote>
+                <div><strong>BGP: Default ER/VPN Gateway //UDR (≥/## or /32) can divert subnet traffic to the firewall&nbsp;</strong>
+                </div>
+                <div><strong>*ARS + Branch-to-Branch = Dynamic transit between NVA and ExpressRoute</strong>
+                </div>
+                <blockquote>
+                  <div>Azure system default routes ← Service End Points</div>
+                </blockquote>
+                <div>&nbsp;</div>
+              </blockquote>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        <div>&nbsp;</div>
+        <div><strong>SECURITY RULE PRECEDENCE</strong>
+        </div>
+        <div>1. ANVM&nbsp;</div>
+        <blockquote>
+          <div>Allow All: Bypass NSG | Deny: Terminate</div>
+        </blockquote>
+        <div>2. UDR → AzureFW&nbsp;</div>
+        <blockquote>
+          <div>(Global→Local)&nbsp;
+            <br>→ DNAT Rule (Inbound)</div>
+          <blockquote>
+            <div>→ NetworkRule (L3/L4)</div>
+          </blockquote>
+          <div>or</div>
+          <blockquote>
+            <div>(→ WAF) → Application Rule (L7)</div>
+            <div><em>//Note: WAF uses Exclusions to fix False Positives without disabling Managed Rules.</em>
+            </div>
+          </blockquote>
+        </blockquote>
+        <div>3. NSG</div>
+        <blockquote>
+          <div>Incoming ( Sub → NIC) &nbsp;→ Outgoing ( NIC → Sub) &nbsp;}</div>
+        </blockquote>
+        <p><strong>Azure cloud security&nbsp;</strong>
+        </p>
+        <p>Shared: Identifiers
+          <br>- NSG &nbsp;[ <span><strong>IP Address | Service Tag | &nbsp;</strong>Azure Service + External &nbsp;identity | Storage/SQL]<strong> &nbsp;</strong></span>
+          <br><span><strong>- &nbsp;{ASG } [</strong> Internal VM Roles | Web | DB ] //Same Vnet only!</span>
+          <br>
+          <br><span>//PRIVATE ACCESS → Private Endpoint Network Policies must be "Enabled" on sNet for NSGs/UDRs to that Private Endpoint.</span>
+          <br>
+          <br><span>TAGS VS. GROUPS</span>
+          <br><span>- Service Tags ➔ IP-based filtering for Azure Services (NSG or Firewall).</span>
+          <br><span>- FQDN Tags ➔ Pre-defined category filtering (e.g. WindowsUpdate) in Application Rules ONLY.</span>
+          <br><span>- IP Groups ➔ Reusable IP collections for multiple Firewall/NSG rules.</span>
+          <br>
+          <br>Service Tags vs. IP Groups: Filtering by Azure Service (Identity) vs.
+          a reusable list of custom IPs.
+          <br>Application Rule (Target FQDN tags) vs. Network Rule (using FQDNs)
+          <br>ASG (Application Security Groups): Grouping VMs by role (Web/DB) to simplify
+          NSG rules.
+          <br>
+          <br>[AZURE FIREWALL] // &nbsp;Rule Processing Order Threat intel(Alerts/denies
+          first) ➔ DNAT ➔ Network ➔ Application.
+          <br>inbound: {DNAT Rule} &nbsp;IP | &nbsp;Network Rule [ Port / Protocol]
+          <br>Outbound: L4 {Network Rule} [Non-HTTP/S] | &nbsp;| L7 (Application Rule
+          &nbsp;| {FQDN Tags}* (WindowsUpdate)) [HTTP/S]
+          <br>*//prerequisite: enable {DNS Proxy}
+          <br>Web: {IDPS}(Premium) [Signature/Exploit patterns] &nbsp;| {Web Categories}
+          [Social / Gambling sites]
+          <br>//IDPS (Premium): Signature-based threat detection for known exploit patterns.&nbsp;
+          <br>//Outbound L7 filtering (HTTP/S) vs. Outbound L4 filtering (non-HTTP/S
+          like WindowsUpdate).
+          <br>// 2026 VNet ➔ Zero Default Outbound Access.&nbsp;</p>
+        <p>
+          <br>WAF EXECUTION
+          <br>- Priority ➔ Custom Rules (Priority 1-100) execute BEFORE Managed Rule
+          Sets.
+          <br>- Regional Policy ➔ Overrides Global WAF Policy if assigned to a specific
+          Listener.</p>
+        <p>Security rule filters:&nbsp;
+          <br>ANVM {Security admin rule} [Subscription] &nbsp;| &nbsp;IP Groups [Centralized
+          CIDR Management] &nbsp;| NSG Security rule [Local subnet] &nbsp;
+          <br>*// PE Prerequisite for NSG: enable {Private endpoint Network Policy}
+          &nbsp;&nbsp;
+          <br>
+          <br>Private Link Service: Providing your own service to other VNets (
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Provider-side NAT IP → Protect private IP/ &nbsp;no Route overlap</span>)
+            <br>&nbsp;</p>
+        <hr>
+        <div>&nbsp;</div>
+        <div>[FRONT DOOR]</div>
+        <p style="margin-left:0px;"><span>- Active-Passive / Failover ➔ <strong>Priority</strong> | Active-Active / Split ➔ <strong>Weighted</strong></span>
+          <br><span><strong>- </strong>Near-instant failover (&lt;10s) ➔ <strong>Anycast</strong> | Nearest regional path ➔ <strong>Latency-based</strong></span>
+          <br><span><strong>- </strong>Verify Edge Cache ➔ <strong>X-Cache Header (TCP_HIT)</strong> | File Compression ➔ <strong>Brotli/Gzip</strong> (1KB–8MB)</span>
+          <br><span>- Domain Auto-rotation ➔ <strong>Managed Certificates</strong> | HTTP ➔ HTTPS ➔ <strong>Rule Engine (Redirect)</strong></span>
+        </p>
+        <div>Security:</div>
+        <p style="margin-left:0px;"><span>- Country-block ➔ <strong>Geomatch</strong> | Request volume cap ➔ <strong>Rate Limit</strong></span>
+          <br>- <span>Hide backend tech ➔ <strong>Strip X-Powered-By</strong> | Origin Bypass Check ➔ <strong>[X-Azure-FDID]</strong></span>
+          <br><span><strong>- </strong>OWASP/Exploits ➔ <strong>Managed Rules</strong> | Scrapers/Crawlers ➔ <strong>Bot Manager</strong></span>
+          <br><span><strong>- </strong>Zero-Public IP backend ➔ <strong>Premium SKU (Private Link)</strong> | Audit vs. Block ➔ <strong>WAF Mode</strong></span>
+          <br>&nbsp;</p>
+        <hr>
+        <div>[TRAFFIC MANAGER]</div>
+        <p style="margin-left:0px;"><span>- Non-HTTP / Gaming / Any Protocol ➔ <strong>DNS-based Routing</strong> | Lowest Cost ➔ <strong>Traffic Manager</strong></span>
+          <br><span><strong>- </strong>See original Client IP at backend ➔ <strong>Direct Connection</strong> (No Proxy)</span>
+          <br><span>- Failover delay (30s–300s) ➔ <strong>DNS TTL</strong> | List of healthy IPs ➔ <strong>MultiValue</strong></span>
+          <br><span><strong>- C</strong>orporate-only IP mapping ➔ <strong>Subnet Routing</strong> | Multi-stage logic (Geo ➔ Priority) ➔ <strong>Nested Profiles</strong></span>
+        </p>
+        <div>Security:</div>
+        <p style="margin-left:0px;"><span>- No Packet Inspection ➔ <strong>L4 Passthrough</strong> | Inherits <strong>Azure DNS DDoS</strong> protection</span>
+          <br><span>- No WAF/SSL Offload ➔ <strong>Backend must handle Security/Certificates</strong></span>
+        </p>
+        <div>
+          <br>[APP GATEWAY]
+          <br>- URL segment (/images) ➔ URL Path Map | Host Headers (contoso.com) ➔
+          Multisite Listener
+          <br>- Modify Header / URL on-the-fly ➔ Rewrite Rule | Assign WAF to specific
+          Listener ➔ Regional Policy
+          <br>- Health check specific path (/health) ➔ Custom Probe | Enforce TLS versions
+          ➔ SSL Policy
+          <br>- Session Persistence: Enable Cookie-based Affinity.
+          <br>- Zero-Downtime Maintenance: Enable Connection Draining.</div>
+        <p>Security:&nbsp;
+          <br>- <span>Hide backend tech ➔ Rewrite Rule (Strip X-Powered-By) | Audit vs. Active Block ➔ WAF Mode (Detection vs. Prevention)</span>
+          <br>- Decrypt at Gateway / Plaintext to Backend ➔ SSL Termination
+          <br>- <span><strong>mTLS (Mutual TLS)</strong>: Assign <strong>SSL Profile</strong> (Client Certificate Auth) to Listener.</span>
+          <br>-<span> TLS 1.0/1.1 is <strong>Retired</strong>. SSL Policy must enforce <strong>TLS 1.2+</strong>.</span>
+          <br><span>- Zero-Public IP backend ➔ Private Link (Standard V2)</span>
+          <br>&nbsp;</p>
+        <hr>
+        <div><strong>1 ➔ FILTERING &amp; ACCESS (L3/L4)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e3e9ddf1775e065d96be2d335c730d468">
+            <p style="margin-left:0px;"><span><strong>Role-based (VMs)</strong> ➔ <strong>ASG</strong> (Same VNet only)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e5811c2f64d6d271a65c69dad869da64e">
+            <p style="margin-left:0px;"><span><strong>Azure Service IPs</strong> ➔ <strong>Service Tags</strong> (NSG/Firewall)</span>
+            </p>
+          </li>
+          <li data-list-item-id="ebd8e331336dbcb26aaebbb07b169a060">
+            <p style="margin-left:0px;"><span><strong>Private Endpoints</strong> ➔ <strong>Enable {Network Policy}</strong> on sNet (Required for NSG/UDR)</span>
+            </p>
+          </li>
+          <li data-list-item-id="eaa0fbcbee8193fbab04538e27d87eab3">
+            <p style="margin-left:0px;"><span><strong>Reusable Lists</strong> ➔ <strong>IP Groups</strong> (Azure Firewall)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e803d135e7d372b5b7a0459a23d0bd823">
+            <p style="margin-left:0px;"><span><strong>Custom FQDNs (SQL/SSH)</strong> ➔ <strong>Network Rules</strong> + <strong>DNS Proxy</strong> (Firewall)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e9399fc0d3b089379d0fc13c83284b865">
+            <p style="margin-left:0px;"><span><strong>Signatures/Exploits</strong> ➔ <strong>IDPS</strong> (Firewall Premium)</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>2 ➔ APPLICATION ROUTING (L7)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ee7506c770d21533186f513d767e4e58d">
+            <p style="margin-left:0px;"><span><strong>URL Path (/api)</strong> ➔ <strong>Path-based Rule</strong> (AppGW)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e1f12dac28b4c5952a4af62316b79320c">
+            <p style="margin-left:0px;"><span><strong>Host Headers (a.com)</strong> ➔ <strong>Multisite Listener</strong> (AppGW)</span>
+            </p>
+          </li>
+          <li data-list-item-id="eccc02d255a55713a89f6d7250ee4b0e8">
+            <p style="margin-left:0px;"><span><strong>Header/URL Fixes</strong> ➔ <strong>Rewrite Rules</strong> (AppGW) | <strong>Strip </strong></span>
+              <code
+              spellcheck="false"><span><strong>X-Powered-By</strong></span>
+                </code>
+            </p>
+          </li>
+          <li data-list-item-id="e5a72c103fa4269e826c2202bc33bbcc9">
+            <p style="margin-left:0px;"><span><strong>FQDN Tags (WindowsUpdate)</strong> ➔ <strong>Application Rules</strong> (Firewall ONLY)</span>
+            </p>
+          </li>
+          <li data-list-item-id="ee64cf9a21b748eff627dd68be25aea8b">
+            <p style="margin-left:0px;"><span><strong>URL Categories</strong> ➔ <strong>Web Categories</strong> (Firewall Premium)</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>3 ➔ GLOBAL &amp; EDGE (WAF/FAILOVER)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e4bdf31ad1584b6b6ef2a40cd3b65c819">
+            <p style="margin-left:0px;"><span><strong>Country/Geo-block</strong> ➔ <strong>Geomatch</strong> (WAF Custom Rule)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e47ec05f1bd7441133be7e5e3fc9ba62a">
+            <p style="margin-left:0px;"><span><strong>Requests per IP</strong> ➔ <strong>Rate Limit</strong> (WAF Custom Rule)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e0791839001d37fb28e999df2584f6bae">
+            <p style="margin-left:0px;"><span><strong>Scrapers/Bots</strong> ➔ <strong>Bot Manager</strong> (WAF Managed Rule)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e839fc5e88b1855796bf73f4c9178057c">
+            <p style="margin-left:0px;"><span><strong>Fast Failover (&lt;10s)</strong> ➔ <strong>Front Door</strong> (Anycast) | <strong>Origin Groups</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e0b44896c5b2996e61ffacb220aa1ee20">
+            <p style="margin-left:0px;"><span><strong>Non-HTTP Failover</strong> ➔ <strong>Traffic Manager</strong> (DNS/Priority)</span>
+            </p>
+          </li>
+          <li data-list-item-id="e35444acddf6155d130cb4b12bb6f0e36">
+            <p style="margin-left:0px;"><span><strong>Zero-IP Backend</strong> ➔ <strong>Private Link</strong> (FD Premium / AppGW V2)</span>
+            </p>
+          </li>
+          <li data-list-item-id="eb2708694fbf8f0a92b8ba68f5f798d5a">
+            <p style="margin-left:0px;"><span><strong>Volumetric DDoS</strong> ➔ <strong>Network Protection</strong> (VNet) | <strong>IP Protection</strong> (Single IP)</span>
+              <br>&nbsp;</p>
+          </li>
+        </ul>
+        <hr>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div><span><strong>"Smallest subnet for any Gateway/Route Server"</strong> ➔ </span>
+          <code
+          spellcheck="false"><span><strong>/27</strong></span>
+            </code><span> (27 usable IPs).</span>
+        </div>
+        <p style="margin-left:0px;"><span><strong>"App Gateway status: Unknown"</strong> ➔ Open <strong>TCP/65200-65535</strong> Inbound.</span>
+          <br><span><strong>"Connect to VM via Bastion fails"</strong> ➔ Check <strong>Outbound</strong> NSG on </span>
+          <code
+          spellcheck="false"><span>AzureBastionSubnet</span>
+            </code><span> for <strong>TCP/22 or 3389</strong>.</span>
+            <br><span><strong>"Same IP across On-prem and Azure"</strong> ➔ <strong>Azure Extended Network</strong>&nbsp;</span>
+        </p>
+        <div><strong>Hybrid (on-Prem)&nbsp;</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>WINDOWS ADMIN CENTER (WAC)&nbsp;</strong>
+        </div>
+        <div><em>for: out-of-azure (on-prem) servers</em>
+        </div>
+        <p style="margin-left:0px;"><span>Link ➔ Azure Network Adapter (P2S VPN via SSTP TCP/443)</span>
+          <br>Manage <span>→ <strong>Azure Connected Machine agent</strong> (Azure Arc) &nbsp;</span>
+          <br>Migrate →<span> configure <strong>Azure Extended Network</strong></span>
+        </p>
+        <hr>
+        <div>&nbsp;</div>
+        <div>IP RESERVATIONS &amp; MAGIC IPs
+          <br>Azure <strong>always</strong> steals five IP addresses from every subnet.
+          If you see a <code spellcheck="false">/29</code> (8 IPs), only <strong>3</strong> are
+          usable.<span>&nbsp;</span>
+        </div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <p>Smallest Gateway / <strong>AzureRouteServerSubnet </strong>Subnet ➔ /27
+                  (32 IPs total | 27 Usable)
+                  <br>
+                  <br>+ x.x.x.0 ➔ Network Address
+                  <br>+ x.x.x.1 ➔ Default Gateway
+                  <br>+ x.x.x.2 ➔ Azure DNS (Mapping)
+                  <br>+ x.x.x.3 ➔ Azure DNS (Redundancy)
+                  <br>+ x.x.x.255 ➔ Broadcast Address (Reserved, not used)
+                  <br>+ 168.63.129.16 ➔ "Magic IP" // WireServer (DNS, DHCP, LB Health Probes,
+                  VM Agent)
+                  <br>+ 169.254.169.254 ➔ IMDS (Instance Metadata Service - SKU, Region, Auth)
+                  <br><em>// This IP is non-routable. It cannot be reached via VNet Peering, VPN, or ExpressRoute. It only works from inside the VM.</em>
+                  <br>&nbsp;</p>
+                <div>These are the "High-Frequency" ports you will encounter in NSG and Load
+                  Balancer troubleshooting scenarios.
+                  <br>TCP/22 ➔ SSH (Linux)
+                  <br>UDP/53 ➔ DNS Queries | TCP/53 ➔ DNS Zone Transfers
+                  <br>UDP/67, 68 ➔ DHCP (IP Assignment)
+                  <br>TCP/80 ➔ HTTP (Unencrypted)
+                  <br>TCP/443 ➔ HTTPS / Bastion Inbound / WAC SSTP
+                  <br>TCP/445 ➔ SMB (Azure Files / File Sync)
+                  <br>TCP/1433 ➔ SQL Server (Private Link)
+                  <br>TCP/3389 ➔ RDP (Windows)
+                  <br>TCP/5985, 5986 ➔ WinRM (Remote PowerShell)
+                  <br>TCP/65200-65535 ➔ App Gateway V2 Manager (Required for Health Probes)
+                  <br>&nbsp;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,74 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Application Gateway</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Application Gateway </h1>
+
+      <div class="ck-content">
+        <p><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Ensure a user stays connected to the same backend server throughout their session" ➔ Cookie-based Affinity.</span>
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">"Remove a backend server for maintenance without dropping active user sessions." - </span>Connection
+          draining</p>
+        <div><span><strong>"Backend shows 'Unknown' status"</strong> ➔ Check NSG for ports <strong>65200-65535</strong> (Gateway Manager)</span>
+          <br><span><strong>"SSL/TLS handshake failure to backend"</strong> ➔ <strong>Root Certificate (.cer)</strong> missing from Backend Settings (if using Private CA).</span>
+          <br><span>&nbsp;"App requires a specific header for security" or “Redirect traffic without a client-side 301.”&nbsp;</span>
+          <br><span>→ </span><strong>Rewrite Engine →</strong><span>rewrite <strong>HTTP Headers</strong> (Request/Response) and the <strong>URL Path</strong>.</span>
+          <br>
+          <br><span><strong>L7 (Kubernete) load balancing(L4) for AKS </strong>➔ <strong>AGIC</strong>.</span>
+          <br><strong>"Terminate SSL and provide WAF for containers"</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ </span><strong>AGIC</strong>
+        </div>
+        <div><span><strong>“502 Gateway Error”</strong></span>
+          <br><span><strong>→</strong> Check <strong>NSG Inbound</strong> for ports <strong>65200-65535</strong>.</span>
+          <br>→ verify <span><strong>Backend Port</strong> and <strong>Probe Port</strong> match actual application port.</span>
+          <br><span><strong>Host Header:</strong> If the backend requires a specific domain, the probe must send that <strong>Host Header</strong>.</span>
+        </div>
+        <div>&nbsp;</div>
+        <hr>
+        <p style="margin-left:0px;">sNet highlander → def. /24 (min 26)
+          <br>Must use TLS 1.2+.
+          <br>Static Public IP //<strong>Private Frontend IP possible </strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(ILB mode), management/updates still require public IP&nbsp;</span>
+            <br>NSG Inbound [Ports 65200-65535] required.
+            <br>Health probes must match backend protocol (HTTPS) and port
+            <br>&nbsp;</p>
+        <p>V1(*RETIRED) &nbsp;<span style="background-color:rgb(29,30,38);color:rgb(230,232,240);"> [manual scale | 0 redundant | dynamic IP]&nbsp;</span>
+          <br>&gt; AppGW V2 [Auto-scaling; Static VIP; Key Vault (SSL); mTLS; Header
+          Rewrite; Zone Redundant: offscaling/performance(5xv1)]
+          <br>+Addon: <span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">WAF [OWASP 3.2 SQL/XSS protection] → &nbsp;V2 SKU </span><strong>Managed Rule Sets (DRS)</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">,</span><strong>Bot Manager</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">, and </span><strong>Per-policy customization</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+              <br><span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">//WAF / gateway | listener (multi-site) /path&nbsp;</span>
+        </p>
+        <p style="margin-left:0px;"><span><strong>Backend Authentication:</strong> </span>(<span>V2)</span>
+          <br>Gw-to-backend requires trusted certificate&nbsp;
+          <br><strong>Publicly Trusted CA (Automatic)</strong>
+          <br><strong>Private/Self-Signed CA → </strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">upload the </span><strong>Root Certificate (.cer)</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">to backend</span>
+            <br><strong>mTLS</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> (Mutual TLS) for </span><strong>Client-to-Gateway</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">authentication &nbsp;→</span><span>uploading &nbsp;<strong>Trusted Client CA cert. chain</strong> (Root and Intermediates) +Client must offer matching Cert.&nbsp;</span>
+              <br>
+              <br><strong>AGIC (APPLICATION GATEWAY INGRESS CONTROLLER)</strong>
+        </p>
+        <p style="margin-left:0px;"><span>Standard Kubernetes load balancers (Layer 4) don't &nbsp;WAF, Cookie Affinity, or URL routing well.</span>
+          <br><span>→ Omsta;; Agic in AKS → programs route to AppGW past LB <strong>(User</strong> ➔ <strong>App Gateway</strong> ➔ <strong>Pod (VM))</strong></span>
+          <br><span>//AKS = Az. Kubernetes Svc.</span>
+        </p>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

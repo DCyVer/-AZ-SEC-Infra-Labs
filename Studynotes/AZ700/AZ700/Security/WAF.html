@@ -1,0 +1,69 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>WAF</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>WAF</h1>
+
+      <div class="ck-content">
+        <div><strong>Detection Mode</strong> ➔ Audit Only | Logs to LAW | Traffic allowed.
+          <br><strong>Prevention Mode</strong> ➔ Active Block | Drops malicious requests
+          | 403 Forbidden.
+          <br>
+          <br><strong>WAF on Application Gateway | Regional / VNet-Internal</strong>
+          <br>Specific VNet | Internal Apps | Multi-site backends.
+          <br>Policy applied to Global, Per-Site (Listener), or Per-URI (Path).
+          <br>Specific policies replace broader policies; they DO NOT inherit.
+          <br>{Rule Set} = CRS 3.2+ (Core Rule Set) | OWASP protection (SQLi, XSS).
+          <br>
+          <br><strong>WAF on Front Door | Global / Edge (Anycast)</strong>
+          <br>Worldwide | Public-facing | SSL Offload at Edge.</div>
+        <div>Order: <strong>Custom Rules</strong> ➔ <strong>Managed Rulesets</strong>.
+          <br>{Bot Manager} = Premium Only | Protection against malicious scrapers.
+          <br>{Pre-emptive} = Blocks threats at the Edge before hitting the Azure Backbone.
+          <br>{Evaluation Law} = Custom Rules (Priority) ➔ Managed Rulesets (DRS 2.1).</div>
+        <div>{<strong>Evaluation Law</strong>} = Evaluated by <strong>Priority (Lower # wins)</strong>;
+          stops on first match.</div>
+        <div>&nbsp;</div>
+        <div><strong>DIAGNOSTICS &amp; THE "X-FORWARDED-FOR" GAP</strong>
+        </div>
+        <div>{Source IP} = Backend sees Front Door Edge IP or App Gateway IP.
+          <br>{Real Client IP} = Contained in <strong>X-Forwarded-For</strong> header.
+          <br>{Fix} = Application must be configured to read the header for logging/security.</div>
+        <div>
+          <br><strong>KILL-SWITCH: THE FALSE POSITIVE FIX</strong>
+          <br>{Legit Traffic Blocked} = Valid cookie/string flagged as attack (403 Forbidden).
+          - &gt; {Fix} = WAF Exclusion Rule.
+          <br>→ {Method} = Extract <strong>Rule ID</strong> from Diagnostic Logs (Firewall
+          Logs) ➔ Add to Exclusions.</div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>2026 EXAM "INSTANT" DECISIONS</strong>
+        </div>
+        <div>"Block traffic from a specific country" ➔ <strong>Geo-filtering</strong> (Available
+          on both).
+          <br>"Stop bot scrapers before they hit my VNet" ➔ <strong>Front Door (WAF) Premium</strong>.
+          <br>"Inspect traffic for an Internal-only app" ➔ <strong>App Gateway (WAF)</strong>.</div>
+        <div>&nbsp;</div>
+        <p>Managed Rulesets (OWASP)
+          <br>Trigger: Use DRS (Default Rule Set) for Front Door or CRS (Core Rule Set)
+          for App Gateway.
+          <br>Update: 2026 standards prioritize DRS 2.1 / CRS 3.2+ for reduced false
+          positives.
+          <br>
+          <br>&nbsp;</p>
+        <p>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

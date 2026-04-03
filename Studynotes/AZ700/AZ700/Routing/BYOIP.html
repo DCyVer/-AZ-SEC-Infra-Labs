@@ -1,0 +1,79 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>BYOIP</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>BYOIP</h1>
+
+      <div class="ck-content">
+        <div><strong>Hard-Locks (2026)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="eb10f3eeffd16fb13be41d166d6ba5004">
+            <p style="margin-left:0px;"><span><strong>IPv4 Min Size:</strong> <strong>/24</strong> (Exactly).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e6e688da85e9646c204b96965ecb7aa0e">
+            <p style="margin-left:0px;"><span><strong>IPv6 Min Size:</strong> <strong>/48</strong> (Global) | Child ranges regularly <strong>/64, but /48 allowed (2026)</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e38adc028dab6d79e74bd06001f31bf2d">
+            <p style="margin-left:0px;"><span><strong>SKU:</strong> Results in <strong>Standard SKU</strong> Public IPs only.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e3b7dc2abba67c42d717fb30e408e53f5">
+            <p style="margin-left:0px;"><span><strong>Proof:</strong> Requires <strong>ROA (Route Origin Authorization)</strong> to prove ownership.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ef918f676aa26522ee18550f1f60df65f">
+            <p style="margin-left:0px;"><span><strong>ASN:</strong> Must be <strong>8075</strong> (Public) or <strong>8070</strong> (US Gov Cloud).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e8f02db84e873f01a34c58e666b001665">
+            <p style="margin-left:0px;"><span><strong>State Dependency:</strong> Prefix must be in the <strong>Commissioned</strong> state before Public IP addresses can be carved from it for use.</span><strong>Operational Flow</strong>
+            </p>
+          </li>
+        </ul>
+        <ol>
+          <li data-list-item-id="e37c2c11029a32659fc20b501d53f861b">
+            <p style="margin-left:0px;"><span><strong>Validation:</strong> ROA + Signed Message.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ec7573057804983cd36193849492d71c2">
+            <p style="margin-left:0px;"><span><strong>Provision:</strong> Range appears in Azure.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e60251ba9213830445d81a6bfa7dcc1b2">
+            <p style="margin-left:0px;"><span><strong>Commission:</strong> Azure begins advertising the range to the Internet.</span>
+            </p>
+          </li>
+        </ol>
+        <div>&nbsp;</div>
+        <div><strong>🎯 INSTANT "NO" TRIGGERS</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="eb474e2cd832beda96c5b1d4714795fef">
+            <p style="margin-left:0px;"><span><strong>"Bring a /25 or /28 range"</strong> ➔ <strong>NO</strong> (Min is /24).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e8639ee619aa4fd7e22b12d976a6f6533">
+            <p style="margin-left:0px;"><span><strong>"Use with Basic Load Balancer"</strong> ➔ <strong>NO</strong> (Standard SKU only).</span>
+            </p>
+          </li>
+          <li data-list-item-id="eb893d820702c36d86a56d1131a61c45c">
+            <p style="margin-left:0px;"><span><strong>"Stretch one /24 across 2 regions"</strong> ➔ <strong>NO</strong> (Regional resource only).</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

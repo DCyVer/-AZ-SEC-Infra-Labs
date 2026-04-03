@@ -1,0 +1,188 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Exam prep</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Exam prep</h1>
+
+      <div class="ck-content">
+        <p>The "Automatic Mandate" (If you see X, you MUST have Y)
+          <br>IF: [Prvt. LINK]⁷ ➔ MUST: [PRIV. DNS ZONE]⁹ + [Prvt. EP]¹⁷.
+          <br>IF: [ON-PREM]¹ to [Prvt. LINK]⁷ ➔ MUST: [Prvt. RESOLVER (INBOUND)]⁹.
+          <br>IF: [HUB-SPOKE]⁵ (Transit) ➔ MUST: [GATEWAY SUBNET]⁷ + [UDR]¹³.
+          <br>IF: [FQDN FILTERING]¹⁴ ➔ MUST: [Az. FW (PREM)]¹⁶ + [DNS PROXY]⁹.
+          <br>2. The "Binary Kill" (If you see X, Y is IMPOSSIBLE)
+          <br>IF: [GLOBAL GEOGRAPHY]⁴ ➔ KILL: [GlobalGwTransit]⁷.
+          <br>IF: [BASIC SKU]¹¹ ➔ KILL: [BGP]¹³ + [VNET PEERING TRANSIT]⁷.
+          <br>IF: [ASG]¹⁰ ➔ KILL: [GLOBAL PEERING]⁷ + [Prvt. LINK]⁷.
+          <br>IF: [PUBLIC LB]¹¹ ➔ KILL: [HA PORTS]¹⁵ (HA Ports are Internal only).
+          <br>3. The "Precedence Trap" (X always beats Y)
+          <br>[UDR]¹³ &gt; [BGP]¹³ &gt; [SYSTEM ROUTE].
+          <br>[AVNM]¹⁰ (Admin Rule) &gt; [NSG]¹⁰.
+          <br>[LPM (Longest Prefix Match)]¹³ always wins, regardless of the path.
+          <br>The Strategy for Tomorrow's Map Consolidation:
+          <br>When you build the condensed version, we should create a "Logic Matrix"
+          that looks like this:
+          <br>Scenario&nbsp;&nbsp;&nbsp;&nbsp;The Anchor (Branch)&nbsp;&nbsp;&nbsp;&nbsp;The
+          Red Flag (Dead Giveaway)
+          <br>Hybrid DNS&nbsp;&nbsp;&nbsp;&nbsp;Branch 9&nbsp;&nbsp;&nbsp;&nbsp;No Prvt.
+          Resolver = No Resolution.
+          <br>Global Transit&nbsp;&nbsp;&nbsp;&nbsp;Branch 7&nbsp;&nbsp;&nbsp;&nbsp;Global
+          Peering = No GlobalGwTransit.
+          <br>Secure Egress&nbsp;&nbsp;&nbsp;&nbsp;Branch 16&nbsp;&nbsp;&nbsp;&nbsp;NAT
+          Gateway = No SNAT Exhaustion.
+          <br>Micro-Seg&nbsp;&nbsp;&nbsp;&nbsp;Branch 10&nbsp;&nbsp;&nbsp;&nbsp;ASG
+          = Identity-based (Regional only).</p>
+        <p>&nbsp;</p>
+        <figure class="table" style="width:651.989px;">
+          <table style="background-color:rgb(16, 18, 24);border-style:none;">
+            <thead>
+              <tr>
+                <th style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>The "Crafty" Scenario (Distractor)</strong><span><strong><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+                  </button>
+                  </strong>
+                  </span>
+                </th>
+                <th style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:8px 16px 8px 0px;vertical-align:top;"><strong>The Binary Kill (Deterministic Truth)</strong>
+                </th>
+                <th style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:8px 0px;vertical-align:top;"><strong>The Ruling (Action)</strong>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">"Force-tunnel all traffic to NVA via the GatewaySubnet."</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Loop Trap</strong>: [::/0] on GwSubnet pointing to NVA = <strong>Routing Loop</strong>.</td>
+                <td
+                style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>RULE OUT</strong>; Select specific Spoke-CIDR only.</td>
+              </tr>
+              <tr>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">"Use Global VNet Peering to reach On-Prem via a Hub."</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>Transit Trap</strong>: Global Peering does <strong>not</strong> support <strong>[UseRemoteGw]</strong>.</td>
+                <td
+                style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>RULE OUT</strong>; Select VNet-to-VNet Peering or vWAN.</td>
+              </tr>
+              <tr>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">"Configure WAF to Rate-Limit traffic on App Gateway."</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>SKU Trap</strong>: <strong>[RateLimit]</strong> is a <strong>FrontDoor</strong> only
+                  WAF capability.</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>RULE OUT</strong>; Select WAF Policy for FrontDoor.</td>
+              </tr>
+              <tr>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">"Use Service Endpoints to reach a specific SQL instance."</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>ACL Trap</strong>: <strong>[Svc. Endpt⁷]</strong> is a "Subnet-to-Service"
+                  gate, not Instance-level.</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>RULE OUT</strong>; Select <strong>[Priv. Link⁷]</strong> for (PaaS).</td>
+              </tr>
+              <tr>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;">"Enable BGP on a Basic SKU VPN Gateway."</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 16px 12px 0px;vertical-align:top;"><strong>SKU Kill</strong>: <strong>Basic SKU</strong> = No BGP, No Transit,
+                  No RADIUS.</td>
+                <td style="border-bottom:0.909091px solid rgb(45, 47, 53);padding:12px 0px;vertical-align:top;"><strong>RULE OUT</strong>; Select <strong>[VPNGW(V2+)]</strong>.</td>
+              </tr>
+              <tr>
+                <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;">"Use ASG to filter traffic over Global Peering."</td>
+                <td style="border-bottom-style:none;padding:12px 16px 12px 0px;vertical-align:top;"><strong>Geography Kill</strong>: <strong>[ASG¹⁰]</strong> is incompatible
+                  with <strong>[Global⁴]</strong>.</td>
+                <td style="border-bottom-style:none;padding:12px 0px;vertical-align:top;"><strong>RULE OUT</strong>; Select IP addresses or Svc. Tags.</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+        <p>&nbsp;</p>
+        <div><strong>Hybrid &amp; DNS</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e1ba76ea7886f71d2cf2e0183e8f12ba5">
+            <p style="margin-left:0px;"><span><strong>DNS Resolver:</strong> Confused <strong>Inbound</strong> (On-prem to Azure) with <strong>Outbound</strong> (Azure to On-prem).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e0570c38a82f8dae2e52d2687225053c1">
+            <p style="margin-left:0px;"><span><strong>DNS Peering:</strong> Incorrectly assumed peering automatically shares <strong>Private DNS Zone</strong> links.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e6785798b5977e35b50345a2586662bb8">
+            <p style="margin-left:0px;"><span><strong>SSTP Protocol:</strong> Missed that <strong>SSTP</strong> = <strong>P2S VPN</strong>, not Azure Bastion.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e896dd1ad8180a171693f5afb17adf9ee">
+            <p style="margin-left:0px;"><span><strong>BGP Path:</strong> Missed <strong>AS Path Prepending</strong> as the primary tool for Primary/Backup path selection.</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <div><strong>2. Load Balancing (L4 vs. L7)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ea6fa75c7008f5f69908127fa677ae42c">
+            <p style="margin-left:0px;"><span><strong>Proxy Traffic:</strong> Tried to use <strong>L4 (Standard LB)</strong> for users behind a single proxy; requires <strong>L7 (App Gateway)</strong> for cookie-based affinity.</span>
+            </p>
+          </li>
+          <li data-list-item-id="eb9ff036c0951af7551f8566a1c16cf82">
+            <p style="margin-left:0px;"><span><strong>HA Ports:</strong> Missed <strong>HA Ports</strong> as the requirement for NVA/Firewall load balancing.</span>
+            </p>
+            <p style="margin-left:0px;">&nbsp;</p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <div><strong>3. IP &amp; Routing</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e0d9f29914cce788aa20068c1a4b4a7ae">
+            <p style="margin-left:0px;"><span><strong>BYOIP:</strong> Confused <strong>Custom IP Prefix</strong> (Public/Internet) with <strong>VNet Address Space</strong> (Internal/NIC).</span>
+            </p>
+          </li>
+          <li data-list-item-id="efd46aa7a0b69d067a14febc229d5e9cf">
+            <p style="margin-left:0px;"><span><strong>Forwarded Traffic:</strong> Over-applied "Allow Forwarded Traffic" to direct VNet-to-VNet peering (it is for <strong>Transit</strong> only).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e66531c357dbbfa4149adf238a672c479">
+            <p style="margin-left:0px;"><span><strong>Firewall Subnet:</strong> Incorrectly chose <strong>/29</strong>; the minimum requirement is <strong>/26</strong>.</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <div><strong>4. SKUs &amp; Limits</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e7c325a43e26f88f190a985bff05ad142">
+            <p style="margin-left:0px;"><span><strong>VPN Thresholds:</strong> Missed the <strong>1,000-connection limit</strong> for </span>
+              <code
+              spellcheck="false"><span>VpnGw2</span>
+                </code><span>.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e742a47abf33f8801902e776b8ed31dd4">
+            <p style="margin-left:0px;"><span><strong>Resiliency:</strong> Missed that "surviving datacenter failure" requires the <strong>-AZ</strong> SKU suffix.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ef31e0ce8d0f5f6ea078440fb24b88997">
+            <p style="margin-left:0px;"><span><strong>vWAN SKU:</strong> Missed that <strong>Basic vWAN</strong> does not support ExpressRoute or P2S.</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <div><strong>5. Security &amp; Monitoring</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ee74936f87ffc8c4f751bce3ef9037a71">
+            <p style="margin-left:0px;"><span><strong>Exfiltration:</strong> Missed <strong>Service Endpoint Policies</strong> for restricting access to </span><em><span>specific</span></em><span> storage accounts.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e2a6df90b7a858163b19e42e74718817d">
+            <p style="margin-left:0px;"><span><strong>MAC Addresses:</strong> Chose NSG Flow Logs (L3/4) instead of <strong>VNet Flow Logs</strong> (L2/MAC).</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

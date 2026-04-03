@@ -1,0 +1,113 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Network Watcher</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Network Watcher</h1>
+
+      <div class="ck-content">
+        <div><strong>PREREQUISITE FOR:</strong>
+          <br><strong>- Packet Capture | Connection Monitor → NetworkWatcherAgent deployed to source(VM)</strong>
+          <br><strong>- Network Watcher Tools → Regional Service enablement &nbsp;(Default on Vnet deployment, else manually enable in target Vnet region)&nbsp;</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>Next Hop | Source: NIC | Returns: Hop Type</strong>
+          <br><strong>Trigger:</strong>  <strong>Verify Routing</strong> | <strong>UDR</strong> issues
+          | <strong>Identify NVA path</strong>
+          <br>{VirtualAppliance} = NVA/Firewall (UDR)
+          <br>{Internet} = System Route (0.0.0.0/0)
+          <br>{None} = <strong>Dropped @ NIC</strong> //No valid route</div>
+        <div>&nbsp;</div>
+        <div><strong>IP Flow Verify: Check NSG Allow/Deny</strong> //5-tuple match
+          <br><strong>Trigger:</strong>  <strong>Security Rules</strong> | <strong>Traffic Filtering</strong> | <strong>Confirm Port Access</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>Packet Capture | Payload Analysis | Req: Storage Account</strong>
+          <br><strong>Trigger:</strong>  <strong>Deep Packet Inspection (DPI)</strong> | <strong>Protocol Failure (TLS/SSL)</strong>
+          <br>{TCP Retransmissions} = Loss at 1500 in ER/VPN → <strong>MTU/MSS 1350/1400 to compensate for 10% overhead (Encapsulation)&nbsp;</strong>
+          <br>{Zero Traffic} = Check <strong>Next Hop</strong> (Routing) or <strong>IP Flow</strong> (NSG)</div>
+        <div>&nbsp;</div>
+        <div><strong>TRAFFIC AUDIT (VNet Logs)</strong>
+        </div>
+        <div>*NSG Logs Retired → <strong>VNet Flow Logs</strong> (2026 Std) | Format: <strong>.JSON</strong>
+          <br><strong>V2:</strong> + Bytes/Packets + <strong>Flow State</strong> (Open/Active/Closed)
+          <br><strong>{Encryption: False}</strong>: Internal Exposure → <strong>VNet Encryption</strong> //Req:
+          dV4/eV4
+          <br><strong>{Traffic Analytics}</strong>: <strong>"Top Talkers"</strong> | <strong>Malicious IPs</strong> | <strong>Threat Intel</strong> → <strong>Req: LAW</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div><strong>&nbsp;PERFORMANCE (Connection Monitor)</strong>
+        </div>
+        <div><strong>Conn Monitor | Latency (RTT) | Loss % | Req: Agent + LAW</strong>
+          <br><strong>Trigger:</strong>  <strong>Monitor Endpoint (O365/URL)</strong> | <strong>RTT to On-Prem</strong> | <strong>Performance SLA</strong>
+          <br>{High RTT 4+ Hop}: ISP/External → Use <strong>ExpressRoute</strong>
+          <br>{High Loss @ GW}: Link Saturation → <strong>Upgrade SKU</strong>
+          <br>{&gt;200ms RTT}: Distance → Use <strong>Front Door (Edge)</strong>
+          <br>{&lt;100ms + Loss}: NIC/VM Saturation → <strong>Upsize VM SKU</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <hr>
+        <div>&nbsp;</div>
+        <div><strong>VNet* Flow Logs</strong> | <strong>Traffic Audit (VNet/Subnet Level)</strong> | <strong>Format: .JSON</strong> | <strong>Retention: Storage Lifecycle Rules</strong>
+          <br><strong>*</strong><em><strong>NSG FLogs &nbsp;retired→ Vnet FLogs (2026 exam standard)</strong></em>
+          <br>&nbsp;</div>
+        <ul>
+          <li data-list-item-id="eb26761e224314ba366d783bccc9beb35">
+            <p style="margin-left:0px;"><span><strong>V1</strong> | Basic flow | Captures ingress/egress IP traffic (Allowed/Denied).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e014a01dd7d95255a9e2b209c9c2b9217">
+            <p style="margin-left:0px;"><span><strong>V2</strong> | <strong>+ Bytes | Packets | Enhanced Flow State (Open/Active/Closed)</strong> → <strong>Throughput Analysis</strong>.</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>Audit paths:&nbsp;</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="e987ab780089d0a18de6b51d74e5c38fe">
+            <p style="margin-left:0px;"><span>{Flow Allowed: High Volume} = Data Exfiltration → Check Application Layer/DLP.</span>
+            </p>
+          </li>
+          <li data-list-item-id="eb5ca819db1cb1e2f66925544c8b78243">
+            <p style="margin-left:0px;"><span>{Flow Denied: High Frequency} = Port Scan/Recon → Block Source IP via NSG or Firewall.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e13762daf7bb72995f45b50ed87f9445e">
+            <p style="margin-left:0px;"><span>{Encryption: False} = Internal Exposure → Enable <strong>VNet Encryption</strong> (2026 Objective). //</span><em><span>vCPU floor (dV4, eV4)</span></em>
+            </p>
+          </li>
+          <li data-list-item-id="ea36f04bc466db032867bd19359648497">
+            <p style="margin-left:0px;"><span>{Malicious IP Source} = Threat Intelligence Match → View via <strong>Traffic Analytics</strong> (LAW).</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>Retention:</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ea9e7d476d2406fb46b8ebdaed2b395d5">
+            <p style="margin-left:0px;"><span>Compliance / Cold Audit - &gt; save RAW logs in <strong>Storage Account (longterm)</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="ed4fad65e65dae12707e1360ac0b015f3">
+            <p style="margin-left:0px;"><span><strong>Traffic analytics → </strong>Real-time Visualization / Threat Intel. <strong>Log Analytics Workspace (LAW)</strong> (Shortterm)&nbsp;</span>
+            </p>
+          </li>
+        </ul>
+        <hr>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

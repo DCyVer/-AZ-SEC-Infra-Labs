@@ -1,0 +1,53 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Bastion</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Bastion </h1>
+
+      <div class="ck-content">
+        <p>INSTANT" DECISIONS
+          <br>"User can't connect to Bastion" ➔ Check NSG Inbound for Internet (443).
+          <br>"Bastion deployment stuck in 'Failed' state" ➔ Check NSG Inbound for AzureLoadBalancer
+          (443) or UDR for Forced Tunneling.
+          <br>"Need to RDP into on-prem server via Bastion" ➔ Standard SKU (IP-Connect)</p>
+        <hr>
+        <div><strong>Bastion (2026)</strong>
+          <br><strong>Dev (Free/Min-Cost):</strong> 1 subscription/region | Shared MS
+          Cloud | Browser-only |&nbsp;<strong> Private IP</strong> | No Native Client
+          | vnet
+          <br><strong>Basic (Dedicated):</strong> ≤ 2/vnets (Peering limit) | Static
+          Public IP | <strong>AzureBastionSubnet /26</strong>
+          <br><strong>Standard:</strong> ≤ 50/nodes (Scalable) | Native Client (CLI/Putty)
+          | Shareable Links | IP-connect (On-Prem) | <strong>Kerberos | Vnet(+hub) Peering &nbsp;| File transfer&nbsp;</strong>
+          <br><strong>Premium:</strong>  <strong>Private-only (No PIP)</strong> | Session
+          Recording (TLS 1.2+ → Storage) | <strong>Zonal Redundancy</strong>
+        </div>
+        <div>&nbsp;</div>
+        <div>Subnet: <strong>AzureBastionSubnet</strong> | Min <strong>/26</strong> //N/a
+          for DevSKU
+          <br>NSG In: <strong>GatewayManager +&amp;| Internet &nbsp;&amp;| &nbsp;AzureLoadBalancer(</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">health probes)</span><strong>(443)</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">&nbsp;</span>
+            <br>NSG Out: <strong>AzureCloud (443)</strong> + Guest Subnets (22/3389); <strong>VirtualNetwork (8080/5701)</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+              <br>Fail if: UDR: <strong>::/0 to NVA &nbsp;| OK if </strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">UDR for </span><strong>GatewayManager</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">to the</span><strong>Internet</strong>
+        </div>
+        <div>The <strong>Basic SKU</strong> is the real "trap" here because it sits in
+          the middle with higher costs than Dev but fewer features (like Kerberos)
+          than Standard.</div>
+      </div>
+    </div>
+  </body>
+
+</html>

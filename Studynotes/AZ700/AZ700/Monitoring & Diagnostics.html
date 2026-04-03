@@ -1,0 +1,63 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Monitoring &amp; Diagnostics</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Monitoring &amp; Diagnostics </h1>
+
+      <div class="ck-content">
+        <div>
+          <p>PREREQUISITE FOR:
+            <br>- <strong>Diagnostic Logs</strong> (VPN Gateway | Firewall | App Gateway
+            | &lt;…&gt;) → &nbsp;<strong>Log Analytics Workspace</strong> or <strong>Event Hub</strong>
+          </p>
+          <p>
+            <br><strong>Session Management for outbound and balanced traffic.&nbsp;</strong>
+            <br><strong>//</strong>Application Delivery or Network Monitoring under Troubleshooting
+            Connection Drops</p>
+          <div>&nbsp;</div>
+          <div><strong>GATEWAYS:</strong>
+          </div>
+          <div>Effective Routes | <strong>Missing BGP</strong> -&gt; Enable Gateway Propagation.
+            <br>VPN Diags | <strong>IKEDiagnosticLog</strong> -&gt; PSK/Proposal Mismatch.
+            <br>VPN Diags | <strong>RouteDiagnosticLog</strong> -&gt; BGP/Routing Flaps.
+            <br>VPN Health | <strong>High CPU</strong> -&gt; SKU Limit (Upgrade to <strong>Az</strong> SKU)</div>
+          <div>&nbsp;</div>
+          <div><strong>SESSION:</strong>
+          </div>
+          <div>Precedence | <strong>NAT Gateway &gt; Load Balancer</strong> for Outbound.
+            <br>Timeout | <strong>120 Mins</strong> -&gt; Only possible with <strong>NAT Gateway</strong>.
+            <br>Firewall | <strong>Fail-Close</strong> -&gt; If FW is down/overloaded, traffic
+            stops (Secure but Dead).<span>.</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>TCP Idle Timeouts</strong> (≥4mins (default) | Outbound/balanced
+            traffic&nbsp;</div>
+          <div><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">{NAT Gateway} | [≤120 mins] → </span><strong>Outbound SNAT persistence</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(Precedence Winner).</span>
+              <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">{Standard LB} | [≤100 mins] → </span><strong>Backend Pool stability</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+                <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">{App Gateway} | [≤30 mins] → </span><strong>Long-running web requests</strong>
+                <span
+                style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(e.g., file uploads).</span>
+                  <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">{Azure Firewall} | [Default: 4 mins] → </span><strong>N-S: ≤15 mins</strong>
+                  <span
+                  style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(via request) |</span><strong>E-W: Fixed 5 mins</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span>
+                    <br><em>(!) if subnet includes both, then NAT &gt; Std. LoadBalance for outbound flows&nbsp;</em>
+          </div>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

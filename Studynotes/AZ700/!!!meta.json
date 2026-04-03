@@ -1,0 +1,5319 @@
+{
+	"formatVersion": 2,
+	"appVersion": "0.101.3",
+	"files": [
+		{
+			"isClone": false,
+			"noteId": "yZqz36N5j7bO",
+			"notePath": [
+				"yZqz36N5j7bO"
+			],
+			"title": "AZ700",
+			"notePosition": 70,
+			"prefix": null,
+			"isExpanded": true,
+			"type": "text",
+			"mime": "text/html",
+			"attributes": [
+				{
+					"type": "label",
+					"name": "myLabel",
+					"value": "",
+					"isInheritable": false,
+					"position": 10
+				},
+				{
+					"type": "label",
+					"name": "autoReadOnlyDisabled",
+					"value": "",
+					"isInheritable": false,
+					"position": 20
+				}
+			],
+			"format": "html",
+			"dataFileName": "AZ700.html",
+			"attachments": [
+				{
+					"attachmentId": "10nKXhLl50zb",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "AZ700_image.png"
+				},
+				{
+					"attachmentId": "2RVDQWq5PrMG",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "4duk9XrGonOO",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "1_AZ700_image.png"
+				},
+				{
+					"attachmentId": "9X2MaIr9U19Z",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "1_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "abQZfEUhuM10",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "2_AZ700_image.png"
+				},
+				{
+					"attachmentId": "ah5JwdEoe5Ko",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "3_AZ700_image.png"
+				},
+				{
+					"attachmentId": "Ao4UABOxCmSq",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "2_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "B7GTMSd1f021",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "3_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "BPaAcgZNWpjl",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "4_AZ700_image.png"
+				},
+				{
+					"attachmentId": "bQnMua9G09xB",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "5_AZ700_image.png"
+				},
+				{
+					"attachmentId": "CawdGaNzWam4",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "6_AZ700_image.png"
+				},
+				{
+					"attachmentId": "eEPWNhRXlaCD",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "4_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "FbHgYiG03kcQ",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "5_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "iIbELRjmOJkm",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "7_AZ700_image.png"
+				},
+				{
+					"attachmentId": "is9pH7fAoxY5",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "6_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "it07exAqf6LN",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "8_AZ700_image.png"
+				},
+				{
+					"attachmentId": "J1vE3ua8DooV",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "7_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "J887QwOkpjfG",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "8_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "JCx9Rwd1X5NO",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "9_AZ700_image.png"
+				},
+				{
+					"attachmentId": "k3MOgme2HPOh",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "9_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "k8pba4VE7gf6",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "10_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "KM7O41B8xuxV",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "10_AZ700_image.png"
+				},
+				{
+					"attachmentId": "KqJ922BdeZWN",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "11_AZ700_image.png"
+				},
+				{
+					"attachmentId": "mgwyyNJmq2hQ",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "12_AZ700_image.png"
+				},
+				{
+					"attachmentId": "mrOjY4Jl1mlk",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "11_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "MTDFGgKV3io2",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "12_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "njH24jnWfZfl",
+					"title": "image.gif",
+					"role": "image",
+					"mime": "image/gif",
+					"position": 10,
+					"dataFileName": "AZ700_image.gif"
+				},
+				{
+					"attachmentId": "NPzIXUMHGL6L",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "13_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "O1rWoStqUy9K",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "14_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "oPtxZiE3zeLK",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "15_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "or0mlgjEuC0k",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "16_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "OvbBS2FjJxko",
+					"title": "image.gif",
+					"role": "image",
+					"mime": "image/gif",
+					"position": 10,
+					"dataFileName": "1_AZ700_image.gif"
+				},
+				{
+					"attachmentId": "Qj37xeGTtcQ2",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "17_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "qKYfqwtYPyzV",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "13_AZ700_image.png"
+				},
+				{
+					"attachmentId": "QOrSkWC1SYuu",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "18_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "quhksiWic2XW",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "19_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "S6mM2LmYLgqs",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "20_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "SDTQHpPUvHEN",
+					"title": "image.gif",
+					"role": "image",
+					"mime": "image/gif",
+					"position": 10,
+					"dataFileName": "2_AZ700_image.gif"
+				},
+				{
+					"attachmentId": "V6adR0x0h9Wi",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "14_AZ700_image.png"
+				},
+				{
+					"attachmentId": "Vi8Ee83dy8nF",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "21_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "viO7DCoqciQl",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "15_AZ700_image.png"
+				},
+				{
+					"attachmentId": "Whjjhle7pHD4",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "16_AZ700_image.png"
+				},
+				{
+					"attachmentId": "woAy3hEZX0Hc",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "22_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "xqQYjp86oFQT",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "17_AZ700_image.png"
+				},
+				{
+					"attachmentId": "Y4rTy2tMIHuI",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "18_AZ700_image.png"
+				},
+				{
+					"attachmentId": "Y9EQtG8K287j",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "19_AZ700_image.png"
+				},
+				{
+					"attachmentId": "YDQnAmDdgj4h",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "20_AZ700_image.png"
+				},
+				{
+					"attachmentId": "YZ1UKlr5BZa3",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "21_AZ700_image.png"
+				},
+				{
+					"attachmentId": "YzzhvQ7zvAlF",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/jpg",
+					"position": 10,
+					"dataFileName": "22_AZ700_image.png"
+				},
+				{
+					"attachmentId": "ZEBaGHaqhyMz",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "23_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "zkIJIhyTa4vh",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "24_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "zwB1HbNhvL3I",
+					"title": "inline image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "25_AZ700_inline image.png"
+				},
+				{
+					"attachmentId": "Zxz9PzSm0R0U",
+					"title": "image.png",
+					"role": "image",
+					"mime": "image/png",
+					"position": 10,
+					"dataFileName": "23_AZ700_image.png"
+				}
+			],
+			"dirFileName": "AZ700",
+			"children": [
+				{
+					"isClone": false,
+					"noteId": "2LV9WDEtkhGU",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"2LV9WDEtkhGU"
+					],
+					"title": "Exam prep",
+					"notePosition": 10,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Exam prep.html",
+					"attachments": []
+				},
+				{
+					"isClone": false,
+					"noteId": "2kn6clgvQded",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"2kn6clgvQded"
+					],
+					"title": "Promptv2",
+					"notePosition": 20,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Promptv2.html",
+					"attachments": [
+						{
+							"attachmentId": "eJye0prgeNFI",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "Promptv2_image.gif"
+						},
+						{
+							"attachmentId": "H4yqNQ51wyD2",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "1_Promptv2_image.gif"
+						},
+						{
+							"attachmentId": "TtSlG9nKBLVN",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "2_Promptv2_image.gif"
+						}
+					],
+					"dirFileName": "Promptv2",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "kLVvkHRgHIBm",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"2kn6clgvQded",
+								"kLVvkHRgHIBm"
+							],
+							"title": "Cheatsheet prompt ",
+							"notePosition": 10,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [
+								{
+									"type": "label",
+									"name": "autoReadOnlyDisabled",
+									"value": "",
+									"isInheritable": false,
+									"position": 10
+								}
+							],
+							"format": "html",
+							"dataFileName": "Cheatsheet prompt.html",
+							"attachments": [],
+							"dirFileName": "Cheatsheet prompt",
+							"children": [
+								{
+									"isClone": false,
+									"noteId": "cwePPpEuylv0",
+									"notePath": [
+										"yZqz36N5j7bO",
+										"2kn6clgvQded",
+										"kLVvkHRgHIBm",
+										"cwePPpEuylv0"
+									],
+									"title": "New note",
+									"notePosition": 10,
+									"prefix": null,
+									"isExpanded": true,
+									"type": "text",
+									"mime": "text/html",
+									"attributes": [],
+									"format": "html",
+									"dataFileName": "New note.html",
+									"attachments": [
+										{
+											"attachmentId": "4XATxOBZK7r9",
+											"title": "image.gif",
+											"role": "image",
+											"mime": "image/gif",
+											"position": 10,
+											"dataFileName": "New note_image.gif"
+										},
+										{
+											"attachmentId": "eWTzIJ8ipYz4",
+											"title": "image.gif",
+											"role": "image",
+											"mime": "image/gif",
+											"position": 10,
+											"dataFileName": "1_New note_image.gif"
+										},
+										{
+											"attachmentId": "HOXkxtsOdrXu",
+											"title": "image.png",
+											"role": "image",
+											"mime": "image/jpg",
+											"position": 10,
+											"dataFileName": "New note_image.png"
+										},
+										{
+											"attachmentId": "ml31ArY3TtKQ",
+											"title": "image.gif",
+											"role": "image",
+											"mime": "image/gif",
+											"position": 10,
+											"dataFileName": "2_New note_image.gif"
+										},
+										{
+											"attachmentId": "zfy2u5h6vAjm",
+											"title": "image.gif",
+											"role": "image",
+											"mime": "image/gif",
+											"position": 10,
+											"dataFileName": "3_New note_image.gif"
+										}
+									],
+									"dirFileName": "New note",
+									"children": [
+										{
+											"isClone": false,
+											"noteId": "RegMq5UwHQGe",
+											"notePath": [
+												"yZqz36N5j7bO",
+												"2kn6clgvQded",
+												"kLVvkHRgHIBm",
+												"cwePPpEuylv0",
+												"RegMq5UwHQGe"
+											],
+											"title": "Backup",
+											"notePosition": 10,
+											"prefix": null,
+											"isExpanded": false,
+											"type": "text",
+											"mime": "text/html",
+											"attributes": [],
+											"format": "html",
+											"dataFileName": "Backup.html",
+											"attachments": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "aHDpXdJ2W1sV",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"aHDpXdJ2W1sV"
+					],
+					"title": "Architecture and traffic flow",
+					"notePosition": 30,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [
+						{
+							"type": "label",
+							"name": "autoReadOnlyDisabled",
+							"value": "",
+							"isInheritable": false,
+							"position": 10
+						}
+					],
+					"format": "html",
+					"dataFileName": "Architecture and traffic flow.html",
+					"attachments": [
+						{
+							"attachmentId": "058H22o8qTVD",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "1Hl20Ddyh0U3",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "1_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "1uZp0oJR196b",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "2_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "29xoIA3GbLwv",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "3_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "2fARuL1yU2pA",
+							"title": "inline image.jpg",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "Architecture and traffic f.jpg"
+						},
+						{
+							"attachmentId": "2pps0fkUbReH",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "4_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "3PBcscc6SSD4",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "5_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "4t7ZYpCTFa3Z",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "6_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "6aBAkN1Gjx97",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "7_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "6IEZ9yO843rD",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "Architecture and traffic f.gif"
+						},
+						{
+							"attachmentId": "6W5QC2BufJ6X",
+							"title": "image.png",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "8_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "7n0DbBfPX0K1",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "9_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "83982prTYR4k",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "10_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "86rfq0nTV8pb",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "11_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "8CWnK2IgDzBD",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "12_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "8Ut9vyMUGNgJ",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "13_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "8ZwwaJys20Na",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "14_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "9OACfsRUqXDf",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "1_Architecture and traffic f.gif"
+						},
+						{
+							"attachmentId": "aaBBxksocefH",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "15_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "aEidc1yihYCy",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "16_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "AHCSWEsmEEQR",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "17_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "APlZzM4oo5KC",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "18_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "b7nakHONoNtc",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "19_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "bLuP93EHEInw",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "20_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "BNiyCk0Y6g1H",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "21_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "BUrftrxWRLvm",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "22_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "cDwasr5ax571",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "23_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "CDZKSd7ZpW2n",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "24_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Cfv3VUrBSbGp",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "25_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "cID0EXnqC69f",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "26_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Db2NhPyETftJ",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "27_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Dh0eRgOKGXTG",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "28_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "DNqqqPjk581X",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "29_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "E7CQzAJbt1Hr",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "30_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "E96cfkIFXGGB",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "31_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "ExTLKMxKuBGY",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "32_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "fB0mUXREBp5s",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "33_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "FH77dgnMJJCV",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "34_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "FsuBFaWzJ7CA",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "35_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "FwZoOrOooxp5",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "36_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "FzntPzmOHTuC",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "37_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "GFGCeCJtVSZF",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "38_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "gGMGH9hTYHqv",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "39_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "GMmWJG2sPOlz",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "40_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "GV1vkrrfotlf",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "41_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "gYeFHr4qJRyU",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "42_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "HHpHL4G2gTgy",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "43_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "HN6zWUCOlvHf",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "44_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "i9otIpdFL7iu",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "45_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "ieq975ITNyy2",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "46_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "jCOQCNGVWEQY",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "47_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "jEQJeuz5EM2T",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "48_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "jLReGjI6DsXh",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "49_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "jRkpRNXlQGee",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "50_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "lb5fxE1IxPxk",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "51_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Ld4LOaqygH2W",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "52_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "lDRYNBx0LjqG",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "53_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "m5jTHZbTqHtF",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "54_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "MQNR4MojsWWW",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "55_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "mvyRha7pPZAH",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "56_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "NMBGic6yyV9m",
+							"title": "inline image.jpg",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "1_Architecture and traffic f.jpg"
+						},
+						{
+							"attachmentId": "NMmt6YGjm8aa",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "57_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "OJBphyeFazD3",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "58_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "OwSSNtEzOM2o",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "59_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "p5jH6sA5e41r",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "2_Architecture and traffic f.gif"
+						},
+						{
+							"attachmentId": "pc3fRcwLkzlA",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "60_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "piEyC1OJR1Gi",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "61_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "PXXbL3xEYkIL",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "62_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Q2sWJ07ScHQ2",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "63_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Q5AWXtgwFhUF",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "64_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "qe7zlnYxXd2d",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "65_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "QH8lH8M5oMwx",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "66_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "QkDW3ZEfIfhw",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "67_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "QUzN6AtRVBwJ",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "68_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "R4Wi6eQ3s4Jk",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "69_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "r9r7xmoVRwYo",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "70_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "S6UiUUOaeXlF",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "71_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "sITDnY11HcQ4",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "72_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "SJP9vocapY3H",
+							"title": "inline image.jpg",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "2_Architecture and traffic f.jpg"
+						},
+						{
+							"attachmentId": "sJt9r7C0uXB1",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "73_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "StNjVQ0VxKLI",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "74_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "sTs3LsJ99PLt",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "75_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "TeaNzE3lMjno",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "76_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "TF9pIP4H1LCM",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "77_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Tg6F5tGMQ6XO",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "3_Architecture and traffic f.gif"
+						},
+						{
+							"attachmentId": "UCxfcCMY3MSw",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "78_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "uJpNqeW67Dz8",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "79_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "UMjEELtp9Zsi",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "80_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "UnpwMRRAJlft",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "81_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "usOM43riYG4g",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "82_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "UzQg7ED4p8Ys",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "4_Architecture and traffic f.gif"
+						},
+						{
+							"attachmentId": "V5TssLsx8tRi",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "83_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "v9DZHvGZgIxv",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "84_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "VhHCwe55aTcY",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "85_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "VMDTBoyRGqPz",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "86_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "VXpTyNWDSK7Q",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "87_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "wkdgPVLSSgUy",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "88_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "X3I6rVqK2YlY",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "89_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "XflQ5zIqS2tI",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "90_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "xpUDJZVLF5Cz",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "91_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "Xz64c1kauMpn",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "92_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "YJomxsraUgnJ",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "93_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "YkFVKUlher7H",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "94_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "YLZQLMkN48uv",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "95_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "yzyjqZtAATdA",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "96_Architecture and traffic f.png"
+						},
+						{
+							"attachmentId": "ZWhX4w8i1THt",
+							"title": "inline image.jpg",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "3_Architecture and traffic f.jpg"
+						},
+						{
+							"attachmentId": "zxfiCXg851lC",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "97_Architecture and traffic f.png"
+						}
+					],
+					"dirFileName": "Architecture and traffic flow",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "QbZwqZ2Pm8Ku",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"aHDpXdJ2W1sV",
+								"QbZwqZ2Pm8Ku"
+							],
+							"title": "Architecture and traffic flow",
+							"notePosition": 10,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [
+								{
+									"type": "label",
+									"name": "autoReadOnlyDisabled",
+									"value": "",
+									"isInheritable": false,
+									"position": 10
+								}
+							],
+							"format": "html",
+							"dataFileName": "Architecture and traffic flow.html",
+							"attachments": [
+								{
+									"attachmentId": "00SgCNMlr1Xl",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "2nn36mxhV3FQ",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "3Rvf2X4MLCax",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "9AAmpOxvlVSA",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "1_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "9gDjh9u6rKLF",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "1_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "A4eOVQ1P0RKL",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "2_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "aadKDH45ShhU",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "3_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "cZohNbp3Y2fL",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "DbPGqktQHAUK",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "2_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "dZKK5p7okPoh",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "2_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "FlQajFn1bMv1",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "4_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "gdGt2MZKxYHc",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "3_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "GuJbKg9R1gyL",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "3_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "hdrqb6XlKDaL",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "5_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "hlaclujfm2tQ",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "6_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "hSiALvBbokko",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "7_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "hXwIlhGr7GFe",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "8_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "J7OB2wTw356x",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "4_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "JiiUNI0LzKZe",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "9_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "krabx6dGSZEC",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "4_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "lNIFfeGXlMj1",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "5_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "lU5abAfCPs8E",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "5_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "LV1RoljQndcv",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "6_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "mgDNDFmqkdqM",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "10_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "n6Sf5yocczzZ",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "6_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "Nu6H7s0PCE6i",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "11_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "o3nogRJObcYP",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "7_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "OFBPtO1u4tRj",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "12_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "OyNkpVkqUYm0",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "8_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "PZiaD6uUv7Tb",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "13_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "qeZ5RC7wtxuH",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "14_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "rqvTyrnlGTlL",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "15_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "s9z3YhgmIrsi",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "7_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "SS8LJiLIDggF",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "8_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "TgJwdrxdsua9",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "9_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "tmXhtu0aA7Ja",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "10_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "tzJdaJZFmWgY",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "16_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "vBCCnpxr6uds",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "11_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "VOPrI3Ctvyaz",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "12_Architecture and traffic f.jpg"
+								},
+								{
+									"attachmentId": "W4XkfjmWSfWI",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "9_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "w6x7clwiVs5V",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "17_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "wrAEADipqeND",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "10_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "z9tSCQuYkjFh",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "18_Architecture and traffic f.gif"
+								},
+								{
+									"attachmentId": "Zi4E6xsvKp4X",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "11_Architecture and traffic f.png"
+								},
+								{
+									"attachmentId": "ZUuuiurWiE7I",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "13_Architecture and traffic f.jpg"
+								}
+							],
+							"dirFileName": "Architecture and traffic flow",
+							"children": [
+								{
+									"isClone": false,
+									"noteId": "FvVlAd3MazBC",
+									"notePath": [
+										"yZqz36N5j7bO",
+										"aHDpXdJ2W1sV",
+										"QbZwqZ2Pm8Ku",
+										"FvVlAd3MazBC"
+									],
+									"title": "New note",
+									"notePosition": 20,
+									"prefix": null,
+									"isExpanded": false,
+									"type": "text",
+									"mime": "text/html",
+									"attributes": [],
+									"format": "html",
+									"dataFileName": "New note.html",
+									"attachments": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "awu2H2EhU239",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"awu2H2EhU239"
+					],
+					"title": "Global rules and Centralized Management",
+					"notePosition": 60,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Global rules and Centralized M.html",
+					"attachments": [
+						{
+							"attachmentId": "0SuiIJJbKueR",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "2eVOlevsE1DU",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "2lb61f6wDb4e",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "1_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "2MMzbPePm7S2",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "1_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "3WFPjxQMiZjl",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "2_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "485UysUpI8rC",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "2_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "6TzKaOwg55Ms",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "3_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "7VHL3XMkUv37",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "4_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "91DPqfOKIMrh",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "5_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "A82MR2KIjqNk",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "6_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "AUjp7nigQnCS",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "3_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "b3a3mB1IT93o",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "7_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "bi3Kq80x3ydi",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "8_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "CILeFm6PlJMs",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "9_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "dVXFMcoJyQxy",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "10_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "EZLZ5SAhC2LI",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "11_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "F52rztlP1YjM",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "12_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "FFwa2FTjzESw",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "4_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "FRuVfA1wjfvW",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "13_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "FVMX5SRKnWBT",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "14_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "Fx5vGWcguU6i",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "15_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "fZmmNDzVRIDa",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "16_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "iJrO1S22WB2r",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "17_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "iZadhAZPDLM0",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "18_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "kcqAyGRCyS0Q",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "5_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "lgJOgvv73Ugg",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "19_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "lusojVVTmC8r",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "20_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "m9g5Cy4Hlxf4",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "6_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "mlyOfL0ex8Cf",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "7_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "N3xRuePilDB9",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "21_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "nDVusNn3KVV3",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "22_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "omFOHIAvshUq",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "8_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "OQTxaV27cMG4",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "23_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "pLXz6sAocOet",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "24_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "pOxroPmJIHvL",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "25_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "qnVZFdwGT5k9",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "9_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "Qw3fApPoIlgq",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "26_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "r2XR8jVFXuHX",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "10_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "RkvuvsvigDHx",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "27_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "rtzmX98sjSBv",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "28_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "rZldsOIGrNJ8",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "29_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "S4p8ibL7xcCH",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "30_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "sDCXJ5cV8RTd",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "11_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "sWHsUZvh2WGF",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "31_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "TVnitp6h3s2e",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "32_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "U8ZuF0Vs85EI",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "12_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "uCwmJdE8e1MP",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "33_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "UpSFFaPFQJSk",
+							"title": "image.png",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "13_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "uTo4QGJQbRkf",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "14_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "VsbU7497OdRr",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "15_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "WkRBjSsjl2Yf",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "34_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "WuNs4imCDZVw",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "35_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "XOsBKgeljEtz",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "36_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "xq0ldG5O7lGk",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "37_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "XyaeJALTeUMR",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "16_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "XZZe3L6y9nxd",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "17_Global rules and Centraliz.png"
+						},
+						{
+							"attachmentId": "Ybm3OKxjobue",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "38_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "yhlDDz2qvzam",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "39_Global rules and Centraliz.gif"
+						},
+						{
+							"attachmentId": "YWnC8IwlcQuO",
+							"title": "image.gif",
+							"role": "image",
+							"mime": "image/gif",
+							"position": 10,
+							"dataFileName": "40_Global rules and Centraliz.gif"
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "IkUeyrxZMQ4b",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"IkUeyrxZMQ4b"
+					],
+					"title": "Gateways",
+					"notePosition": 270,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Gateways.html",
+					"attachments": [
+						{
+							"attachmentId": "AU1mj21yKySF",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "Gateways_inline image.png"
+						},
+						{
+							"attachmentId": "BUnZFTgE912M",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "1_Gateways_inline image.png"
+						},
+						{
+							"attachmentId": "DIpK4u4sUPQc",
+							"title": "image.png",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "Gateways_image.png"
+						}
+					],
+					"dirFileName": "Gateways",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "WbxbcgoOcsUa",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"IkUeyrxZMQ4b",
+								"WbxbcgoOcsUa"
+							],
+							"title": "NAT/SNAT/DNAT ",
+							"notePosition": 30,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "NATSNATDNAT.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "J1Cay5AFb2m6",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"IkUeyrxZMQ4b",
+								"J1Cay5AFb2m6"
+							],
+							"title": "Application Gateway ",
+							"notePosition": 40,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Application Gateway.html",
+							"attachments": [
+								{
+									"attachmentId": "5tQgVOywl4tC",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "Application Gateway_inline.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "XTzmeGwH8ktX",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"IkUeyrxZMQ4b",
+								"XTzmeGwH8ktX"
+							],
+							"title": "ExpressRoute (+Fastpath)",
+							"notePosition": 50,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "ExpressRoute (+Fastpath).html",
+							"attachments": [
+								{
+									"attachmentId": "09uC3STUB1RU",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "0EOMaW0WLaKC",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "0UUNnlJxnrdd",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "2_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "1m6jJMWx6ebc",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "3_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "1mI5WOUObxOc",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "4_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "1oS5oQBOBa5X",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "5_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "1tBpgw8aqyXB",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "2LoVRWCO5PB4",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "1_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "352MT3BgEYwn",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "6_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "35EBm8t92qhn",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "7_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "3AVpcqYT198V",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "8_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "3g97D11a3BW6",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "3Q24D40tJkgS",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "9_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "3WRVmA6rBTat",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "10_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "3xzF2QTjQQ3E",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "1_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "4AES5AlPhm6w",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "2_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "4DjoYpxHjvqv",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "11_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "4EpwEkHVUw4D",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "12_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "4ieLaugBMmcr",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "13_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "56As1qrFPVDe",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "14_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "5AtdzaB6s8ER",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "15_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "5VW41QItBQnb",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "16_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "6CM1zTzrFqZ4",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "17_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "6NvxjhicJfn6",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "18_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "70A9qb2iHV9t",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "19_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "7FAZ4hB902ym",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "20_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "7wP0w0dnJSCn",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "21_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "8cv00ZCVNuna",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "22_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "9Gc3GgQLuZsx",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "23_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "9KNkdUrvs5GV",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "24_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "9YTadczuQ70m",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "25_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "a976lFAUl8m0",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "26_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "AbVMG38NeIuB",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "27_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "AEFDlCUn5XB0",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "28_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "AOdx8X9fo3oo",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "ExpressRoute (+Fastpath)_i.gif"
+								},
+								{
+									"attachmentId": "APFsMjZPiPey",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "29_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "AXz1a28JWbY4",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "30_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ayLPhyWnDaKA",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "2_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "b7IGbigBycSn",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "3_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "BaIFC9vxV1xb",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "31_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "bbPQHEOcxgDd",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "32_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "bkg4qZepyGBd",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "33_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "C66yCumUzyNn",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "34_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "cbY2fsLcwDcS",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "35_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ClzYeyv2T38D",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "4_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "cOZMduxhOGPr",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "36_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "crlJ4wahEd7i",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "37_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "D34tkWiI60hO",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "38_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "D5Ex5m1lNMwi",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "39_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "D7zQNd2vaHCO",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "3_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "dMZdDQtoAQkt",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "5_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "dxFsR9eh3P2T",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "6_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "DyIxzHyH9s7q",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "40_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "eetB4YauMuGL",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "41_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "emUtk3XkyLmi",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "42_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ENwQ4vVuQI9E",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "43_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "EpZlzu9OxEla",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "44_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ErMDmMXB8SdB",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "45_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "f44sGtsRTwNj",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "46_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "F6meh1R04UVm",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "47_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "FAEY3TwsAHpx",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "48_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "FfucaAvgLB1Z",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "49_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "fgkXfl0bfjBc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "50_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Fh9r5ndAvVd9",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "51_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "fQmof0o54yeK",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "52_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "fTaLuFAjlnzI",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "53_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "G4TaVK5peVyU",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "54_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "GdZKGcmsiZsl",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "55_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ghAAugYZyi3B",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "4_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "GkM27hVoMjVW",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "56_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "GncD3eHQeWFn",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "57_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "GOXrUQNdxYPa",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "58_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "gtDzmkXEW77z",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "59_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "gX0Mp2nsNEJ9",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "60_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "H1QafrOHCXHs",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "61_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "H3cDGXXkPVhc",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "62_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "HFum2pQEqmG7",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "63_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Hg79l9M4tQBf",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "64_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "HKS8fcHzV9gM",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "65_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "HkXfJTrZz4Ou",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "66_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "hNT2XGnd23YZ",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "67_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "HOyKiwjIGgdA",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "68_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "hpE3HBHJYv8l",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "69_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "HWcRPbOzfKTe",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "7_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "ItoOBZW8WXPd",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "70_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ItzqDqkDxVQg",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "71_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "j2x6pLCZRJ4W",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "72_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "jaGw3YOPS27O",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "8_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "JoEdnnNGyP9E",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "9_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "JR7UXvrpUNEy",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "73_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "JzEdyeSfTbCa",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "74_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "k2IilVERvNKQ",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "75_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "kAshvglNWlju",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "10_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "KbkbBmKZ5AB1",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "76_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "kFFN182VCsSz",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "77_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "KOAssScz0FfZ",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "78_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Kp3v4tUr5i04",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "79_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "kp40wPaHpv1p",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "80_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "kZhc3hTD89y6",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "5_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "l3lHtry7IZpz",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "81_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "l6kQ3KFFM9Ax",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "82_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "LDwDRjhI4Ncc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "83_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "lfOnz179K6og",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "84_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "lk0Tx68IJoZa",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "85_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Lp9H2XWfifVc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "86_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "MCdW1PXpBn9P",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "87_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "MfEw51WSDjHf",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "88_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "mhrmV4J3xvxO",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "89_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "mo3l0S1fPVqI",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "90_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "mQgQDAKyfR30",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "91_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Mtc2QPWyT9qr",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "92_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "mwxZmiChUFL5",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "93_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "NBk8McWJGw4q",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "6_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "NEq2NFbcbrDb",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "94_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "NFsxtfC6d1TU",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "95_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "nKOxbAvxGtPW",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "96_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "NYZhkSsVqTaw",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "97_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "oGIYs1MMqoXl",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "1_ExpressRoute (+Fastpath)_i.gif"
+								},
+								{
+									"attachmentId": "Ot10TTU6BRFh",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "98_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Pi0nFJmxJXG1",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "99_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "pm8Jr7bztfSF",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "11_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "pXRrVzX5R3ds",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "12_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "q3BpidyepMgA",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "100_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "qdGAQsJLRN0f",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "101_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "qeGchjfm4xOM",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "102_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "qK77HwkI66dy",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "103_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Qx1esBgrAuQt",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "104_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "qYRNG78g98cB",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "13_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "R1YA2kPjIsMR",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "14_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "RAXSVdrGgL8o",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "105_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "rDgkvt0eV6jc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "106_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "regWww4Zlyx2",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "107_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "RFbUK7MOPLXm",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "108_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "RnFKlNTWKXku",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "109_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "RpBVF7Ap1p7E",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "110_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "s0ZhVkWVuSWo",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "111_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "SbrDHlFGEktq",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "112_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Sbscfff3lpeY",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "113_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "skI3J0TdK0XC",
+									"title": "inline image.jpg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "7_ExpressRoute (+Fastpath)_i.jpg"
+								},
+								{
+									"attachmentId": "spH8EussgnVC",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "114_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "sVog8ugEAmJN",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "115_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "TbC6UoxxfCFg",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "116_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Tkn9fMfmFVX2",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "117_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "TknZZIAK6nid",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "118_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "tTacvhJQupI1",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "119_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "TYx7S3otB3Dm",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "120_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "UgIT4ECk6zeY",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "121_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Ulc5sfqM1xJa",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "122_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "upjGjtX8Zc3f",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "123_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "uVYgYNegsaLs",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "124_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "UXTFN3Zpq8k3",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "125_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "V0SQN00L4bRd",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "126_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Vx2dYUc54BGX",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "127_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "VxdnqHCG3ak5",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "128_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Wc73AZfZs8SR",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "129_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "WDQ0bwWvtTLe",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "15_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "wIkkifJF72Jh",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "130_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "WpKm1HsnIIrB",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "16_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "WSlqEnhwkdqu",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "131_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "WtDZVETl9uyh",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "132_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "x3rHDLZq9HWG",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "133_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "xnf2ZPo5wHLu",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "134_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "XXx1Ayzr9J00",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "135_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "YHf1ayOsBxRT",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "136_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "yJu6n2xvO1op",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "137_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ykWT5Jk3Mf3m",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "138_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "Yl5Gfs5vw8yB",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "139_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "YolHaTRjJPiL",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "140_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "yOOXMZijdOic",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "141_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "yuKNSoFpEHF2",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "142_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "YyMGCczFvh6E",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "143_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "z2IMMWbqeARg",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "144_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "z591pWbPtiYa",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "145_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ZiqXKfThW4Oz",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "146_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "zJtMpf0PoVig",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "147_ExpressRoute (+Fastpath)_i.png"
+								},
+								{
+									"attachmentId": "ZlYpFYzbPKSN",
+									"title": "image.jpeg",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "17_ExpressRoute (+Fastpath)_.jpeg"
+								},
+								{
+									"attachmentId": "zPQe78L31pTv",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "148_ExpressRoute (+Fastpath)_i.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "i9wTITDud39m",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"IkUeyrxZMQ4b",
+								"i9wTITDud39m"
+							],
+							"title": "Azure VPN Gateway",
+							"notePosition": 60,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Azure VPN Gateway.html",
+							"attachments": [
+								{
+									"attachmentId": "2PWCKSw7WRfP",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "Azure VPN Gateway_image.gif"
+								},
+								{
+									"attachmentId": "gAtiZzkoSlj8",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "1_Azure VPN Gateway_image.gif"
+								},
+								{
+									"attachmentId": "GtHrQPO7Y8jt",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "2_Azure VPN Gateway_image.gif"
+								},
+								{
+									"attachmentId": "gzoNtYkcBi7H",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "3_Azure VPN Gateway_image.gif"
+								},
+								{
+									"attachmentId": "WR9jE95MYggz",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "4_Azure VPN Gateway_image.gif"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "UhZUuXVttlE8",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"IkUeyrxZMQ4b",
+								"UhZUuXVttlE8"
+							],
+							"title": "Traffic Manager/ Front door",
+							"notePosition": 140,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Traffic Manager Front door.html",
+							"attachments": [
+								{
+									"attachmentId": "LBTGPBgJONUS",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "Traffic Manager Front door.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "g9iJbV4AMBn4",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"IkUeyrxZMQ4b",
+								"g9iJbV4AMBn4"
+							],
+							"title": " Communication & OnPrem Data Gateway.",
+							"notePosition": 150,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Communication & OnPrem Data Ga.html",
+							"attachments": [
+								{
+									"attachmentId": "qQSAsXWkmkK2",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "Communication & OnPrem Dat.gif"
+								},
+								{
+									"attachmentId": "UaU39T0rT8l7",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "1_Communication & OnPrem Dat.gif"
+								},
+								{
+									"attachmentId": "UcGElVUvPDg7",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "2_Communication & OnPrem Dat.gif"
+								}
+							]
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "M28XOILQCY2N",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"M28XOILQCY2N"
+					],
+					"title": "Routing",
+					"notePosition": 280,
+					"prefix": null,
+					"isExpanded": true,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Routing.html",
+					"attachments": [
+						{
+							"attachmentId": "PhIPg37p0b07",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "Routing_inline image.png"
+						}
+					],
+					"dirFileName": "Routing",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "rJQndwgkMD3n",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"rJQndwgkMD3n"
+							],
+							"title": "Azure Route Server",
+							"notePosition": 10,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Azure Route Server.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "WtZ9M6ccLK9D",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"WtZ9M6ccLK9D"
+							],
+							"title": "Bastion ",
+							"notePosition": 20,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Bastion.html",
+							"attachments": [
+								{
+									"attachmentId": "PVFIDMpqrS7O",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "Bastion_image.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "RKcWF9uEqZyt",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"RKcWF9uEqZyt"
+							],
+							"title": "DNS",
+							"notePosition": 30,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "DNS.html",
+							"attachments": [
+								{
+									"attachmentId": "FZedNGpkGOai",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "DNS_inline image.png"
+								},
+								{
+									"attachmentId": "hh45PttFCVup",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "IE4rHTrIpkR1",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "DNS_image.png"
+								},
+								{
+									"attachmentId": "myTeiguK6oGu",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "2_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "NW3Dn1LEkcRA",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "3_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "oO53rInzYrdk",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "4_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "qNnL2qKoXJxL",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "1_DNS_image.png"
+								},
+								{
+									"attachmentId": "RXUUbh9xqlzi",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "5_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "tQ6mXuY2keUZ",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "6_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "tzkyaJVs8i77",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "7_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "uwA6WqUqcQHM",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "8_DNS_inline image.png"
+								},
+								{
+									"attachmentId": "WpjDHvhxDYrW",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "9_DNS_inline image.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "iIEgXd487bLQ",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"iIEgXd487bLQ"
+							],
+							"title": "SaaS (Mged IP/ PaaS (Svc./Priv. Endpts) and Private Link",
+							"notePosition": 40,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "SaaS (Mged IP PaaS (Svc.Priv. .html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "U6G6OysLOLxL",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"U6G6OysLOLxL"
+							],
+							"title": "Load Balancer (internal, Std. Gw) ",
+							"notePosition": 50,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Load Balancer (internal, Std. .html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "73DDzES9dod0",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"73DDzES9dod0"
+							],
+							"title": "Azure Private DNS Resolver",
+							"notePosition": 60,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Azure Private DNS Resolver.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "XOr2b2AtkV1g",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"M28XOILQCY2N",
+								"XOr2b2AtkV1g"
+							],
+							"title": "BYOIP",
+							"notePosition": 80,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "BYOIP.html",
+							"attachments": []
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "PZrRkvPqgEbd",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"PZrRkvPqgEbd"
+					],
+					"title": "Security",
+					"notePosition": 320,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Security.html",
+					"attachments": [],
+					"dirFileName": "Security",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "pBlqzFbnVM8O",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"PZrRkvPqgEbd",
+								"pBlqzFbnVM8O"
+							],
+							"title": "Azure Firewall",
+							"notePosition": 10,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Azure Firewall.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "XhxZd7AxOA0E",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"PZrRkvPqgEbd",
+								"XhxZd7AxOA0E"
+							],
+							"title": "WAF",
+							"notePosition": 20,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "WAF.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "5YkOx4A0YsH0",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"PZrRkvPqgEbd",
+								"5YkOx4A0YsH0"
+							],
+							"title": "DDoS Protection",
+							"notePosition": 30,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "DDoS Protection.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "4HlCylePLG7D",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"PZrRkvPqgEbd",
+								"4HlCylePLG7D"
+							],
+							"title": "Network Access: Security & Identity",
+							"notePosition": 40,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Network Access Security & Iden.html",
+							"attachments": [
+								{
+									"attachmentId": "i1NrmIWrIWi5",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "Network Access Security & .png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "o1cbsGp6JMVg",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"PZrRkvPqgEbd",
+								"o1cbsGp6JMVg"
+							],
+							"title": "Security Groups",
+							"notePosition": 50,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Security Groups.html",
+							"attachments": []
+						},
+						{
+							"isClone": false,
+							"noteId": "GHD0kz0rqr69",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"PZrRkvPqgEbd",
+								"GHD0kz0rqr69"
+							],
+							"title": "NSG",
+							"notePosition": 60,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "NSG.html",
+							"attachments": [
+								{
+									"attachmentId": "5VQRTc9voYK7",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "NSG_inline image.png"
+								},
+								{
+									"attachmentId": "T8PCUlXBt2Sq",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_NSG_inline image.png"
+								}
+							]
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "cEG5MTmbpGHD",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"cEG5MTmbpGHD"
+					],
+					"title": "Vnets and Subnets",
+					"notePosition": 350,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"attachments": [],
+					"dirFileName": "Vnets and Subnets",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "YMOrixj7Uv3N",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"cEG5MTmbpGHD",
+								"YMOrixj7Uv3N"
+							],
+							"title": "Vnet Foundations",
+							"notePosition": 10,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Vnet Foundations.html",
+							"attachments": [
+								{
+									"attachmentId": "GJqnaFfhIMIZ",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "Vnet Foundations_image.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "0NoCzsYKkF7T",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"cEG5MTmbpGHD",
+								"0NoCzsYKkF7T"
+							],
+							"title": "Vnet Peering | Hub |  VWAN",
+							"notePosition": 20,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Vnet Peering  Hub   VWAN.html",
+							"attachments": [
+								{
+									"attachmentId": "6XuTu3fMr7uF",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "Vnet Peering  Hub   VWAN_i.png"
+								},
+								{
+									"attachmentId": "En8FPFm8JD1Z",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_Vnet Peering  Hub   VWAN_i.png"
+								},
+								{
+									"attachmentId": "qrh1ScbRqK7j",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "2_Vnet Peering  Hub   VWAN_i.png"
+								},
+								{
+									"attachmentId": "rjfXnwZxhyba",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "3_Vnet Peering  Hub   VWAN_i.png"
+								},
+								{
+									"attachmentId": "v8E0eAUGpywc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "4_Vnet Peering  Hub   VWAN_i.png"
+								},
+								{
+									"attachmentId": "vxWbk5qyjtPT",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "5_Vnet Peering  Hub   VWAN_i.png"
+								},
+								{
+									"attachmentId": "YdZlSFoUMzdy",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "6_Vnet Peering  Hub   VWAN_i.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "qcFswJuekzmS",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"cEG5MTmbpGHD",
+								"qcFswJuekzmS"
+							],
+							"title": "Subnet Delegation",
+							"notePosition": 40,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Subnet Delegation.html",
+							"attachments": [
+								{
+									"attachmentId": "3tORt33QtdBD",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "4t9Xj3qpCchV",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "dusrbaVaMKec",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "2_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "F35s7c7kyRsn",
+									"title": "image.png",
+									"role": "image",
+									"mime": "image/jpg",
+									"position": 10,
+									"dataFileName": "Subnet Delegation_image.png"
+								},
+								{
+									"attachmentId": "g4S2iTqUeZjr",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "3_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "H9SJCyigH0xg",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "4_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "LiuLYXwasiEw",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "5_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "NdMrMTcZJwgC",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "Subnet Delegation_image.gif"
+								},
+								{
+									"attachmentId": "pIBvb82hpcae",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "6_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "rKNiiRfIy8nt",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "7_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "rZIcXyZlAsTc",
+									"title": "image.gif",
+									"role": "image",
+									"mime": "image/gif",
+									"position": 10,
+									"dataFileName": "1_Subnet Delegation_image.gif"
+								},
+								{
+									"attachmentId": "SxNjSaRFQ1To",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "8_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "vwTv2qCH8Q4r",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "9_Subnet Delegation_inline i.png"
+								},
+								{
+									"attachmentId": "w7aqgRfN7Mqh",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "10_Subnet Delegation_inline i.png"
+								}
+							]
+						},
+						{
+							"isClone": false,
+							"noteId": "cW0JhW97Il7X",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"cEG5MTmbpGHD",
+								"cW0JhW97Il7X"
+							],
+							"title": "Azure Extended Network",
+							"notePosition": 50,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Azure Extended Network.html",
+							"attachments": [
+								{
+									"attachmentId": "9foW9LtUnNyi",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "9koQOlTNMl57",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "1_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "9sbX3AwtixZQ",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "2_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "9YlWZbYPMUvs",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "3_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "aPTcRXvGFruy",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "4_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "aY2AQy6eKiGZ",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "5_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "biX7vXLbZPni",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "6_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "Bv3ywZvAbEi6",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "7_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "CbqEgAJ7TqDG",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "8_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "d75yufmB9BHu",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "9_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "DSREN6lLCv7k",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "10_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "FeYwokEApItK",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "11_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "GDa6QjLznWr3",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "12_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "GsNGKgyb8YDy",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "13_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "H5AR7easfF63",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "14_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "hNphcFpBRvWv",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "15_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "HS0q6er6MONG",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "16_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "jvr0L7SGNgCJ",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "17_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "kJzmeaOPAJen",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "18_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "lX7WERgXzPqn",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "19_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "n8tv8SOCOojr",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "20_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "OWyTb50wpis1",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "21_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "ptem0TAIwIIS",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "22_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "R33pmq7xLhpt",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "23_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "tq2gIfJFbUha",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "24_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "Ugxgf0ZoR66W",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "25_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "ve4ATnJb7vYw",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "26_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "VgYdQiK9M5Yc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "27_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "Wo5FGP96WrCs",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "28_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "zNsGb5mxkBgc",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "29_Azure Extended Network_inl.png"
+								},
+								{
+									"attachmentId": "zr8yxqFnBoWs",
+									"title": "inline image.png",
+									"role": "image",
+									"mime": "image/png",
+									"position": 10,
+									"dataFileName": "30_Azure Extended Network_inl.png"
+								}
+							]
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "oWgubDOnCvbG",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"oWgubDOnCvbG"
+					],
+					"title": "Monitoring & Diagnostics ",
+					"notePosition": 360,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Monitoring & Diagnostics.html",
+					"attachments": [
+						{
+							"attachmentId": "0ACsVD1vUXDl",
+							"title": "image.png",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "0dz62WvB6W8I",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "1_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "2bndmSbgC4qR",
+							"title": "image.png",
+							"role": "image",
+							"mime": "image/jpg",
+							"position": 10,
+							"dataFileName": "2_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "5naAJ5QuY8HG",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "3_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "6sbTKN9XKK1N",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "4_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "e9AcfDK5XvxC",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "5_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "gnel9WcPZA4b",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "6_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "GY8zWqFtTpL0",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "7_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "JaJ3JeBt3iuS",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "8_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "kr3aFjkKAj9j",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "9_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "lbXlgeUD3z4W",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "10_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "LMIlku9v0SYu",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "11_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "ml6oDstp4FwE",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "12_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "MRYWijYLnNLI",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "13_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "My7BUkBjvYQY",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "14_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "Ns50U8fg93qK",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "15_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "pF6JfexImgzN",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "16_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "R61KPmFpBrXs",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "17_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "RtEweS4SbTQX",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "18_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "TGQUd5a8dIc1",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "19_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "tTzhuqbPsCpm",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "20_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "vAzXYO9J83WF",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "21_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "wrJS4tDWlVlP",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "22_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "xNkc0lJ8ruCY",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "23_Monitoring & Diagnostics_i.png"
+						},
+						{
+							"attachmentId": "ztwPH39Rb3Jc",
+							"title": "inline image.png",
+							"role": "image",
+							"mime": "image/png",
+							"position": 10,
+							"dataFileName": "24_Monitoring & Diagnostics_i.png"
+						}
+					],
+					"dirFileName": "Monitoring & Diagnostics",
+					"children": [
+						{
+							"isClone": false,
+							"noteId": "PnXy5birfYxK",
+							"notePath": [
+								"yZqz36N5j7bO",
+								"oWgubDOnCvbG",
+								"PnXy5birfYxK"
+							],
+							"title": "Network Watcher",
+							"notePosition": 10,
+							"prefix": null,
+							"isExpanded": false,
+							"type": "text",
+							"mime": "text/html",
+							"attributes": [],
+							"format": "html",
+							"dataFileName": "Network Watcher.html",
+							"attachments": []
+						}
+					]
+				},
+				{
+					"isClone": false,
+					"noteId": "Rl2lfCsh4xDV",
+					"notePath": [
+						"yZqz36N5j7bO",
+						"Rl2lfCsh4xDV"
+					],
+					"title": "Exam Questions ",
+					"notePosition": 370,
+					"prefix": null,
+					"isExpanded": false,
+					"type": "text",
+					"mime": "text/html",
+					"attributes": [],
+					"format": "html",
+					"dataFileName": "Exam Questions.html",
+					"attachments": []
+				}
+			]
+		},
+		{
+			"noImport": true,
+			"dataFileName": "navigation.html"
+		},
+		{
+			"noImport": true,
+			"dataFileName": "index.html"
+		},
+		{
+			"noImport": true,
+			"dataFileName": "style.css"
+		}
+	]
+}

@@ -1,0 +1,38 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Routing</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Routing</h1>
+
+      <div class="ck-content">
+        <p>Gap Items: Azure Route Server (ARS), Branch 2 Branch, CIDR range, IPv6
+          address space/prefix.
+          <br>Integration Logic: This is the Dynamic Control Plane.
+          <br>Note: ARS enables BGP between an NVA and the SDN. Branch-to-Branch is
+          the specific toggle that lets a VPN "talk" to an ExpressRoute through the
+          Hub.</p>
+        <p>&nbsp;</p>
+        <hr>
+        <p>&nbsp;</p>
+        <p>Custom route groups &gt; Resouces\Routing Table → Apply to subnets&nbsp;
+          <br>Route Override &nbsp;→ UDR&nbsp;<span style="background-color:rgb(29,30,38);color:rgb(230,232,240);"> [FW/NVA (inspection) | Gateways | &nbsp;Internet (iron dome) | None (Isolation) | Vnet (shortcut)</span>
+          <br>Vnet to Vnet → Peering [Local/Global] | IP overlap → VPN
+          <br>Vnet 2 Service → Private link&nbsp;
+          <br>Site 2 Site: <span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">[Quick-implement | &lt;$ &nbsp;| Public ] → VPN &nbsp;| [Reliable High Gb/s] → Expressroute</span>
+          <br><span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">Any 2 Any: [&gt;500 vnets] → vWAN</span>
+          <br>
+          <br><span><strong>Troubleshooting → Effective Routes&nbsp;</strong></span>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

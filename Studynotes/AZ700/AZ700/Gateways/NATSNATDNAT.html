@@ -1,0 +1,100 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>NAT/SNAT/DNAT</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>NAT/SNAT/DNAT </h1>
+
+      <div class="ck-content">
+        <p>INSTANT DECISIONS</p>
+        <p><span>"Need outbound access for a private backend pool" ➔ <strong>Add a NAT Gateway to that subnet.</strong></span>
+          <br>"LB SNAT ports are full" ➔ Migrate to NAT Gateway (On-demand allocation).
+          <br>"Fixed IP range for customer whitelist" ➔ Associate Public IP Prefix to
+          NAT Gateway.
+          <br>"Outbound traffic shows wrong IP" ➔ NAT Gateway overrides Instance-level
+          Public IPs.
+          <br><span>"New VM cannot reach the internet" ➔ <strong>Must associate a NAT Gateway to the subnet.</strong></span>
+        </p>
+        <hr>
+        <p>
+          <br>Outbound Precedence:&nbsp;
+          <br>1. NAT Gateway (Subnet)&nbsp;
+          <br>2. Instance-level PIP&nbsp;
+          <br>3. &nbsp;Load Balancer SNAT (Default).
+          <br><strong>//Firewall DNAT</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> happens </span><strong>before</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">any Network/Application rules.</span>
+            <br>
+            <br>NAT Gateway (SNAT) //Outbound only (no PING ICMP)
+            <br>Inbound: VM's Public IP | Outbound: NAT Gateway IP.
+            <br>sNet → NAT → Internet(out) &nbsp;//DNAT (in) = LB
+            <br>Override LB and (::/0) out
+            <br>1/sNet | 16 public IP/NAT (<strong>1,024,000</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> concurrent ports.)</span> |
+            Port Exhaustion: ≤ 64k ports per IP
+            <br>Allocate: zone (→VM) | Regional
+            <br>//<span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">Zone-1 NAT Gateway can serve a Zone-2 VM, but you will pay for </span><strong>cross-zone data transfer</strong>
+            <br><strong>Idle Timeout:</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> </span>
+            <code
+            spellcheck="false">Default = 4 mins | Max = 120 mins</code>→ TCP reset only if enabled on
+              NAT Gw
+              <br>&gt;SKU: Std for Public IP and LB</p>
+        <p><em><strong>! Internal (Private)</strong></em><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em><strong> Standard Load Balancer does </strong></em></span><em><strong>NOT</strong></em>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><em><strong> provide SNAT/outbound access. !</strong></em>
+            </span>
+            <br>
+            <br>Std LB SNAT: Scaling Port allocations // Rule of Halves ports to VMs
+            <br>1024 ≤ 50&nbsp;
+            <br>512 ≤ 100
+            <br>256 ≤ 200
+            <br>128 ≤ 400
+            <br>64 = 800
+            <br>32 = 1000+</p>
+        <p>DNAT&nbsp;
+          <br>Primary Az. Fw(Public IP)
+          <br>DNAT rules, before Network/Application rules.
+          <br>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div><strong>Deltas (Missing)</strong>
+        </div>
+        <ul>
+          <li data-list-item-id="ea4665979ab4222cf3b889b792f838a4c">
+            <p style="margin-left:0px;"><span><strong>PIP on VM + NAT Gateway (Inbound Logic):</strong> If a VM has its own <strong>Public IP</strong> </span><em><span>and</span></em><span> the subnet has a <strong>NAT Gateway</strong>:</span>
+            </p>
+            <ul>
+              <li data-list-item-id="edc92ef73a861647f4357c8415b9cf1f4">
+                <p style="margin-left:0px;">&nbsp;</p>
+              </li>
+            </ul>
+          </li>
+          <li data-list-item-id="e924b57a1e9b041989158986466ae30a4">
+            <p style="margin-left:0px;"><span><strong>Zonal Conflict:</strong> NAT Gateway is <strong>Regional</strong> but can be pinned to a <strong>Zone</strong>.</span>
+            </p>
+            <ul>
+              <li data-list-item-id="e2f32e48cdb76819d44785aad50c2c9e5">
+                <p style="margin-left:0px;"><span><strong>Logic:</strong> A Zone-1 NAT Gateway can serve a Zone-2 VM, but you will pay for <strong>cross-zone data transfer</strong>.</span>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li data-list-item-id="e10aeb9c69cb90e7942a89a61845bff0b">
+            <p style="margin-left:0px;"><span><strong>Standard LB (Internal) Trap:</strong> An <strong>Internal (Private)</strong> Standard Load Balancer does <strong>NOT</strong> provide SNAT/outbound access.</span>
+            </p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <p>&nbsp;</p>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,99 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Subnet Delegation</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Subnet Delegation</h1>
+
+      <div class="ck-content">
+        <p style="margin-left:0px;">SUBNET HIGHLANDERS:&nbsp;</p>
+        <ul>
+          <li class="ck-list-marker-bold" data-list-item-id="e89c62d0ce08d5508779f579844aa6576">
+            <p style="margin-left:0px;"><span><strong>ENTRY (Perimeter/Ingress)</strong></span>
+            </p>
+          </li>
+        </ul>
+        <blockquote>
+          <p style="margin-left:0px;"><span><strong>GatewaySubnet</strong> ➔ <strong>/27 </strong>(Min /29) ➔ VPN/ER Entry point.[</span><strong>ASN 65515</strong> (BGP).
+            No NSGs. No UDRs unless 0.0.0.0/0 -&gt; <span><strong>AzureBastionSubnet</strong> ➔ <strong>/26 (Scaling (Std. / Premium) [</strong></span><strong>Administrative Access.</strong>  <strong>No UDRs.</strong> Inbound <strong>TCP 443</strong> + <strong>TCP 5701</strong> ]
+            <br><span><strong>AppGatewaySubnet</strong> ➔ <strong>/24</strong> (v2 Rec.) [</span><strong>Regional L7.</strong>  <strong>TCP 65200-65535</strong> must
+            be open for Backend Health probes.]&nbsp;
+            <br><span><strong>AzureFirewallSubnet</strong> ➔ <strong>/26 (min.) [</strong></span><strong>MGMT IP</strong> (Standard/Prem).
+            Requires <strong>MGMT Subnet</strong> for Forced Tunneling.]&nbsp;
+            <br>&nbsp;</p>
+          <p style="margin-left:0px;"><em><span>//</span> <span>Forced Tunneling (Firewall): If you route all traffic to an on-premise NVA, you must deploy an additional </span></em>
+            <code
+            spellcheck="false"><em><span>AzureFirewallManagementSubnet</span></em>
+              </code><em><span> for the firewall’s own control traffic.</span></em>
+              <br><em>// <span>Management IP (Firewall): Azure Firewall always takes a private IP for its own management traffic within the subnet, separate from its operational IPs.</span></em>
+          </p>
+        </blockquote>
+        <ul>
+          <li data-list-item-id="efbf60d65afd788a8ec07c3ee20d818a2">
+            <p style="margin-left:0px;"><span>R<strong>OUTING (Control Plane)</strong></span>
+            </p>
+          </li>
+        </ul>
+        <blockquote>
+          <p style="margin-left:0px;"><span><strong>RouteServerSubnet</strong> ➔ <strong>/27 [</strong>BGP engine VMs. BGP Routing. TCP 179 (BGP). Dedicated to BGP peering with NVAs/SD-WAN.]</span>
+          </p>
+        </blockquote>
+        <ul>
+          <li class="ck-list-marker-bold ck-list-marker-color" style="--ck-content-list-marker-color:rgb(230,232,240);"
+          data-list-item-id="e3b7a7b5ff5084ea4c384bb62af930e9f">
+            <p style="margin-left:0px;"><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><strong>SERVICES (PaaS/Data Injection)</strong></span>
+            </p>
+          </li>
+        </ul>
+        <blockquote>
+          <p style="margin-left:0px;"><strong>App Service Integration ➔ /26 (Min /28) ➔ </strong><code spellcheck="false"><strong>Microsoft.Web/serverFarms</strong></code>
+            <br><span><strong>SQL MI Subnet</strong> ➔ <strong>/27 </strong>(Min /28)&nbsp; <strong>[</strong></span>
+            <code
+            spellcheck="false"><span><strong>Microsoft.Sql/managedInstances</strong></span>
+              </code><span>➔ SQL MI Injection]</span>
+              <br><span><strong>NetApp Subnet</strong> ➔ <strong>/28 (Min.) [</strong></span>
+              <code
+              spellcheck="false"><strong>Microsoft.NetApp/volumes</strong>
+                </code><span> ➔ </span><strong>Azure NetApp Files (ANF)</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">.</span><span>]</span>
+                <br><span>Oracle Database | /27 (Min) - /22 (Max) ➔ Oracle.Database/network // max 1 delegated sNet/vNet</span>
+                <br><span>Container Instances | /28 (Min) ➔ Microsoft.ContainerInstance/containerGroups // Needs: Dedicated sNet for vNet-injected groups.</span>
+          </p>
+          <p style="margin-left:0px;">
+            <br>Container Instances Microsoft.ContainerInstance/containerGroups</p>
+        </blockquote>
+        <ul>
+          <li class="ck-list-marker-bold" data-list-item-id="eac51615bbf9ec9e284f2a60d66e98090">
+            <p style="margin-left:0px;">
+              <br><strong>DNS PRIVATE RESOLVERS&nbsp;</strong>
+            </p>
+          </li>
+        </ul>
+        <blockquote>
+          <div>DNS Resolver (In/out) | /28 ➔ Microsoft.Network/dnsResolvers // inbound/outbound
+            mutually exclusive, outbound for fwd. ruleset</div>
+        </blockquote>
+        <div><strong>Subnet Residents:&nbsp;</strong>
+        </div>
+        <blockquote>
+          <div><strong>Exclusive [ DNS (in+out) </strong>| {Reserved name} | Delegated<strong>]</strong>
+          </div>
+          <div>Shared space: &nbsp;[VMs | Load Balancers | Private Endpoints]</div>
+        </blockquote>
+        <div>Name restrictions:&nbsp;</div>
+        <blockquote>
+          <div>GatewaySubnet | &nbsp;AzureFirewallSubnet | AzureBastionSubnet]
+            <br>//Case sensitivity might matter, no suffixes</div>
+        </blockquote>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

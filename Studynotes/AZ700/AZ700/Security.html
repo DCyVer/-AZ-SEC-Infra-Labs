@@ -1,0 +1,98 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Security</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Security</h1>
+
+      <div class="ck-content">
+        <div><strong>SECURITY RULE HIERARCHY</strong>
+        </div>
+        <div>When traffic hits a VNet, rules are processed in a "First-Match-Wins"
+          sequence across multiple layers.</div>
+        <ol>
+          <li data-list-item-id="e81dde11002799bfb7eebbbcf6a67a25b">
+            <p style="margin-left:0px;"><span><strong>Threat Intelligence (The Sieve)</strong>: If enabled on <strong>Azure Firewall</strong>, this kills traffic from known malicious IPs/domains </span><em><span>before</span></em><span> any user rules are even looked at.</span>
+            </p>
+          </li>
+          <li data-list-item-id="effcd1c53b27545a41c08df3d63e081a7">
+            <p style="margin-left:0px;"><span><strong>Parent Policies (The Mandate)</strong>: In <strong>Firewall Manager</strong>, <strong>Parent Policies</strong> always take precedence over <strong>Child Policies</strong>, regardless of the priority numbers used in the child.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e21a73529b063e14a4393108b07ce7ab6">
+            <p style="margin-left:0px;"><span><strong>Rule Type Priority (The Fixed Stack)</strong>: Within a policy, rule types are processed in this <strong>hard-coded order</strong>—priority numbers only matter </span><em><span>within</span></em><span> each bucket:</span>
+            </p>
+            <ul>
+              <li data-list-item-id="e81003525e187b52f2e416e353eb4c5a2">
+                <p style="margin-left:0px;"><span><strong>Bucket 1: DNAT Rules</strong> (Inbound translation).</span>
+                </p>
+              </li>
+              <li data-list-item-id="e1695bb3f90976f8317b635ac700c9492">
+                <p style="margin-left:0px;"><span><strong>Bucket 2: Network Rules</strong> (L3/L4 filtering by IP/Port).</span>
+                </p>
+              </li>
+              <li data-list-item-id="ef3488b88274b0eeb9547be464a519b1c">
+                <p style="margin-left:0px;"><span><strong>Bucket 3: Application Rules</strong> (L7 filtering by FQDN).</span>
+                </p>
+              </li>
+              <li data-list-item-id="e8836e8bd26c229690b98e70fb52909ef">
+                <p style="margin-left:0px;"><em><span>Kill-Switch: If a Network Rule matches and allows traffic, Application Rules are <strong>NEVER</strong> evaluated</span></em><span>.</span>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li data-list-item-id="e9163379ca90ce89c1de9b2a149c7234e">
+            <p style="margin-left:0px;"><span><strong>Network Security Groups (NSGs)</strong>: Evaluated at the <strong>Subnet</strong> then <strong>NIC</strong> level. Lower numbers (100+) process first</span>
+            </p>
+          </li>
+        </ol>
+        <div>&nbsp;</div>
+        <div><strong>5. THE DIAGNOSTIC “SURGERY”</strong>
+        </div>
+        <div><em>Picking the specific tool for the symptom.</em>
+        </div>
+        <ul>
+          <li data-list-item-id="e4f91a1e5d8db9ef704e68390f8266b05">
+            <p style="margin-left:0px;"><span><strong>Next Hop:</strong> "Where is the packet going?" (Troubleshoot <strong>UDR/Routes</strong>).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e0e585f4c373752591f973e332b9ec629">
+            <p style="margin-left:0px;"><span><strong>IP Flow Verify:</strong> "Is it the firewall?" (Troubleshoot <strong>NSG/ASG</strong>).</span>
+            </p>
+          </li>
+          <li data-list-item-id="e382d449b0cef09234f731ef480cd55f7">
+            <p style="margin-left:0px;"><span><strong>VPN Troubleshoot:</strong> "Why is it disconnected?" (Check <strong>IKE Phase 1/2</strong>).</span>
+            </p>
+          </li>
+          <li data-list-item-id="ef6efa92d465cef46f02b192b5f1109a7">
+            <p style="margin-left:0px;"><span><strong>Connection Monitor:</strong> "Why is it slow?" (Check <strong>Latency/Loss</strong>).</span>
+            </p>
+          </li>
+        </ul>
+        <div><strong>🩺 4. Diagnostic "IKEDiagnosticLog" &amp; “NSG Flow Logs”</strong>
+        </div>
+        <div>For the <strong>Secure and Monitor</strong> domain (15–20% of the exam),
+          you must know the specific log name for the fix.<span>&nbsp;</span>
+        </div>
+        <ul>
+          <li data-list-item-id="e79b193825da8b6c5623a075687e79ebc">
+            <p style="margin-left:0px;"><span><strong>IKEDiagnosticLog:</strong> The <strong>only</strong> log that shows Phase 1/2 negotiation failures for VPNs.</span>
+            </p>
+          </li>
+          <li data-list-item-id="e83ddf46e2ea8e7c2690d92ab42afbe3f">
+            <p style="margin-left:0px;"><span><strong>NSG Flow Logs:</strong> Required to see which specific rule is dropping a packet in a "Traffic Analytics" dashboard.&nbsp;</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>

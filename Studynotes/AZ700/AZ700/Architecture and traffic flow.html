@@ -1,0 +1,1026 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Architecture and traffic flow</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Architecture and traffic flow</h1>
+
+      <div class="ck-content">
+        <div><strong>I Global Topology Constants</strong>
+          <br>
+          <br>II Global Topology variables
+          <br>
+          <br><strong>(0)Global Topology Assumptions:</strong>
+          <br>Unless an item's (modifier) or //*Comment explicitly states otherwise,
+          the following AZ-700 "Success States" are assumed true.&nbsp;</div>
+        <ul>
+          <li class="ck-list-marker-bold" data-list-item-id="ee160c34f88fcb0fa347c57fade4ee426"><span><strong>Vnet Peering on hub spokes assumes the following are enabled</strong></span>
+            <br><span><strong>'Allow Transit' on the peering link from the source Hub vNet&nbsp;</strong></span>
+            <br><span><strong>'Use Remote Gateway' on the peering link from the Spoke vNet</strong></span>
+            <br><span><strong>'Forwarded Traffic" if routed through NVA/Firewall</strong></span>
+          </li>
+          <li data-list-item-id="e4200009d3c8c6b87282e78aba06e7a44">
+            <p style="margin-left:0px;"><span>&nbsp;ER/VPN Gw's / GlobalReach assume <strong>BGP Route propagation </strong>enabled on</span><strong> </strong>
+              <code
+              spellcheck="false"><strong>GatewaySubnet</strong>
+                </code><span>&nbsp;</span>
+            </p>
+          </li>
+          <li data-list-item-id="eafe266a86b19ff54307e885026910f75">
+            <p style="margin-left:0px;"><span>Vnet Injection assumes “Subnet Delegation”&nbsp;is active on the destination resource&nbsp;</span>
+            </p>
+          </li>
+          <li data-list-item-id="e57a8d5f78939ecc06ca0badc3ce72450">
+            <p style="margin-left:0px;"><span>BackendPool assumes “Healthy” probes</span>
+            </p>
+          </li>
+          <li class="ck-list-marker-bold" data-list-item-id="e88b60c8dff8cb32965fe39ac544c365b">
+            <p style="margin-left:0px;"><span><strong>AVNM assumes that traffic rule for that path is set to either allow or always allow</strong></span>
+            </p>
+          </li>
+          <li data-list-item-id="e3158e49c4524293d5a637329cdfd841b">
+            <p style="margin-left:0px;"><span><strong>NSG/ASG:</strong> assumes that traffic rule for that path are set to allow</span>
+            </p>
+            <p style="margin-left:0px;">&nbsp;</p>
+          </li>
+        </ul>
+        <div>&nbsp;</div>
+        <div>&nbsp;<strong>A: Context (Scenario intent)&nbsp;</strong>
+          <br>(1) <strong>SOURCE</strong> ➔ <strong>(Traffic Origin ) [ Int. | onPrem &nbsp;| Ext. ] &nbsp;Pre-defined modifiers: → (server | svc. | user ) //Int = cloud/Az. (internal)</strong>
+          <br>&nbsp;</div>
+        <blockquote>
+          <blockquote>
+            <div><strong>[INT] </strong>//Internal
+              <br><strong>[INT. (server)][Az.⁵] → [vNet⁷]</strong>
+              <br>→ [VIRTUAL LINK⁹] → [NIC⁸]
+              <br>→ [Svc. Endpt¹⁷] → [MGED.-IP(Svc.)⁸]
+              <br>→ [NAT GW¹⁶] → [Internet⁵] → [EXT. SaaS(IP)⁸]</div>
+            <div><strong>[INT. (server)][vNet Peering⁷]</strong>
+              <br>→ [Hub(in)⁵] → [VpnGw¹¹ | ErGw¹¹] → [onPrem(host)⁸]</div>
+            <p>
+              <br>(server)&nbsp;
+              <br>→ <strong>[Spoke(out)⁵] ➔ [vNet Peering⁷] ➔ [UDR¹³] ➔ [AzureFirewall¹⁶] ➔ [NIC⁸]</strong>
+            </p>
+            <div><strong>➔ [Az.⁵] ➔ [NVA(WAC)¹⁶] ➔ [Entra ID(WAC)¹²] ➔ [VpnGw¹¹ | ErGw¹¹] ➔ [onPrem(host)⁸]</strong>
+              <br><strong>[Int.(svc.)¹][Prvt.Link⁷] ➔ [Prvt. edpnt¹⁷] ➔ ['Approved'¹²] ➔ [MGED.-IP(PaaS)⁸]</strong>
+              <br><strong>[Int.(user)¹][Az.⁵] ➔ [Bastion¹¹] (⟷ [Entra ID (Cond. Access)¹²]) ➔ [NIC⁸]</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <p><strong>[ONPREM]</strong> //On-Premise
+              <br><strong>[ONPREM (server)][VPN(S2S)⁵]</strong>
+              <br>→ [VpnGw¹¹] → [vNet Peering⁷] → [NIC⁸]</p>
+            <div><strong>[ONPREM (user)][VPN(P2S)⁵]</strong>
+              <br>→ [VpnGw¹¹] (⟷ [Cert¹² | Entra ID¹²]) → [vNet⁷] → [NIC⁸]</div>
+            <p>
+              <br><strong>(user)[VPN(P2S)⁵] ➔ [VpnGw¹¹] (⟷ [Cert¹² | Entra ID¹²]) ➔ [vNet Peering⁷] ➔ [NIC⁸]</strong>
+              <br><strong>(server¹)</strong>&nbsp;
+              <br><strong>➔[ER⁵][ErGw¹¹] ➔ [GlobalReach¹³] ➔ [onPrem(host)⁸]</strong>
+              <br><strong>➔ [VPN(WAC)⁵] ➔ [VpnGw¹¹] ➔ [NVA(WAC)¹⁶] ➔ [Entra ID(WAC)¹²] ➔ [NIC⁸]</strong>
+              <br><strong>(user¹)</strong> ➔ [vWAN hub¹¹] ➔ [ [NIC(NVA)⁸] | [Az. FW¹⁴] ]</p>
+          </blockquote>
+          <blockquote>
+            <div><strong>[EXTERNAL]</strong>
+              <br><strong>[EXTERNAL (user)][Internet⁵]</strong>
+              <br>→ [TRAFFIC MGR.⁹] → [ [FrontDoor¹¹] | [AppGw(v2)¹¹] ] → [vNet Injection⁷]
+              → (|-&gt;) [NIC⁸]</div>
+            <div><strong>[EXTERNAL (svc.)][ER Circuit(MS)⁷]</strong>
+              <br>→ [MGED.-IP(Svc.)⁸]</div>
+            <p>
+              <br><strong>(server¹)</strong> ➔ Frontdoor¹¹ ➔ [WAF Policy¹⁴] ➔ [Internet⁵]
+              ➔ (user¹)</p>
+            <div><strong>[Ext.(user)¹][Internet⁵] ➔ [TRAFFIC MGR.^⁹] ➔ [FrontDoor¹¹ | AppGw(v2)¹¹] ➔ [vNet Injection⁷] ➔ (|-&gt;) [NIC⁸]</strong>
+              <br><strong>(user¹) ➔ [Internet⁵] ➔ [ [VpnGw¹¹] (⟷ [Entra ID¹² | Cert¹²]) ➔ [vNet⁷] (|-&gt;) [NIC⁸] | [ [FrontDoor¹¹] ➔ [AppGw(V2)¹¹] | [AppGw(V2)¹¹] &amp;| [Std. LB¹¹] ] (|-&gt;) [BACKENDPOOL⁸] ]</strong>
+              <br><strong>(svc.¹)</strong> ➔ ER Circuit(MS)⁷ ➔ [App Gw¹¹]
+              <br><strong>[Ext.(user)¹][Internet⁵] ➔ [AppGw(v2)¹¹] ➔ [WAF Policy¹⁴] ➔ (|-&gt;) [BACKENDPOOL⁸]</strong>
+            </div>
+          </blockquote>
+        </blockquote>
+        <div><strong>(2) VISIBILITY ➔ &nbsp;[Prvt.| Public] //AZ700 networking scope. Public destined traffic may be private if every step in the tree path is private</strong>
+        </div>
+        <blockquote>
+          <div><strong>[Prvt.]</strong>  <em>//Internal / RFC 1918</em>
+          </div>
+          <blockquote>
+            <p>[local⁴]
+              <br>[Int.(server¹)] ➔ [Az.⁵] ➔ [vNet⁷] ➔ [LPM(Sys. Route)¹³] (|-&gt;) [NIC⁸]</p>
+          </blockquote>
+          <blockquote>
+            <p style="margin-left:0px;"><em>[Regional⁴]&nbsp; </em>[INT.(server¹)] ➔ [Az.⁵] ➔ [vNet⁷]&nbsp;
+              <br>➔ [ [Prvt.Link⁷] (⟷ [Prvt. DNS Zones⁹]) &nbsp;| &nbsp;[Peering⁷] ] ➔ [LPM(Sys.
+              Route)¹³] (|-&gt;) [NIC⁸]</p>
+            <p style="margin-left:0px;">[onPrem.(user)¹]&nbsp;
+              <br>➔ [ [Er Circuit⁷] ➔ [ErGw¹¹] | [Peering⁷](transit) ➔ [VpnGw¹¹] ] ➔ [BGP¹³]
+              ➔ [LPM¹³] ➔ [onPrem(host)⁸]
+              <br>➔ [ [VpnGw¹¹] | [ErGw¹¹] ] ➔ [LPM(BGP)¹³] ➔ [onPrem(host)⁸]</p>
+          </blockquote>
+          <blockquote>
+            <p>[Global⁴]&nbsp;
+              <br>[onPrem.(server¹)] ➔ [GlobalReach¹³] ➔ [LPM(BGP)¹³] ➔ [onPrem(host)⁸]
+              <br>[onPrem.(user¹)] ➔ [vWAN hub¹¹]&nbsp;
+              <br>➔ [Az.⁵] ➔ [BGP¹³] ➔ [LPM¹³] ➔ [onPrem(host)⁸] //*Standard Branch-to-Branch
+              <br>➔ [vWAN(Route Intent)¹³] ➔ [Az. FW¹⁴] ➔ [LPM(BGP)¹³] ➔ [onPrem(host)⁸]&nbsp;</p>
+          </blockquote>
+          <p><em>//ExamTrap: [INT.(server¹)] ➔ [vNet⁷] ➔ Peering⁷ ➔ [UDR¹³] ➔ [NIC(NVA)⁸] //*GlobalGwTransit &amp; UDR= !FAIL!)</em>
+          </p>
+        </blockquote>
+        <blockquote>
+          <p style="margin-left:0px;"><strong>[PUBLIC]</strong> //Internet / External</p>
+          <blockquote>
+            <p style="margin-left:0px;">[Regional⁴]&nbsp;D
+              <br>[Int.(svc.¹)] ➔ [svc. edpnt.⁷] ➔ [LPM(Sys. Route)¹³] ➔ [Mged.-IP (PaaS/Svc.)⁸]
+              <br>[Ext.(user¹)] ➔ [Internet⁵] ➔ [ [Std. LB¹¹] | [AppGw(V2)¹¹] ] (|-&gt;)
+              [ [NIC⁸] | [BackendPool(VMSS)⁸] ]
+              <br>[onPrem.(user¹)] ➔ [ErGw¹¹] ➔ [ER Circuit(MS)⁷] ➔ [BGP¹³] ➔ [LPM¹³] ➔
+              [Internet⁵] ➔ [Ext. (SaaS-edpnt.)</p>
+          </blockquote>
+          <blockquote>
+            <p style="margin-left:0px;">[Global⁴]&nbsp;
+              <br>[Int.(server¹)] ➔ [Az.⁵] ➔ [vNet⁷] ➔ [UDR¹³] ➔ [Az. FW¹⁴] ➔ [Internet⁵]
+              ➔ [Ext. (SaaS-edpnt.)⁸]
+              <br>[EXT.(user¹)] &nbsp;➔ [Internet⁵] ➔ [Frontdoor¹¹] ➔ [ [AppGw(V2)¹¹] |
+              [Std. LB¹¹] ] (|-&gt;) [NIC⁸]
+              <br>[EXT.(server¹)] (⟷ [Traffic Mgr.⁹]) ➔ [Internet⁵] &nbsp;[ (|-&gt;) [ [NIC⁸]
+              | ➔ [Mged.-IP⁸] ]</p>
+          </blockquote>
+        </blockquote>
+        <div><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(3) </span><strong>OSI Layer (L3/L4/L7):</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);">[</span><strong>Nw</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> | </span><strong>App</strong>
+            <span
+            style="background-color:rgb(16,18,24);color:rgb(230,232,240);">]</span>
+        </div>
+        <blockquote>
+          <div><strong>[Nw]</strong>&nbsp;</div>
+          <blockquote>
+            <div>[Int.¹] [local⁴] ➔ [Az.⁵] ➔ [vNet⁷] (|-&gt;) [NIC⁸]</div>
+            <div>[Int.¹] [global⁴] ➔ [Az.⁵] ➔ [vNet⁷] ➔ [ [NAT Gateway¹¹] | [Az. FW(network
+              rule)¹⁴] ] ➔ [Internet⁵]
+              <br>[onPrem.¹] [regional⁴] ➔ [ [VpnGw¹¹] | [ErGw¹¹] ] ➔ [BGP¹³] ➔ [LPM¹³]
+              ➔ [onPrem(host)⁸][Ext.¹] [global⁴] (⟷ [Traffic Mgr.⁹]) ➔ [Std. LB¹¹] (|-&gt;)
+              [ [NIC(NVA)⁸] | [BackendPool⁸] | ➔ [Mged.-IP⁸] ]</div>
+          </blockquote>
+          <div><strong>[App]</strong>&nbsp;</div>
+          <blockquote>
+            <p>[Int.¹] [regional⁴] (⟷ [FW FQDN Proxy⁹]) ➔ [UDR¹³] ➔ [Az. FW(app rule)¹⁴]
+              ➔ [ [Peering⁷] | [vWAN⁷] ]
+              <br>[Int.¹] [global⁴] (⟷ [FW FQDN Proxy⁹]) ➔ [UDR¹³] ➔ [Az. FW(app rule)¹⁴]
+              ➔ vWAN⁷
+              <br>[Ext.¹] [regional⁴] (⟷ [Prvt. DNS Zones⁹]) ➔ [AppGw(V2)¹¹] (|-&gt;) [
+              [NIC⁸] | [BackendPool⁸] ]
+              <br>[Ext.¹] [global⁴] (⟷ [Traffic Mgr.⁹]) ➔ [Frontdoor¹¹] ➔ [ [AppGw(V2)¹¹]
+              | [Std. LB¹¹] ] (|-&gt;) [NIC⁸]</p>
+          </blockquote>
+          <p>&nbsp;//*Frontdoor to NIC mandates regional gate</p>
+        </blockquote>
+        <div>(4) <strong>GEOGRAPHY</strong> ➔&nbsp;<strong> [Local| Regional | Global ] /AZ700 geography. Based on resource dependancies/requirements</strong>
+        </div>
+        <blockquote>
+          <p><strong>[LOCAL] [Int.¹]</strong>
+          </p>
+          <blockquote>
+            <p>➔ [Az.⁵] ➔ [vNet⁷] [ (|-&gt;) [NIC⁸] | ➔ [Std. LB¹¹] (|-&gt;) [BackendPool⁸]
+              ]&nbsp;
+              <br>➔ [Prvt.Access⁵] ➔ [vNet-injection⁷] ➔ [Mged.-IP⁸]</p>
+          </blockquote>
+          <p><strong>[REGIONAL]</strong>
+          </p>
+          <blockquote>
+            <p>[Int.¹] ➔ [Prvt.Access⁵] ➔ [Prvt.Link⁷] (⟷ [Prvt. DNS Zones⁹]) ➔ [Mged.-IP⁸]
+              <br>[Int.¹] [Spoke(out)] ➔ [vNet Peering⁷] ➔ (|-&gt;) [NIC⁸]* ➔ [Spoke(in)]
+              //*Bypasses hub
+              <br>[Int.¹] [Spoke(out)] ➔ [vNet Peering⁷] ➔ [UDR¹³] ➔ [Hub(in)] ➔ [Az. FW¹⁶]
+              <br>[onPrem.¹] ➔ [ [VpnGw¹¹] | [ErGw¹¹] ] ➔ [vNet⁷] ➔ Peering⁷ (|-&gt;) [NIC⁸]
+              <br>[Ext.¹] ➔ [Internet⁵] ➔ [ [ Bastion¹¹] ➔ [vNet⁷] ➔ [NIC⁸] | &nbsp;[ Std.
+              LB¹¹] (|-&gt;) [ [NIC⁸] | [BackendPool⁸] ] ]
+              <br>[Ext.¹] (⟷ [Traffic Mgr.⁹]) → [Internet⁵] → [AppGw(V2)¹¹] (|-&gt;) [ [NIC⁸]
+              | [BackendPool⁸] ]</p>
+          </blockquote>
+          <p><strong>[GLOBAL]</strong>|</p>
+          <blockquote>
+            <p>[Int.¹] ➔ [Hub-Hub⁵] ➔ [vWAN hub¹¹] ➔ [vWAN(Route Intent)¹³] ➔ [Az. FW¹⁴]
+              //*Global Transitive Path
+              <br>[onPrem.¹] ➔ [ErGw¹¹] ➔ [GlobalReach¹³] ➔ [ErGw¹¹] ➔ [onPrem(host)⁸]
+              <br>[onPrem.¹] ➔ [Internet⁵] ➔ [VpnGw¹¹] (⟷ [PSK¹²]) ➔ [BGP¹³] ➔ [vNet⁷]
+              <br>[Ext.¹] (⟷ [Traffic Mgr.⁹]) → [Internet⁵] → [ [AppGw(V2)¹¹] | [Mged.-IP⁸]
+              ]
+              <br>[Ext.¹] → [Internet⁵] → [Frontdoor¹¹] (⟷ [WAF Policy¹⁴]) → [ [AppGw(V2)¹¹]
+              | [Mged.-IP⁸] ]
+              <br>[Ext.(user|server¹)] ➔ [Internet⁵] ➔ [VpnGw¹¹] (⟷ [ [Entra ID¹²] | [Cert¹²]
+              ]) ➔ [vNet⁷]</p>
+          </blockquote>
+          <p>//ExamTrap: [Int.¹] ➔ Peering⁷ ➔ [UDR¹³] ➔ [!FAIL!] //*Global Transit
+            Trap (No Hub-hopping)</p>
+        </blockquote>
+        <div>(5) PATH → <strong>5&nbsp;[Az. | Prvt.Access || [ Spoke | Hub ( in | out) ] || VPN(S2S | P2S | WAC) | ER | ForceTunnel || Internet ] </strong><em>//[local||regional||hybrid||global]</em>
+        </div>
+        <blockquote>
+          <div><strong>[Nw³]</strong>
+          </div>
+          <blockquote>
+            <div><strong>[Local⁴]</strong>
+              <br><span>[<strong>Az.</strong>] (←||→) [vNet⁷] → [ [LPM¹³] → [NIC(VM)⁸] | [Internal LB¹⁵] → &nbsp;[BackendPool⁸] ]&nbsp;</span>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[ Regional⁴ ][ Prvt.² ]</strong>
+              <br>[<strong>Int ( server )¹ ]</strong>
+            </div>
+            <div><strong>→ [AZ.]</strong> (←||→)* [vNet⁷] → &nbsp;[svc. Endpt¹⁷] → [Mged.-IP⁸]
+              <br>//*(!svc. edpt. Policy must be enabled for network traffic rules
+              <br><strong>→ [VPN(S2S)]</strong> → [VpnGw¹¹] → [vNet⁷] → [VpnGw¹¹] → (←||→)
+              [NIC(VM)⁸]</div>
+            <div>[Az. FW¹⁶] (!fwd-ed Traffic!) ➔ <strong>[HUB(out)⁵]</strong> ➔ [vNet peering⁷]
+              ➔ (←||→) <strong>[SPOKE(in)⁵]</strong> ➔ [NIC(VM)⁸]
+              <br>
+              <br><strong>[ Int ( server | user )¹ ]</strong>
+              <br>➔ <strong>[SPOKE(out)⁵]</strong> (←||→) [vNet peering⁷] ➔ [UDR¹³] ➔ <strong>[HUB(in)⁵]</strong> ➔
+              [Az. FW¹⁶]
+              <br>➔ <strong>[SPOKE(out)⁵]</strong> (←||→) [vNet peering⁷] ➔ ( [ASG¹⁰] ← )
+              ➔ <strong>[SPOKE(in)⁵]</strong> ➔ [NIC(VM)⁸]
+              <br>→ <span>[<strong>FORCETUNNEL</strong>] (←||→) [UDR([::/0])¹³] → [ [VpnGw¹¹] (⟷ [PSK¹²]) | [ErGw¹¹] → [ER Circuit(Prvt.)⁷ ] ]→ [onPrem(host)⁸]</span>
+              <br>// &nbsp;[Prvt.] visibility because the data only enters the public domain
+              after it exits the AZ700 scope</div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[Regional⁴][Public²]&nbsp;</strong>
+            </div>
+            <div><strong>[Int.(server)¹] (←||→) [NAT Gw¹⁶] → [INTERNET] → [Ext.(SaaS-edpnt.)⁸]</strong>
+              <br>
+              <br><strong>[Ext.(user | server)¹] [INTERNET]&nbsp;</strong>
+              <br><span>→ [AppGw(v2)¹¹] (⟷ [WAF¹⁴]) → [vNet injection⁷] → [BackendPool⁸]</span>
+              <br><span>→ [Bastion¹¹] (⟷ [Conditional Access¹²]) → [vNet⁷] → (←||→) [NIC(VM)⁸]&nbsp;</span>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[onPrem(server | svc.)¹]&nbsp;</strong>  <span>[<strong>VPN(S2S)</strong>] → [VpnGw¹¹] (⟷ [PSK¹²]) → [BGP¹³] → [vNet peering⁷] → (←||→) [NIC(VM)⁸]</span>
+              <br><strong>[onPrem(user)¹]</strong>  <strong>[VPN(P2S)]</strong> → [vpnGw¹¹]
+              (⟷ [Cert¹² | RADIUS¹²]) → [vNet peering⁷] → (←||→) [NIC(VM)⁸]</div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[Global⁴]</strong>
+              <br>[Int.(server)¹] <strong>[SPOKE(out)⁵]</strong> ➔ [vNet peering(global)⁷]
+              ➔ (←||→) [LPM¹³] ➔ <strong>[SPOKE(in)⁵]</strong> ➔ [NIC(VM)⁸]</div>
+            <div><strong>[Int.¹] [SPOKE(out)] </strong>➔ [vNet Peering⁷] ➔ [UDR¹³] ➔ <strong>[HUB(in)]</strong> ➔
+              [VpnGw¹¹ | ErGw¹¹] ➔ [onPrem(host)⁸]
+              <br>[onPrem¹] [ER] → [ErGw¹¹] (⟷ [BGP Key¹²]) → [vNet peering⁷] → (←||→) [NIC(VM)⁸]</div>
+            <div>[onPrem¹] [ER] ➔ [ErGw¹¹] (⟷ [BGP Key¹²]) ➔ [HUB(out)] ➔ [vNet peering⁷]
+              ➔ [SPOKE(in)] ➔ [NIC(VM)⁸]
+              <br>[onPrem¹] [ER]→ [ER Circuit(Prvt.)⁷] (⟷ [GlobalReach¹³]) → [ER Circuit(Prvt.)⁷]
+              → [onPrem(host)⁸]
+              <br><strong>[onPrem¹] [VPN(S2S)]</strong> ➔ [vWAN Hub¹¹] ➔ [vWAN Router¹³]
+              ➔ <strong>[HUB(out)]</strong> ➔ [vNet peering⁷] ➔<strong> [SPOKE(in)]</strong> (←||→)
+              [NIC(VM)⁸]</div>
+            <div>[Ext.(user)¹] [VPN(P2S)] ➔ [VpnGw¹¹] (⟷ [entra ID¹²]) ➔ [HUB(out)] ➔ [vNet
+              peering⁷] ➔ [SPOKE(in)] (←||→) [NIC(VM)⁸]</div>
+          </blockquote>
+          <p><strong>[onPrem¹] ➔ [NIC⁸]</strong>
+            <br><strong>[VPN(WAC)⁵] ➔ [VpnGw¹¹] ➔ [NVA(WAC)¹⁶] ➔ [Entra ID(WAC)¹²] ➔ [NIC⁸]</strong>
+            <br>
+            <br><span>//ExamTrap: </span><em><span>[SPOKE-SPOKE]→[vNet peering(global)⁷]→[!FAIL! ] ; &nbsp;</span></em><span>(!GlobalGwTransit / UseRemoteGw.) peering not possible</span>
+          </p>
+        </blockquote>
+        <blockquote>
+          <div><strong>[App³]</strong>
+          </div>
+          <blockquote>
+            <div><strong>[Prvt.²][Local⁴][Int.(svc.)¹] </strong>[PRVT.ACCESS] (⟷ [Prvt.
+              DNS Zones⁹]) → (←||→)* [Prvt. edpnt.¹⁷] → [Priv. Link⁷] → [Mged.-IP⁸]&nbsp;</div>
+            <div><span>//</span><em><span>HANDSHAKE: Requires [Connection Approved¹²] and [Network Policy¹⁰(Enabled)]</span></em>
+              <br>&nbsp;</div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[Public²]</strong>
+            </div>
+            <div><strong>[Regional</strong><span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">⁴</span><strong>][Int.(server | user)¹] [INTERNET]</strong> (←||→)
+              [Az. FW¹⁶] (⟷ [FQDN Proxy⁹]) → [Ext.(SaaS-edpnt.)⁸]
+              <br>
+              <br><strong>[Global⁴]</strong>
+              <br><strong>[onPrem¹] [ER]</strong> → [ER Circuit(MS)⁷] (|-&gt;) [Mged.-IP⁸]
+              <br><strong>[Ext.(user)¹] [INTERNET]</strong> (⟷ [Traffic Mgr.⁹]) → [FrontDoor¹¹]
+              (⟷ [WAF¹⁴]) → [vNet Injection⁷] → [Mged.-IP⁸]</div>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <blockquote>
+            <div>&nbsp;</div>
+            <div><strong>[SALVAGE 2] // Spoke-to-Spoke Hairpin (!fwd-ed Traffic!)</strong>
+            </div>
+            <ul>
+              <li data-list-item-id="e2051af6c64a77712a67778d65875be70">
+                <p style="margin-left:0px;"><span><strong>The Scenario:</strong> Traffic between spokes must be scrubbed by the Firewall. In <strong>AZ-700</strong>, this requires a specific handshake in the Firewall logic.</span>
+                </p>
+              </li>
+              <li data-list-item-id="e558a621bbb5057058dc1282f3e9bee57">
+                <p style="margin-left:0px;"><span><strong>Surgical Twig:</strong> </span><code spellcheck="false"><span>[Regional⁴][Prvt.²][Int.(server)¹] [HUB-SPOKE] (←||→) [vNet peering⁷] → [UDR¹³] → [Az. FW¹⁶] (!fwd-ed Traffic!) → [vNet peering⁷] → (←||→) [NIC(VM)⁸]</span></code>
+                </p>
+              </li>
+            </ul>
+            <div><strong>[SALVAGE 3] // The Global Peering "FAIL" (Critical Exam Trap)</strong>
+            </div>
+            <ul>
+              <li data-list-item-id="e19cddc161390c2278585d33bb0f9b258">
+                <p style="margin-left:0px;"><span><strong>The Scenario:</strong> Attempting to use <strong>GlobalGwTransit</strong> across a <strong>Global vNet Peering</strong> bridge.</span>
+                </p>
+              </li>
+              <li data-list-item-id="e8d1eb944a56e713f75987bc0cfd2c978">
+                <p style="margin-left:0px;"><span><strong>The Fact:</strong> Traditionally, Global Peering does <strong>not</strong> support GlobalGwTransit. If an exam question asks to use a remote gateway over a global bridge, the answer is "Infeasible."</span>
+                </p>
+              </li>
+              <li data-list-item-id="e035905cc8a1c476ef1b69d66e6030044">
+                <p style="margin-left:0px;"><span><strong>Exception Comment to add to [Global⁴][SPOKE-SPOKE]:</strong></span>
+                  <br><code spellcheck="false"><span>//*(!Global Peering does not support GlobalGwTransit / UseRemoteGw)</span></code>
+                </p>
+              </li>
+            </ul>
+          </blockquote>
+        </blockquote>
+        <div><strong>(6) PAYLOAD</strong> → &nbsp;Qty [ {#} (GB/s | P2S | S2S | Port
+          | vNet⁶ | Spokes) ] || Svc. [ DB | Web | Storage ] //Ports (TCP/UDP) (Concurrency)</div>
+        <blockquote>
+          <blockquote>
+            <div><em><strong>// Group: Quantity Floors &amp; Scale Switches</strong></em>
+            </div>
+            <blockquote>
+              <div><strong>[Ext.(user | server)¹] [{#}P2S] </strong><em>// user Capacity</em>
+                <br>&nbsp;➔ [VpnGw('Basic' {≤ |128} &gt;} 'Gw1-5' {≤ 1k| &gt;} vWAN)¹¹)] ➔
+                [VPN(P2S)⁵] ➔ [NIC⁸]</div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[onPrem( server | svc. )¹] [{#}S2S] </strong><em>// Tunnel Capacity&nbsp;</em>
+                <br>&nbsp;➔ [VpnGw('Basic' {≤ |10} &gt;} 'Gw1-5' {≤ 30| &gt;} vWAN¹¹)] ➔ [VPN(S2S)⁵]
+                ➔ [NIC(VM)⁸]</div>
+            </blockquote>
+            <blockquote>
+              <div><em>// Throughput&nbsp;</em>
+                <br><strong>[{#}GB/s] [Int.(server)¹] ➔ </strong>[NAT Gw('Std.v1' {≤ |50}
+                &gt;} 'Std.v2'¹⁶)] ➔ [Internet⁵] ➔ [Ext.(SaaS-Endpt.)⁸]
+                <br><strong>[{#}GB/s]&nbsp;[OnPrem¹] </strong><em>//ExpressRoute and VPN Gateway</em>
+                <br><strong>(server | svc.) </strong>➔ [VpnGw('Basic' {≤ |0.65} &gt;} 'Gw1-5'¹¹)]
+                ➔ [VPN(S2S)⁵] ➔ [onPrem(host)⁸]
+                <br><strong>(server)¹ </strong>➔ [ERGw('Basic' {≤ |0.5} &gt;} 'Std/High/Ultra'
+                {≤ 10| &gt;} ‘Direct’¹¹)] ➔ [ER⁵] ➔ [onPrem(host)⁸]</div>
+            </blockquote>
+            <blockquote>
+              <div><span><strong>[Int.(server)¹]</strong> [ {#}<strong>[PORT]</strong> ] </span><em>// SNAT threshold / &nbsp;<span>Std. LB/FW &nbsp;limit = 64,512/IP </span>( ! Port Exhaustion ! )</em>
+              </div>
+              <div><span>➔ [NAT Gw('Single-IP' {≤ |64k} &gt;} 'Multi-IP'¹⁶) ] ➔ [Internet⁵] ➔ [Ext.(SaaS-Endpt.)⁸]</span>
+              </div>
+            </blockquote>
+            <blockquote>
+              <div><strong>[onPrem¹] [ {#}VNET]</strong> ➔ [ ER Circuit('Std.' {≤ |10} &gt;}
+                'Premium'⁷) ] ➔ [ER⁵] ➔ [NIC⁸]</div>
+            </blockquote>
+            <blockquote>
+              <div>[Int.(server)¹] <strong>[ {#}[SPOKES] ]</strong> ➔ [vNet('Std.Hub' <strong>{≤ |500} &gt;}</strong> vWAN)¹¹]
+                ➔ [Hub(in)⁵ | Hub(out)⁵] ➔ [NIC⁸]</div>
+            </blockquote>
+          </blockquote>
+          <blockquote>
+            <p><em>// svc. Mapping</em>
+            </p>
+            <blockquote>
+              <p><span><strong>[Int.(server)¹]</strong></span>
+                <br><span>[ <strong>[DB]</strong> ] ➔ ( ⟷ [Prvt. DNS Zones⁹] ) ➔ [Prvt. Endpt.¹⁷] ➔ [Mged.-IP⁸]</span>
+                <br><span><strong>[ Regional⁴ ] [ [STORAGE] ] </strong>➔ [ Prvt. Endpt.¹⁷ | Svc. Endpt.¹⁷ ] ➔ [ Mged.-IP⁸ ]</span>
+                <br><span><strong>[ Global⁴ ] [ [STORAGE] ]</strong> ➔ [ Prvt. Endpt.¹⁷ ] ➔ [ Mged.-IP⁸ ]</span>
+              </p>
+            </blockquote>
+            <blockquote>
+              <p>[Ext.¹] [ [WEB] ] ➔ [ AppGw(V2)¹¹ ] ( ⟷ [WAF Policy¹⁴] ) ➔ [BackendPool⁸]</p>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        <div><strong>(7) BRIDGES ➔ [ vNet Peering | vNet Injection | Priv. Link | | ER Circuit (Prvt. | MS) | vWAN ] &nbsp;</strong>
+        </div>
+        <blockquote>
+          <p><strong>&nbsp;[Prvt.²]&nbsp;</strong>
+          </p>
+          <blockquote>
+            <p><strong>[Regional⁴]</strong>
+              <br><strong>[Hub(in)⁵] [VNET PEERING] (! allow transit !)</strong> ➔ [Az. FW¹⁶]
+              <br><strong>[Hub(in)⁵] [VNET PEERING]</strong> (! fwded traffic !) ➔ [Hub(out)⁵]
+              ➔ [SPOKE(in)⁵]
+              <br>
+              <br><strong>[Int.¹] [VNET PEERING]&nbsp;</strong>
+              <br><strong>[Int.¹][VNET PEERING⁷] ➔ [VIRTUAL LINK^⁹] ➔ [NIC⁸ &amp;| Prvt. edpnt¹⁷]*</strong>
+              <br><strong>(! allow transit !)</strong> ➔ [VpnGw¹¹ | ErGw¹¹]&nbsp;
+              <br><strong>(! use remote Gw !)</strong> ➔ [NIC⁸ | BackendPool⁸]
+              <br><strong>(! fwded traffic !)</strong> ➔ [Az. FW¹⁶]
+              <br>
+              <br><strong>[Int.(server)¹]</strong>
+              <br><strong>[VNET INJECTION] (! subnet delegation !)</strong> ➔<strong> [Mged.IP (PaaS)⁸] // to specific svc.&nbsp;</strong>
+              <br>[<strong>Prvt.Access⁵]</strong> [<strong>PRIV. LINK</strong>]<strong> (⟷ [Prvt. DNS Zones⁹])➔[Prvt. Endpt.¹⁷]➔[Mged-IP (PaaS)⁸]</strong>
+            </p>
+            <p><strong>[Int.(server)¹]</strong>
+              <br><strong>[VNET INJECTION⁷] ➔ [PRVT. RESOLVER (out)^⁹] ➔ [VpnGw¹¹ &amp;| ErGw¹¹]</strong>
+            </p>
+            <p><strong>[Int.¹] [SERVICE ENDPOINT] </strong>➔ [Mged.-IP(PaaS)⁸]&nbsp;
+              <br>// specific service must be enabled on the source's subnet properties.
+              <br>//ACL (Service Firewall NW rules) must explitly allow traffic from source
+              subnet</p>
+          </blockquote>
+          <blockquote>
+            <p><strong>[Global⁴]&nbsp;</strong>
+              <br><strong>[Hub(in)⁵] [VWAN] (HUB MESH) ➔ [vWAN Hub¹¹] ➔ ( ⟷ [BGP¹³] ) ➔ [NIC⁸ | onPrem(host)⁸] </strong>//exclusive
+              for global transitive vHub-vHub routing
+              <br>
+              <br><strong>[onPrem(server)¹] [ER CIRCUIT (PRVT.)] ( ⟷ [GlobalReach¹³] ) ➔ [onPrem(host)⁸]</strong> //exclusive
+              circuit-circuit, no Az.</p>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <p>[Public²]</p>
+          <blockquote>
+            <p>[Regional⁴]
+              <br>[Int.(server)¹] [NAT GW] ➔ [Internet⁵] ➔ [Ext. SaaS (IP)⁸]
+              <br>&nbsp;<strong>[onPrem¹]</strong> [<strong>ER CIRCUIT (MS)</strong>] ➔ [Mged.-IP
+              (PaaS)⁸ | Ext. (SaaS-DN.)⁸]</p>
+          </blockquote>
+          <blockquote>
+            <p>[Int.(server)¹] [AZ. FW] (⟷ [FQDN Proxy⁹]) ➔ [Internet⁵] ➔ [Ext. SaaS
+              (DN)⁸]
+              <br>[Global⁴] <strong>[onPrem¹]</strong> [<strong>ER CIRCUIT (MS)</strong>]
+              ➔ [Mged.-IP (PaaS)⁸ | Ext. (SaaS-IP.)⁸]
+              <br>//*Global circuit premium is required for global MS peering</p>
+          </blockquote>
+          <blockquote>
+            <p><strong>[Global⁴] [Public²]</strong>
+              <br><strong>[Internet⁵]</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ </span><strong>[FrontDoor(Prem)¹¹]</strong>
+              <span
+              style="background-color:rgb(16,18,24);color:rgb(230,232,240);">➔</span><strong>[PRIV. LINK]</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ </span><strong>[Prvt. edpnt¹⁷]</strong>
+                <span
+                style="background-color:rgb(16,18,24);color:rgb(230,232,240);">➔</span><strong>[Mged.-IP(PaaS)⁸ | NIC⁸]</strong>
+            </p>
+          </blockquote>
+        </blockquote>
+        <div><strong>(8) DESTINATION ➔ [NIC | BackendPool | Mged.-IP (PaaS | Svc.) | On-Prem (host) | Ext. SaaS (DN | IP)]&nbsp;</strong>
+        </div>
+        <blockquote>
+          <div><strong>[NIC]&nbsp;</strong>
+          </div>
+          <div><strong>[Int.¹] [Az.⁵] (←||→) [NIC]&nbsp;</strong>
+          </div>
+          <blockquote>
+            <div>[[Hub⁵]
+              <br>[Int.¹] [Hub(in)⁵] → [vNet Peering⁷] → [Spoke(in)⁵] &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (←||→) <strong>[NIC]</strong>
+              <br>[Az. FW¹⁶] → [Hub(out)⁵] → [vNet Peering⁷] → [Spoke(in)⁵] &nbsp; &nbsp;
+              &nbsp;(←||→) <strong>[NIC]</strong>
+              <br>[Int.(user)¹] [Bastion¹¹] → [vNet-Injection⁷] → [vNet Peering⁷] &nbsp;
+              (←||→) <strong>[NIC]</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[VPN⁵] &nbsp;[onPrem¹]</strong>&nbsp;
+              <br>(S2S) → [VpnGw¹¹] → [vNet-Injection⁷] → [vNet Peering⁷] → [Spoke(in)⁵]
+              (←||→) <strong>[NIC]</strong>
+              <br>(P2S) ; (user) → [VpnGw¹¹] → [vNet-Injection⁷] → [vNet Peering⁷] &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(←||→) <strong>[NIC]</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[ER⁵] [ER Circuit⁷]&nbsp;</strong>
+            </div>
+            <div><strong>[ERGw¹¹]</strong> → [vNet-Injection⁷] (←||→) <strong>[NIC]</strong>
+            </div>
+            <blockquote>
+              <div><strong>[onPrem¹]&nbsp;</strong>
+              </div>
+              <div>→[ERGw(FastPath)¹¹] → [vNet-Injection⁷] &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (←||→) <strong>[NIC]</strong>
+              </div>
+              <div><strong>→[ERGw(Hub)¹¹]</strong>→[vNetInjection⁷]→[vNetPeering⁷]→[Spoke(in)⁵]
+                (←||→) <strong>[NIC]</strong>
+              </div>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <p><strong>BACKENDPOOL] // Primary Group (Distribution Targets)</strong>
+          </p>
+          <blockquote>
+            <div><strong>[Ext.¹] [Internet⁵]</strong>
+            </div>
+            <div><strong>[ [FrontDoor¹¹] &amp;| [AppGw(v2)¹¹] &amp;| [Std. LB¹¹] ] → [vNet-Injection⁷] (|-&gt;) [BACKENDPOOL]</strong>
+              <br><strong>[TrafficMgr.⁹] → [AppGw(v2)¹¹] &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(|-&gt;) [BACKENDPOOL]</strong>
+              <br><strong>[FrontDoor¹¹] [X-Az.-FDID¹⁴] → [Internet⁵] &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(|-&gt;) [BACKENDPOOL]</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[Az.⁵ | Prvt.Access⁵]</strong>
+              <br><strong>[Internal LB¹⁵] (|-&gt;) [BACKENDPOOL]</strong>
+              <br><strong>[Int.¹] [Gw LB¹⁵] → [vNet-Injection⁷] → [NVA¹⁶] (|-&gt;) [BACKENDPOOL(VMSS)]</strong>
+            </div>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <div><strong>[MGED.-IP(PaaS)] &nbsp;</strong>
+          </div>
+          <blockquote>
+            <div><strong>[Int.¹]</strong>
+            </div>
+            <div><strong>[vNet-Injection⁷] → [vNet Integration¹⁷] &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (←||→) [MGED.-IP(PaaS)]&nbsp;</strong>
+              <br>[Priv. Link⁷] (⟷ [Prvt. DNS Zones⁹]) → [Prvt. Endpt.¹⁷] &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (←||→) <strong>[MGED.-IP(PaaS)]</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div>[onPrem¹] [VPN(S2S)⁵]&nbsp;</div>
+            <div>→[VpnGw¹¹] → [vNet-Injection⁷] → [Priv. Link⁷] → [Prvt. Endpt.¹⁷] (←||→) <strong>[MGED.-IP(PaaS)]</strong>
+            </div>
+          </blockquote>
+          <blockquote>
+            <div><strong>[internet⁵] [MGED.-IP(Svc.)]</strong>
+              <br>[Int.¹] [Spoke(out)⁵] → [vNet Peering⁷] → [Svc. Endpt⁷] &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(|-&gt;) [MGED.-IP(Svc.ACL)]
+              <br>[FrontDoor¹¹] [X-Az.-FDID¹⁴] → [Internet⁵] &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(|-&gt;) [MGED.-IP(Svc.ACL)]
+              <br>
+              <br>&nbsp;</div>
+            <div><strong>[Mged.-IP(PaaS)⁸]</strong> ➔ <strong>[Handshake: Priv. Link⁷]</strong>
+              <br>[vNet⁷] ➔ [Prvt. edpnt¹⁷] ➔ (⟷ [Approved¹²]) ➔ <strong>[Mged.-IP(PaaS)⁸]</strong>
+              <br>//*Logic: Private IP mapped to a specific PaaS instance (SQL/Storage).<span><button><span class="wiMplc ofC0Ud" style="color: rgb(173, 175, 184); display: inline-block; transform: rotate(135deg);"><svg style="margin-top: 3px;" fill="currentColor" width="12px" height="12px" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></span>
+              </button>
+              </span>
+            </div>
+            <div><strong>[Mged.-IP(Svc.)⁸]</strong> ➔ <strong>[Handshake: Svc. Endpt⁷]</strong>
+              <br>[vNet⁷] ➔ [Svc. Endpt⁷] ➔ (⟷ [ACL¹⁰]) ➔ <strong>[Mged.-IP(Svc.)⁸]</strong>
+              <br>//*Logic: Public IP access via Microsoft backbone with subnet-level filtering.</div>
+          </blockquote>
+        </blockquote>
+        <blockquote>
+          <p><strong>[ON-PREM(host)] [Int.¹]</strong>
+            <br><strong>&nbsp;[ [VPN(S2S)⁵] &amp;| [ER Circuit⁷] ] → [ [VpnGw¹¹] &amp;| [ERGw¹¹] ] → [ON-PREM(host)]</strong>
+            <br><strong>[ForceTunnel⁵] → [UDR¹³] → [ [VpnGw¹¹] | [Az. FW¹⁶] ] → &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[ON-PREM(host)]</strong>
+          </p>
+        </blockquote>
+        <blockquote>
+          <div><strong>[Internet⁵][Int.¹]&nbsp;</strong>
+            <br>[NAT GW¹⁶] → [Internet⁵] &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(|-&gt;) <strong>[EXT. SaaS(IP)]</strong>
+            <br>[Az. FW¹⁶] (⟷ [FQDN Proxy⁹]) → [Internet⁵] &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp;(|-&gt;) <strong>[EXT. SaaS(DN)]</strong>
+          </div>
+          <div><strong>[ForceTunnel⁵] → [UDR¹³] → [Az. FW¹⁶] → [Internet⁵] (|-&gt;) [EXT. SaaS(DN)]</strong>
+          </div>
+        </blockquote>
+        <div>
+          <br>B: NAME RESOLUTION( &amp; PERMISSION)
+          <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">(9)</span>  <strong>DNS:</strong> [Traffic
+          Mgr. || Prvt. Resolver (in-/out) | Prvt. DNS Zones | Virtual Link | FW
+          FQDN Proxy]</div>
+        <blockquote>
+          <div><strong>[Int.¹] ➔ [NIC⁸]</strong>
+          </div>
+          <div><strong>[vNet⁷] ➔ [VIRTUAL LINK^⁹] ➔ [NIC⁸]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+          <div><strong>[vNet⁷] ➔ [VIRTUAL LINK^⁹] ➔ [Prvt. edpnt¹⁷] ➔ [Approved¹²] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] ➔ [onPrem(host)⁸]</strong>
+          </div>
+          <div><strong>[VPN(S2S)⁵][vNet Injection⁷] ➔ [PRVT. RESOLVER (out)^⁹] ➔ [VpnGw¹¹] ➔ [onPrem(host)⁸]</strong>
+          </div>
+          <div><strong>[ER⁵][vNet Injection⁷] ➔ [PRVT. RESOLVER (out)^⁹] ➔ [ErGw¹¹] ➔ [onPrem(host)⁸]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] ➔ [EXT. SaaS(DN)⁸]</strong>
+          </div>
+          <div><strong>[Hub(in)⁵] ➔ [vNet Peering⁷(CustomDNS)] ➔ [FW FQDN PROXY^⁹] ➔ [AzureFirewall¹⁶] ➔ [Internet⁵] ➔ [EXT. SaaS⁸]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>[onPrem¹] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+          <div><strong>[VpnGw¹¹] ➔ [PRVT. RESOLVER (in)^⁹] ➔ [VIRTUAL LINK^⁹] ➔ [Prvt. edpnt¹⁷] ➔ [Approved¹²] ➔ [MGED.-IP(PaaS)⁸]</strong>
+            <br>
+            <br><strong>[ErGw¹¹] ➔ [PRVT. RESOLVER (in)^⁹] ➔ [VIRTUAL LINK^⁹] ➔ [Prvt. edpnt¹⁷] ➔ [Approved¹²] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>[Ext.¹] ➔ [BACKENDPOOL⁸]</strong>
+          </div>
+          <div><strong>[Internet⁵] [⟷TRAFFIC MGR.^⁹] ➔ [FrontDoor¹¹ &amp;| AppGw(v2)¹¹ &amp;| Std. LB¹¹ (|-&gt;) [BackendPool ]&nbsp;</strong>
+          </div>
+          <div>
+            <br><strong>[Ext.¹] ➔&nbsp;NIC⁸</strong>
+          </div>
+          <div><strong>[Internet⁵] ➔ [TRAFFIC MGR.^⁹] ➔ [FrontDoor¹¹ &amp;| AppGw(v2)¹¹] ➔ [vNet Injection⁷] ➔ [NIC⁸]</strong>
+          </div>
+          <div>
+            <br><strong>[Int.¹] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+          <div><strong>[vNet⁷] ➔ [VIRTUAL LINK^⁹] ➔ (⟷ [PRVT. DNS ZONES⁹]) ➔ [Prvt. edpnt¹⁷] ➔ [Approved¹²] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+          <div><strong>[Az. FW¹⁶] ➔ [FW FQDN PROXY^⁹] ➔ (⟷ [PRVT. DNS ZONES⁹]) ➔ [Prvt. edpnt¹⁷] ➔ [Approved¹²] ➔ [MGED.-IP(PaaS)⁸]</strong>
+          </div>
+        </blockquote>
+        <div>&nbsp;</div>
+        <p><strong>(10) PERMISSIONS</strong> ➔ [AVNM (AdminRule/ RuleCollection) |
+          NSG( [Prvt. | svc.] edpnt. Policy) | ASG ]</p>
+        <blockquote>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] [REGIONAL⁴]</strong>
+            <br><strong>[vNet⁷]</strong> ➔ ( <strong>[AVNM(RuleCollection)]</strong> ➔ <strong>[AdminRule(Deny)]</strong> )
+            ➔ [!DROP!]
+            <br><strong>[vNet⁷]</strong> ➔ ( <strong>[AVNM(RuleCollection)]</strong> ➔ <strong>[AdminRule(AlwaysAllow)]</strong> )
+            ➔ [NIC⁸] //*NSG Bypassed.
+            <br><strong>[vNet⁷]</strong> ➔ ( <strong>[AVNM(RuleCollection)]</strong> ➔ <strong>[AdminRule(Allow)]</strong> ➔ <strong>[NSG]</strong> )
+            ➔ [NIC⁸] //*Standard Evaluation.</div>
+          <p>
+            <br><strong>[Int.¹] [GLOBAL⁴]</strong>
+            <br><strong>[Global Peering⁷]</strong> ➔ ( <strong>[AVNM(RuleCollection)]</strong> ➔ <strong>[AdminRule(Allow)]</strong> ➔ <strong>[NSG(IP/Svc. Tag)]</strong> )
+            ➔ [NIC⁸]
+            <br>// <code spellcheck="false">[ASG]</code> is incompatible with Global Scope
+            RuleCollections.</p>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] [local⁴]</strong>
+            <br><strong>[Az.⁵]</strong> ➔ [vNet⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> )
+            ➔ [NIC⁸]
+            <br><strong>[Az.⁵]</strong> ➔ [vNet⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG([ASG])]</strong> )
+            ➔ [NIC⁸]</div>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] [Regional⁴]</strong>
+            <br><strong>[Spoke(out)⁵]</strong> ➔ [vNet peering⁷] ➔ [UDR¹³] ➔ [Hub(in)⁵]
+            ➔ [Az. FW¹⁶] ➔ [Hub(out)⁵] ➔ [vNet peering⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> )
+            ➔ [NIC⁸]
+            <br><strong>[vNet-injection⁷]</strong> ➔ ( <em>[NSG (Prvt. Endpoint Policy)]</em>*
+            ) ➔ [Prvt. Link¹⁷] ➔ [Mged.-IP (PaaS)⁸]
+            <br>//*Note: <code spellcheck="false">PrivateEndpointNetworkPolicy</code> must
+            be enabled on the source subnet.</div>
+          <div><strong>[Int.¹] [REGIONAL⁴]</strong>
+            <br><strong>[vNet-injection⁷]</strong> ➔ ( <em>[NSG (Svc. Endpoint Policy)]</em>*
+            ) ➔ [Svc. Endpt⁷] (|-&gt;) [Mged.-IP (PaaS)⁸]
+            <br>//*Logic: Restricts the 'Service Endpoint' to a specific Resource ID (e.g.,
+            a specific Storage Account) instead of the entire Service Tag.</div>
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+          <div><strong>[Int.¹] [Global⁴]</strong>
+            <br><strong>[Hub-Hub⁵]</strong> ➔ [vWAN hub¹¹] ➔ [vWAN(Route Intent)¹³] ➔ [Az.
+            FW¹⁴] ➔ [Global Peering⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> )
+            ➔ [NIC⁸]
+            <br>//*Binary Kill: [ASG] is NOT supported over Global Peering. Must use IP/Svc
+            Tags.</div>
+          <div>&nbsp;</div>
+          <div><strong>[onPrem¹] [Regional⁴]</strong>
+            <br><strong>[Er/Vpn Gateway¹¹]</strong> ➔ [vNet⁷] ➔ ( <em>[NSG (Svc. Endpoint Policy)]</em>*
+            ) ➔ [Svc. Endpt⁷] (|-&gt;) [Mged.-IP (PaaS)⁸]</div>
+          <div>&nbsp;</div>
+          <div><strong>[VPN(S2S)⁵]</strong> ➔ <strong>[VpnGw¹¹]</strong> ➔ ( ⟷ <strong>[PSK¹²]</strong> )
+            ➔ [vNet⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> ) ➔ [NIC⁸]
+            <br>//*Note: Permission logic must allow Port 500/4500 (UDP) at the Edge/NVA
+            if transit is filtered.</div>
+          <div>&nbsp;</div>
+          <div><strong>[ER⁵]</strong> ➔ <strong>[ErGw¹¹]</strong> ➔ ( ⟷ <strong>[BGP Key¹²]</strong> )
+            ➔ [vNet⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> ) ➔ [NIC⁸]
+            <br>//*Note: Permission logic allows BGP (TCP 179) between MSEE and Gateway.</div>
+          <div>&nbsp;</div>
+          <div><strong>[VPN(P2S)⁵]</strong> ➔ <strong>[VpnGw¹¹]</strong> ➔ ( ⟷ <strong>[Entra ID¹² | Cert¹²]</strong> )
+            ➔ [vNet⁷] ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> ) ➔ [NIC⁸]
+            <br>//*Assumption (0): GatewayManager/Platform bypasses are active for Bastion/VPN
+            health.</div>
+          <div>&nbsp;</div>
+          <div><strong>[onPrem¹] ➔ [NIC⁸]</strong>
+          </div>
+          <div><strong>[NVA(WAC)¹⁶] ➔ [UDP 4789¹⁶] ➔ [AVNM(AdminRule)^¹⁰] (|-&gt;) [NSG¹⁰] ➔ [NIC⁸]</strong>
+          </div>
+          <div>&nbsp;</div>
+          <div><strong>[Ext.¹] [Public²] [Internet⁵]</strong>
+            <br><strong>[Global⁴] [App³]</strong> ➔ <strong>[FrontDoor¹¹]</strong> ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG (Svc. Tag)]</strong> )
+            ➔ [BACKENDPOOL⁸]
+            <br><strong>[Regional⁴] [App³]</strong> ➔ <strong>[AppGw(V2)¹¹]</strong> ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG (Port 65200-65535)]</strong> )
+            ➔ [BackendPool⁸]
+            <br><strong>[Regional⁴] [Nw³]</strong> ➔ <strong>[Std. LB¹¹]</strong> ➔ ( <strong>[AVNM]</strong> ➔ <strong>[NSG]</strong> )
+            ➔ [NIC⁸]</div>
+          <div>&nbsp;</div>
+        </blockquote>
+        <p style="margin-left:0px;"><em><span><strong>// Az. Wireserver (168.63.129.16):</strong> Mandatory Allow; provides DNS/DHCP/Health Probes.</span></em>
+          <br><em><span>// <strong>Managed Svc.:</strong> [ <strong>Bastion¹¹ &amp; VPN¹¹ &amp; SQL MI⁸</strong> ] have default "Bypass" rules to ensure management connectivity.</span></em>
+          <br><em><span>// <strong>SMTP (Port 25):</strong> Default Deny. <strong>No Override</strong>.</span></em>
+        </p>
+        <div><span style="background-color:rgb(16,18,24);">C: PHYSICAL/LOGICAL PATH</span>
+          <br><strong>(11) EDGE GATEWAY ➔ Inbound: | Bastion | Std, LB | FrontDoor | AppGw(V2)] 2-way: [VpnGw | ERGw | vWAN HUB]+ SKUs</strong>
+          <br>&nbsp;</div>
+        <blockquote>
+          <div><strong>[Int(server)¹][Global⁴][vWAN hub¹¹]</strong>
+            <br><strong>[VWAN-HUB(STD)]</strong> ➔ [vWAN-Router¹³] ➔ [ [Az. FW¹⁶] ➔ [vNet-injection⁷]
+            | [vNet-injection⁷] ] ➔ [vNet-peering⁷] ➔ [NIC⁸]
+            <br>//*Standard vWAN: Mandatory for Routing Intent.</div>
+          <div>&nbsp;</div>
+          <div><strong>[onPrem(server)¹][Regional⁴][VPN(S2S)⁵]</strong>
+            <br><strong>[VPNGW(V2+)]</strong> ➔ [ (⟷ [PSK¹²]) ➔ [BGP¹³] ➔ [vNet⁷] | [vNet-injection⁷]
+            ➔ [vNet-peering⁷] ] ➔ [NIC⁸]
+            <br>//*Basic SKU: No BGP/Transit.</div>
+          <div>&nbsp;</div>
+          <div><strong>[onPrem(user)¹][Global⁴][vWAN hub¹¹]</strong>
+            <br><strong>[VWAN-HUB(STD)]</strong> ➔ [vWAN-Router¹³] ➔ [ [Az. FW¹⁶] ➔ [vNet-injection⁷]
+            | [vNet-injection⁷] ] ➔ [vNet-peering⁷] ➔ [NIC⁸]</div>
+          <div>&nbsp;</div>
+          <div><strong>[onPrem(server)¹][Global⁴][ER⁵]</strong>
+            <br><strong>[ERGW(ULTRA)]</strong> ➔ [ (⟷ [BGP-Key¹²]) ➔ [GlobalReach¹³] ➔
+            [ER-Circuit(Prem)⁷] | [vNet-injection⁷] ➔ [vNet-peering⁷] ] ➔ [NIC⁸]</div>
+          <div>&nbsp;</div>
+          <div><strong>[Ext(user)¹][Public²][Internet⁵]</strong>
+            <br><strong>[Global⁴][App³][FRONTDOOR]</strong>
+            <br>(PREM.) ➔ (⟷ [WAF¹⁴]) ➔ [Priv. Link⁷] ➔ [Mged.-IP⁸]
+            <br>(STD.) ➔ (⟷ [WAF¹⁴] &amp;| [X-Az.-FDID¹⁴]) ➔ [AppGw(V2)¹¹] ➔ [BackendPool⁸]</div>
+          <div>
+            <br><strong>[Regional⁴]</strong>
+            <br>[App³] ➔ <strong>[APPGW(V2)]</strong> ➔ (⟷ [WAF¹⁴]) ➔ [vNet-injection⁷]
+            ➔ [BackendPool⁸]
+            <br>[Nw³] ➔ <strong>[BASTION(STD)]</strong> ➔ (⟷ [Entra ID¹²]) ➔ [vNet⁷] ➔ [NIC⁸]
+            <br>[Nw³] ➔ <strong>[STD. LB]</strong> ➔ [vNet⁷] ➔ [BackendPool⁸]</div>
+          <div>
+            <br><strong>[Global⁴][Nw³]</strong> ➔ <strong>[VPNGW(V2+)]</strong> ➔ (⟷ [Entra
+            ID¹² | Cert¹²]) ➔ [vNet⁷] ➔ [NIC⁸]</div>
+          <div><strong>[Ext(svc)¹][Public²][ER Circuit(MS)⁷]</strong>
+            <br><strong>[Regional⁴][App³]</strong> ➔ <strong>[APPGW(V2)]</strong> ➔ [BackendPool⁸]</div>
+          <div>&nbsp;</div>
+        </blockquote>
+        <p><strong>(12) AUTHENTICATION ➔ </strong><em>[</em><strong> PSK | BGP Key | Cert (mTLS | Client) | RADIUS | Entra ID (WAC | PIM | MFA | JIT | Conditional Access) | “Approved”* (Prvt.Link) ]</strong>
+          <span
+          style="background-color:rgb(16,18,24);color:rgb(230,232,240);"><strong>*</strong>
+            </span><strong> //*"Connection approved"</strong>
+        </p>
+        <blockquote>
+          <div><strong>XII. AUTHENTICATION (HANDSHAKES)</strong>
+            <br>
+            <br>&nbsp;</div>
+          <div><strong>[Tunnel &amp; Fabric]</strong> ➔ (PSK | BGP Key | Approved*)</div>
+          <ul>
+            <li data-list-item-id="e0b89bf35996ad1e96d22dda746be35e0">
+              <p style="margin-left:0px;"><span><strong>[onPrem(server)¹][Regional⁴][VPN(S2S)⁵]</strong> ➔ [VpnGw¹¹] ➔ (⟷ <strong>[PSK]</strong>) ➔ [NIC⁸]</span>
+              </p>
+            </li>
+            <li data-list-item-id="e0a81a1f01fb516e89b2dfdbe1112a4e2">
+              <p style="margin-left:0px;"><span><strong>[onPrem(server)¹][Global⁴][ER⁵]</strong> ➔ [ErGw¹¹(Ultra)] ➔ (⟷ <strong>[BGP KEY]</strong>) ➔ [GlobalReach¹³] ➔ [onPrem(host)⁸]</span>
+              </p>
+            </li>
+            <li data-list-item-id="e0aa631543a595ac0df4bf6011da87bce">
+              <p style="margin-left:0px;"><span><strong>[Int(server)¹][Regional⁴][Prvt.Link⁷]</strong> ➔ [Prvt. edpnt¹⁷] ➔ (⟷ </span><em><span>[APPROVED]</span></em><span>*) ➔ [Mged.-IP⁸]</span>
+                <br><span>//</span><em><span>Approved</span></em><span>: Handshake for Private Link connection state.</span>
+              </p>
+            </li>
+          </ul>
+          <div><strong>[Identity &amp; Workflow]</strong> ➔ (Entra ID | MFA | Conditional
+            Access | JIT | PIM)</div>
+          <ul>
+            <li data-list-item-id="ebaf21ff4dced94d3eb017c6896b32026">
+              <p style="margin-left:0px;"><span><strong>[Ext(user)¹][Global⁴][Internet⁵]</strong> ➔ [FrontDoor¹¹] ➔ (⟷ <strong>[CONDITIONAL ACCESS]</strong> ➔ <strong>[MFA]</strong>) ➔ [BACKENDPOOL⁸]</span>
+              </p>
+            </li>
+            <li data-list-item-id="eaf0ff5d8f2b72268c487ccd1fd882c62">
+              <p style="margin-left:0px;"><span><strong>[Ext(user)¹][Regional⁴][Internet⁵]</strong> ➔ [Bastion¹¹] ➔ (⟷ <strong>[ENTRA ID]</strong> ➔ <strong>[JIT]</strong>) ➔ [NIC⁸]</span>
+              </p>
+            </li>
+            <li data-list-item-id="e8c42a0e51bd9c0f9d9de87c197532c82">
+              <p style="margin-left:0px;"><span><strong>[Int(user)¹][Regional⁴][AppGw(V2)¹¹]</strong> ➔ (⟷ <strong>[PIM]</strong> ➔ <strong>[ENTRA ID]</strong>) ➔ [BACKENDPOOL⁸]</span>
+                <br><span>//*JIT: Mandatory integration with NSG¹⁰ or Az. FW¹⁶.</span>
+              </p>
+            </li>
+            <li class="ck-list-marker-bold" data-list-item-id="e9075d1677f308d0c2b4d96bce66cca4a">
+              <div><strong>[onPrem¹] ➔ [NIC⁸] (L2-Stretch)</strong>
+              </div>
+            </li>
+            <li class="ck-list-marker-bold" data-list-item-id="ee362973f7709100e7defa68aa2d84c21">
+              <div><strong>[Entra ID(WAC)¹²] ➔ [WAC VM Appliance¹¹] ➔ [NIC⁸]</strong>
+              </div>
+            </li>
+          </ul>
+          <div><strong>[Certificate &amp; Secure-L7]</strong> ➔ (Cert | RADIUS)</div>
+          <ul>
+            <li data-list-item-id="e4cf5bc89158293ff4674314a725e8fa7">
+              <p style="margin-left:0px;"><span><strong>[Ext(user)¹][Global⁴][Internet⁵]</strong> ➔ [VpnGw¹¹(P2S)] ➔ (⟷ <strong>[CERT]</strong> | ⟷ <strong>[RADIUS]</strong>) ➔ [NIC⁸]</span>
+                <br><span>//*RADIUS: Requires NPS Extension for MFA; ErGw¹¹ is a ! KILL !</span>
+              </p>
+            </li>
+            <li data-list-item-id="ec6c0b0d79f4fbc147df2b4b9f614b554">
+              <p style="margin-left:0px;"><span><strong>[Int(server)¹][Regional⁴][App³]</strong> ➔ [AppGw(V2)¹¹] ➔ (⟷ <strong>[CERT(MTLS)]</strong>) ➔ [BACKENDPOOL⁸]</span>
+                <br><span>//*Key Vault: Requires Managed Identity for SSL certificate retrieval.&nbsp;</span>
+              </p>
+            </li>
+            <li data-list-item-id="ef65e63a41e6c74b053dd36225935649a">
+              <p style="margin-left:0px;"><span><strong>[Int(server)¹][Local⁴][App³]</strong> ➔ [Internal LB¹⁵] ➔ (⟷ <strong>[CERT(MTLS)]</strong>) ➔ [BACKENDPOOL⁸]</span>
+                <br><span>//*mTLS: Handshake required at the backend pool for end-to-end encryption.</span>
+              </p>
+            </li>
+            <li data-list-item-id="e936c3016a74e3673bd7df776b2741aac">
+              <p style="margin-left:0px;"><strong>[onPrem(user)¹][Regional⁴][VPN(P2S)⁵]</strong>
+                <br><strong>[VPNGW(V2+)]</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);"> ➔ [ (⟷ </span><strong>[RADIUS]</strong>
+                <span
+                style="background-color:rgb(16,18,24);color:rgb(230,232,240);">) | (⟷</span><strong>[CERT(CLIENT)]</strong><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">) | (⟷ </span><strong>[ENTRA ID]</strong>
+                  <span
+                  style="background-color:rgb(16,18,24);color:rgb(230,232,240);">) ] ➔ [NIC⁸]</span>
+                    <br><span style="background-color:rgb(16,18,24);color:rgb(230,232,240);">//*RADIUS: Requires On-Prem NPS for MFA handshake.</span>
+              </p>
+            </li>
+          </ul>
+        </blockquote>
+        <p>&nbsp;</p>
+        <p><strong>(13) ROUTE ➔ &nbsp;[LPM | UDR | BGP | vWAN (Route intent) | GlobalReach ]&nbsp;</strong>
+        </p>
+        <blockquote>
+          <div><strong>[UDR]</strong> //Static Overrides &amp; Logic Traps
+            <br><strong>[Int(server)¹][Regional⁴][FORCETUNNEL⁵]</strong> ➔ [vNet-injection⁷]
+            ➔ <strong>[UDR([::/0])]</strong> ➔ [VpnGw¹¹] | [ErGw¹¹] ➔ [onPrem(host)⁸]
+            <br><strong>[Int(server)¹][Regional⁴][Hub(in)⁵]</strong> ➔ [vNet-injection⁷]
+            ➔ <strong>[UDR([::/0])]</strong> ➔ [Az. FW¹⁶] | [NVA¹⁶] ➔ [Internet⁵]
+            <br><strong>[Int(server)¹][Regional⁴][Hub(in)⁵]</strong> ➔ [vNet-injection⁷]
+            ➔ <strong>[UDR(Spoke-CIDR)]</strong> ➔ [Az. FW¹⁶] ➔ [vNet-peering⁷] ➔ [NIC⁸]
+            //*Ingress scrubbing.
+            <br><strong>[Int(server)¹][Regional⁴][Hub(in)⁵]</strong> ➔ [vNet-injection⁷]
+            ➔ <strong>[UDR([::/0])]</strong> ➔ [ ! FAIL ! ] //*Loop: [::/0] at gateway
+            interface.
+            <br><strong>[Int(server)¹][Regional⁴][Hub-Spoke⁵]</strong> ➔ [Spoke(out)⁵]
+            ➔ <strong>[UDR(Remote-Subnet)]</strong> ➔ [Hub(in)⁵] ➔ [Az. FW¹⁶] ➔ [Spoke(in)⁵]
+            ➔ [NIC⁸]
+            <br><strong>[Int(server)¹][Regional⁴][App³]</strong> ➔ [AppGw(V2)¹¹] ➔ <strong>[UDR([::/0])]</strong> ➔
+            [ ! FAIL ! ] //*Breaks health/management connectivity.
+            <br><strong>[Ext(svc)¹][Regional⁴][Internet⁵]</strong> ➔ [vNet-injection⁷]
+            ➔ <strong>[UDR([::/0])]</strong> ➔ [Az. FW¹⁶] ➔ [NAT GW¹⁶] ➔ [Internet⁵]</div>
+          <div><strong>[BGP]</strong> &amp; <strong>[GLOBALREACH]</strong> //Dynamic Hybrid
+            &amp; Backplane
+            <br><strong>[onPrem(server)¹][Regional⁴][VPN(S2S)⁵]</strong> ➔ [VpnGw¹¹] ➔ <strong>[BGP(AS-PATH)]</strong> ➔
+            [vNet⁷] ➔ [NIC⁸] //*Prepending forces primary path.
+            <br><strong>[onPrem(server)¹][Global⁴][ER⁵]</strong> ➔ [ErGw¹¹] ➔ <strong>[BGP(WEIGHT)]</strong> ➔
+            [vNet-peering⁷] ➔ [NIC⁸] //*ER Weight trumps VPN.
+            <br><strong>[onPrem(server)¹][Regional⁴][Hub(in)⁵]</strong> ➔ [VpnGw¹¹] | [ErGw¹¹]
+            ➔ [vNet-injection⁷] ➔ <strong>[BGP]</strong> ➔ [Route Server¹³] ➔ [vNet-peering⁷]
+            ➔ [NIC⁸]
+            <br><strong>[onPrem(server)¹][Global⁴][ER⁵]</strong> ➔ [ErGw¹¹] ➔ <strong>[GLOBALREACH]</strong> ➔
+            [ER-Circuit⁷] ➔ [onPrem(host)⁸] //*Direct DC backplane.
+            <br><strong>[onPrem(server)¹][Global⁴][VPN/ER⁵]</strong> ➔ [VpnGw¹¹] ➔ [vNet-peering⁷]
+            ➔ <strong>[BGP]</strong> ➔ [ErGw¹¹] ➔ [onPrem(host)⁸] //*Requires Route Server¹³.</div>
+          <div><strong>[VWAN]</strong> //Automated Mesh
+            <br><strong>[Int(server)¹][Global⁴][vWAN hub¹¹]</strong> ➔ <strong>[VWAN(ROUTE-INTENT)]</strong> ➔
+            [Az. FW¹⁶] ➔ [Internet⁵]
+            <br><strong>[Int(server)¹][Global⁴][vWAN hub¹¹]</strong> ➔ <strong>[VWAN]</strong> ➔
+            [vWAN-Router¹³] ➔ [Hub-Mesh] ➔ [NIC⁸]</div>
+          <div><strong>[LPM]</strong> //System Predominance
+            <br><strong>[onPrem(server)¹][Regional⁴][ER⁵]</strong> ➔ [ERGw(FastPath)¹¹]
+            ➔ <strong>[LPM]</strong> ➔ [NIC⁸] //*Bypasses Gateway CPU/UDR.
+            <br><strong>[Int(server)¹][Regional⁴][Prvt.Link⁷]</strong> ➔ [vNet⁷] ➔ <strong>[LPM(/32|/128)]</strong> ➔
+            [Prvt. edpnt¹⁷] ➔ [Mged.-IP⁸]
+            <br><strong>[Int(server)¹][Regional⁴][Prvt.Link⁷]</strong> ➔ [Spoke(out)⁵]
+            ➔ <strong>[UDR(/32|/128)]</strong> ➔ [Az. FW¹⁶] ➔ [Prvt. edpnt¹⁷] ➔ [Mged.-IP⁸]
+            //*Requires 'PrivateEndpointNetworkPolicy: Enabled'.</div>
+          <div>&nbsp;</div>
+        </blockquote>
+        <div>
+          <br><span style="background-color:rgb(16,18,24);">D: INSPECTOR (Layered Security stack) &nbsp;//Stackable</span>
+          <br>(14) <span style="background-color:rgb(29,30,38);color:rgb(230,232,240);">Web Policy (includes IDS/IPS) - [WAF]( URL-ReWrite | X-Az.-FDID | RateLimit ) //Exception: only specifically mentioned modifiers are additionally included</span>
+        </div>
+        <blockquote>
+          <div><strong>[Int(server)¹][Regional⁴][App³]</strong>
+            <br>[vNet-injection⁷] ➔ [AppGw(v2)¹¹] ➔ <strong>[WAF]</strong> ➔ [BGP¹³] ➔ [
+            [VpnGw¹¹] | [ErGw¹¹] ] ➔ [onPrem(host)⁸]
+            <br>[vNet-injection⁷] ➔ [AppGw(v2)¹¹] ➔ <strong>[WAF]</strong> ➔ (⟷ [FW FQDN
+            Proxy⁹]) ➔ [Az. FW¹⁶] ➔ [EXT. SaaS(DN)⁸]
+            <br>//*Logic: Internal application scrubbing for hybrid and SaaS egress.</div>
+          <div>&nbsp;</div>
+          <div><strong>[Ext(user)¹][Global⁴][App³]</strong>
+            <br>[Internet⁵] ➔ (⟷ [Traffic Mgr.⁹]) ➔ [FrontDoor¹¹] ➔ <strong>[WAF(RateLimit)]</strong> ➔
+            [Priv. Link⁷] ➔ [NIC⁸]
+            <br>[Internet⁵] ➔ [FrontDoor(Std)¹¹] ➔ <strong>[WAF(X-Az.-FDID)]</strong> ➔
+            [AppGw(v2)¹¹] ➔ [BACKENDPOOL⁸]
+            <br>//*Binary Kill: (X-Az.-FDID) header check mandatory to prevent origin
+            bypass on Standard Front Door.</div>
+          <div>&nbsp;</div>
+          <div><strong>[Ext(user)¹][Regional⁴][App³]</strong>
+            <br>[Internet⁵] ➔ [AppGw(v2)¹¹] ➔ <strong>[WAF(Url-Rewrite)]</strong> ➔ [NSG¹⁰]
+            ➔ [BACKENDPOOL⁸]
+            <br>[Internet⁵] ➔ [AppGw(v2)¹¹] ➔ <strong>[WAF]</strong> ➔ (⟷ [PRVT. RESOLVER
+            (out)^⁹]) ➔ [VpnGw¹¹] ➔ [onPrem(host)⁸]</div>
+        </blockquote>
+        <p style="margin-left:0px;"><strong>(15) DISTRIBUTION </strong>→ [Internal LB | Gw LB | Svc. Mesh
+          | +SKUs]&nbsp;</p>
+        <blockquote>
+          <div><strong>[Int(server)¹][regional⁴][App³]</strong>
+            <br>[vNet⁷] ➔ <strong>[INTERNAL LB]</strong> ➔ [Priv. Link⁷] ➔ [Mged.-IP⁸]
+            <br>[Hub(in)⁵] ➔ <strong>[INTERNAL LB]</strong> ➔ [Prvt. edpnt¹⁷] (⟷ [Traffic
+            Analytics¹⁸]) ➔ [Mged.-IP⁸]
+            <br>[local⁴] ➔ <strong>[SERVICE MESH]</strong> ➔ [NIC⁸]
+            <br>//*Logic: Side-car distribution for local East-West micro-services.</div>
+          <div><strong>[onPrem(server)¹][regional⁴][App³]</strong>
+            <br>[Hub(in)⁵] ➔ [VpnGw¹¹] ➔ [UDR¹³] ➔ [Az. FW¹⁶] ➔ <strong>[INTERNAL LB]</strong> ➔
+            [BACKENDPOOL⁸]</div>
+          <div><strong>[Ext(user)¹][regional⁴][App³]</strong>
+            <br>[Hub(in)⁵] ➔ [Std. LB¹¹] ➔ <strong>[GATEWAY LB]</strong> ➔ [NVA¹⁶] (⟷ [vNet
+            Flow Logs¹⁸]) ➔ [BACKENDPOOL⁸]
+            <br>//*Binary Kill: Gateway LB and Standard LB must reside in the same region.
+            <br>[Internet⁵] ➔ [AppGw(v2)¹¹] ➔ <strong>[SERVICE MESH]</strong> ➔ [vNet Integration¹⁷]
+            (⟷ [Next Hop¹⁹]) ➔ [NIC⁸]</div>
+          <div>&nbsp;</div>
+        </blockquote>
+        <div><strong>(16) Nw (L4) SECURITY</strong> → [ Az. Fw/NVA(WAC) | NAT Gw | DDoS <strong>] </strong>+SKUs
+          //WAC is NVA only</div>
+        <blockquote>
+          <ul>
+            <li data-list-item-id="ebedafa6f2d6e3268527133d3bf5cb972">
+              <div><strong>[Egress Scrubbing]</strong>
+                <br><strong>[Int¹][regional⁴][vNet⁷]</strong> ➔ <strong>[AZ. FW | NVA]</strong> ➔
+                (⟷ [FW FQDN Proxy⁹]) ➔ [EXT. SaaS(DN)⁸]
+                <br><strong>[Int¹][regional⁴][vNet⁷]</strong> ➔ <strong>[NAT GW]</strong> ➔ [Internet⁵]
+                ➔ [EXT. SaaS(IP)⁸]
+                <br><strong>[onPrem¹][regional⁴][VpnGw¹¹]</strong> ➔ [UDR¹³] ➔ <strong>[AZ. FW | NVA]</strong> ➔
+                [Internet⁵]
+                <br>//*Logic: Forced-tunneling hybrid egress through hub inspector.</div>
+            </li>
+            <li data-list-item-id="e0d4079dba493286faf88eb4f4a09c3ba">
+              <div><strong>[Transit &amp; Ingress]</strong>
+                <br><strong>[Int¹][Hub(in)⁵][UDR¹³]</strong> ➔ <strong>[AZ. FW | NVA]</strong> ➔
+                [vNet-peering⁷] ➔ [NIC⁸]
+                <br>//*Logic: East-West scrubbing between spokes.
+                <br><strong>[Ext¹][regional⁴][Std. LB¹¹]</strong> ➔ <strong>[AZ. FW | NVA]</strong> (⟷
+                [DNAT]) ➔ [NIC⁸]
+                <br>//*Logic: L4 Ingress scrubbing via DNAT.</div>
+            </li>
+            <li data-list-item-id="e9c799f75212a115e2360529cda427923">
+              <div><strong>[Fabric Protection]</strong>
+                <br><strong>[Ext¹][global⁴][Internet⁵]</strong> ➔ [Std. LB¹¹] ➔ <strong>[DDOS]</strong> ➔
+                [BACKENDPOOL⁸]
+                <br>//*Binary Kill: [DDOS] (Network Protection) required at VNet level.</div>
+            </li>
+          </ul>
+          <p>
+            <br>&nbsp;<strong>[onPrem¹] ➔ [NIC⁸]</strong>
+          </p>
+          <div><strong>[NVA(WAC)¹⁶] ➔ [Entra ID(WAC)¹²] ➔ [VpnGw¹¹ | ErGw¹¹] ➔ [NIC⁸]</strong>
+          </div>
+        </blockquote>
+        <p>(17) <strong>RECEIVER → [Svc. Entry) [Prvt. EP (VPN/ER) | Svc. EP | vNet Integ] </strong>//
+          (Not stackable)</p>
+        <blockquote>
+          <ul>
+            <li data-list-item-id="ee9b329339e3a4baf4ca101a1651d3d9d">EXTERNAL]¹ RECEIVER
+              <br>[External¹ | Public² | App³ | Global⁴ | Internet⁵] ➔ [FRONT DOOR (PREM)]¹¹
+              ➔ [Prvt. LINK]⁷ ➔ [Prvt. EP (VPN/ER)]¹⁷ ➔ [STORAGE/PAAS]⁸
+              <br>[External¹ | Public² | App³ | Regional⁴ | Internet⁵] ➔ [APP GW (V2)]¹¹
+              ➔ [VNET INTEG]¹⁷ ➔ [VM]⁸
+              <br>[External¹ | Public² | App³ | Regional⁴ | Internet⁵] ➔ [STANDARD LB]¹¹
+              ➔ [NSG]¹⁰ ➔ [VM | VMSS]⁸
+              <br>[External¹ | Public² | App³ | Regional⁴ | Internet⁵] ➔ [BASTION]¹¹ ➔ [VNET
+              INTEG]¹⁷ ➔ [VM]⁸
+              <br>[HYBRID] RECEIVER
+              <br>[On-Prem¹ | Prvt.² | App³ | Regional⁴ | Prvt. Access⁵] ➔ [VPNGW | ERGW]¹¹
+              ➔ [Prvt. EP (VPN/ER)]¹⁷ ➔ [STORAGE/PAAS]⁸
+              <br>[Internal¹ | Prvt.² | App³ | Regional⁴ | Prvt. Access⁵] ➔ [Prvt. LINK]⁷
+              ➔ [Prvt. EP (VPN/ER)]¹⁷ ➔ [STORAGE/PAAS]⁸
+              <br>[Internal¹ | Prvt.² | App³ | Regional⁴ | Internet⁵] ➔ [VNET INJECTION]⁷
+              ➔ [NAT GW]¹⁶ ➔ [STORAGE/PAAS]⁸
+              <br>[Internal¹ | Prvt.² | App³ | Regional⁴ | Az. Default⁵] ➔ [SERVICE EP]¹⁷
+              ➔ [STORAGE/PAAS]⁸</li>
+          </ul>
+        </blockquote>
+        <p>
+          <br>E: AUDITING</p>
+        <p>(18) <strong>OBSERVER:</strong> [vNet/NSG FlowLogs | Traffic Analytics |
+          Conn. Mon. | Packet Capture]</p>
+        <blockquote>
+          <div><strong>[Int¹][local⁴][App³]</strong>
+            <br>[vNet⁷] ➔ <strong>[NSG FLOWLOGS]</strong> ➔ [Mged.-IP (Storage)⁸] ➔ <strong>[TRAFFIC ANALYTICS]</strong>
+            <br>//*Correction: Flow Logs MUST land in Storage before processing by Traffic
+            Analytics.</div>
+          <div><strong>[Int¹][regional⁴][App³]</strong>
+            <br>[vNet-peering⁷] ➔ <strong>[VNET FLOWLOGS]</strong> ➔ [Mged.-IP (Log Analytics)⁸]
+            <br>[vNet⁷] ➔ [UDR¹³] ➔ <strong>[PACKET CAPTURE]</strong> ➔ [Mged.-IP (Storage)⁸]
+            <br>[Prvt. edpnt¹⁷] ➔ <strong>[VNET FLOWLOGS]</strong> ➔ <strong>[TRAFFIC ANALYTICS]</strong>
+          </div>
+          <div><strong>[onPrem¹][regional⁴][App³]</strong>
+            <br>[VpnGw¹¹ | ErGw¹¹] ➔ <strong>[CONN. MON.]</strong> ➔ [Mged.-IP (Log Analytics)⁸]</div>
+        </blockquote>
+        <p>(19) INVESTIGATOR ➔ [ IP Flow Verify | Next Hop | Diagnostics ]
+          <br>[INVESTIGATOR]¹⁹</p>
+        <blockquote>
+          <div><strong>[Int¹][regional⁴][App³]</strong>
+            <br>[Hub(in)⁵] ➔ <strong>[NEXT HOP]</strong> ➔ [UDR¹³] ➔ [Az. FW¹⁶]
+            <br>//*Verifies if the packet hits the Firewall or bypasses via System Route.
+            <br>[local⁴] ➔ <strong>[IP FLOW VERIFY]</strong> ➔ [NSG¹⁰ | ASG¹⁰] ➔ [NIC⁸]
+            <br>//*Simulates 5-tuple to identify the specific "Deny" rule.
+            <br>[Prvt. edpnt¹⁷] ➔ <strong>[CONNECTION TS]</strong> ➔ [Mged.-IP⁸]
+            <br>//*Tests reachability from a source to a specific Private Endpoint.</div>
+          <div><strong>[onPrem¹][regional⁴][App³]</strong>
+            <br>[VpnGw¹¹] ➔ <strong>[VPN/NSG DIAG.]</strong> ➔ [VpnGw¹¹]
+            <br>//*Analyzes IKE Phase 1/2 for PSK or Proposal mismatches.</div>
+          <div><strong>[Ext¹][regional⁴][Internet⁵]</strong>
+            <br>[Std. LB¹¹] ➔ <strong>[VPN/NSG DIAG.]</strong> ➔ [NSG¹⁰] ➔ [NIC⁸]
+            <br>//*Checks if LB rules are blocked by a subnet-level NSG.</div>
+        </blockquote>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,36 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Azure Route Server</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Azure Route Server</h1>
+
+      <div class="ck-content">
+        <p style="margin-left:0px;"><span>INSTANT DECISIONS</span>
+          <br><span>"Dynamically update routes for 50 Spoke VNets without 50 UDRs" ➔ Azure Route Server.</span>
+          <br><span>"NVA is peering but VMs aren't seeing routes" ➔ Check "Use Remote Gateway/Route Server" on the Peering config.</span>
+          <br><span>"Route Server vs. ExpressRoute Gateway" ➔ ARS is not a Gateway; it only exchanges Route Info, not the actual data packets.</span>
+        </p>
+        <hr>
+        <p style="margin-left:0px;">
+          <br><span><strong>BGP Peering:</strong> Acts as a BGP speaker to exchange routes with a Network Virtual Appliance (NVA)&nbsp;</span>
+          <br><span><strong>Route Injection:</strong> Auto Update "Effective Routes" of all VMs in the VNet (Include: Use Remote Gw/Routeserver; Exclude UDR)&nbsp;</span>
+          <br>
+          <br>max <span>8 BGP peers /ARS &nbsp;</span>
+          <br><span>Subnet: Dedicated RouteServerSubnet | Min /27.</span>
+          <br>// <span>BGP-injected routes never override UDR&nbsp;</span>
+          <br>// <span>ASN: 65515. Your NVA must use a different ASN (typically 65001-65514).</span>
+          <br>
+          <br>&nbsp;</p>
+      </div>
+    </div>
+  </body>
+
+</html>

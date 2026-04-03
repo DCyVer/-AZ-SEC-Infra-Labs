@@ -1,0 +1,107 @@
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <base target="_parent">
+    <title data-trilium-title>Gateways</title>
+  </head>
+  
+  <body>
+    <div class="content">
+       <h1 data-trilium-h1>Gateways</h1>
+
+      <div class="ck-content">
+        <p style="margin-left:0px;"><span><strong>&lt;50 Spokes + Cost-Sensitive ➔ VNet Peering | ≥50 Spokes + Admin-Easy ➔ Virtual WAN</strong></span>
+          <br><span><strong>&lt;10Gbps + P2S / Encrypted ➔ VPN Gateway | &nbsp;≤100Gbps + Private Compliance ➔ ExpressRoute</strong></span>
+          <br>&nbsp;</p>
+        <p style="margin-left:0px;"><span><strong>SNAT Exhaustion Fix ➔ NAT Gateway</strong></span>
+          <br><span><strong>High-Throughput L4 (TCP/UDP) ➔ Load Balancer</strong></span>
+          <br><span><strong>URL-Path Routing + WAF (Regional) ➔ Application Gateway</strong></span>
+          <br><span><strong>Global DNS + Non-HTTP / SQL ➔ Traffic Manager</strong></span>
+          <br><span><strong>"Gaming platform"</strong> or <strong>"Custom TCP protocol,"</strong> → <strong>Traffic Manager</strong>.&nbsp;</span>
+          <br>Global HTTP ➔ Front Door | Global Non-HTTP ➔ Traffic Manager.
+          <br><span>Traffic Manager is subject to <strong>DNS TTL caching</strong>, which can cause a delay of several minutes</span>
+          <br><span><strong>Failover: &lt; 10s / Anycast / Health Probes / Global Acceleration / HTTP ➔ Front Door</strong></span>
+          <br>Regional HTTP ➔ App Gateway | Global HTTP ➔ Front Door.
+          <br><span><strong>Source IP Visibility:</strong> &nbsp;→ Front door = own IP unless x-forward-for header; Traffic Manager = orig. client IP</span>
+          <br><span><strong>Centralized FQDN / L3-L7 Inspection ➔ Azure Firewall. | Subnet-to-Subnet / IP-based filtering ➔ NSG.</strong></span>
+          <br>Private IP only" ➔ Private Link | "Azure Backbone + Public IP" ➔ Service
+          Endpoint.
+          <br><span><strong>Zero Public IP PaaS ➔ Private Link / Endpoint</strong></span>
+          <br><span><strong>Backbone + Firewall-Locked Public IP ➔ Service Endpoint.</strong></span>
+        </p>
+        <hr>
+        <p>
+          <br>Gateway Precedence&nbsp;</p>
+        <ol>
+          <li data-list-item-id="eb247682bf9187d6bae05a2225f1b2e32">
+            <p style="margin-left:0px;"><span>DNS Resolution (Local Hosts ➔ DNS Proxy (Firewall) ➔ Private DNS Resolver ➔ Private DNS Zone ➔ Public DNS.)</span>
+            </p>
+          </li>
+          <li data-list-item-id="ed8fda968e5056450fec9190a2a5e9ded">
+            <p style="margin-left:0px;"><span>User-Defined Routes (UDR): //</span> <span>Static Wins: Manual routes (::/0 to NVA) override all BGP and System routes.)</span>
+            </p>
+          </li>
+          <li data-list-item-id="ef465966fc12e686243f3790b3730f7a3">
+            <p style="margin-left:0px;"><span>BGP (Longest Prefix Match - LPM): //specific </span><code spellcheck="false"><span>/24</span></code><span> from VPN beats a general </span>
+              <code
+              spellcheck="false"><span>/16</span>
+                </code><span> from ExpressRoute</span>
+            </p>
+          </li>
+          <li data-list-item-id="e66e2f0896696a6a70559e2e253cf85b1">
+            <p style="margin-left:0px;"><span>ExpressRoute (ER) // if both same prefix (</span><code spellcheck="false"><span>/24</span></code><span>), ExpressRoute &gt; VPN.</span>
+            </p>
+          </li>
+          <li data-list-item-id="eea99051558f70140b1ce147b411c890f">
+            <p style="margin-left:0px;"><span>VPN Gateway: //Fallback for cross-prem if no ER exists.</span>
+            </p>
+          </li>
+          <li data-list-item-id="ebf1843c70264f972abdb477cd06fe04b">
+            <p style="margin-left:0px;"><span>Outbound Internet Exit (The "SNAT" Gate) → NAT Gateway ➔ Instance-level PIP ➔ Standard Load Balancer.</span>
+            </p>
+            <ul>
+              <li data-list-item-id="e75a9ec2c031cef8a77ab099189ac4688">
+                <p style="margin-left:0px;"><em><span>//</span></em><span>NAT Gateway always overrides the others for internet-bound traffic.</span>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li data-list-item-id="e86b8fe4a3e9e2602ed5282fa50675cc7">
+            <p style="margin-left:0px;"><span>System Routes:&nbsp;</span>
+            </p>
+          </li>
+        </ol>
+        <div><strong>SUBNET (Granular)&nbsp;</strong>
+        </div>
+        <div><strong>VNET (Single Region)</strong>
+        </div>
+        <p style="margin-left:0px;"><span><strong>VNet Peering default (Min. cost/latency between vnets)</strong></span>
+          <br><span><strong>NAT Gateway </strong>IF <strong>SNAT Port Exhaustion (≤ </strong>64k ports/IP) [Static (Azure) Outbound IP ← 3rd party Whitelist ]</span>
+          <br><span><strong>Standard Load Balancer* IF</strong> L4 &nbsp;[<strong>High-throughput (Gb/s) | </strong>non-HTTP | &nbsp;internal traffic] &nbsp;</span>
+          <br><span>*</span>IF no gateway: Services High Availability (all) ports +
+          outbound rules
+          <br><span><strong>App Gateway (WAF) IF </strong>L7. [<strong>SSL Offload | Cookie-affinity | URL-path routing]</strong></span>
+          <br><strong>Hybred(onPrem) </strong><span><strong>VPN Gw IF</strong> <strong>Encryption over (public) Internet | ExpressRoute if Private [Predictable Performance/SLA]</strong></span>
+          <br><strong>Global</strong>
+          <br><span><strong>vWAN IF Managed (Full transitive routing ≤ 50 vnets}| &nbsp;&gt; 50 VNets</strong> | <strong>Branch-to-Branch</strong> (Any-to-Any)</span>
+          <br>+Addon: ExpressRoute [Intercontinental circuits]
+          <br><span><strong>Front Door IF L7 (HTTP+S) [ [Instant Failover (&lt;10s) |&nbsp;</strong> Edge Caching (CDN) | WAF at the PoP]</span>
+          <br><span>+Addon: Private Link [Secure edge | No Public Internet footprint]</span>
+          <br><span><strong>Traffic Manager(DNS) IF</strong> L4 (<strong>Non-HTTP | DNS) Global Routing</strong> [Legacy|Gaming| VPN endpoints).</span>
+        </p>
+        <div>
+          <br><span><strong>Private Link</strong> → &nbsp;PaaS [Storage | SQL | Keyvault] with <strong>Zero Public IP</strong> .</span>
+          <br><span>+Addon: Azure Firewall [PaaS Traffic monitoring / blocking]&nbsp;</span>
+        </div>
+        <div><span><strong>UDR (Static) IF&nbsp;</strong> <strong>Force Tunnel (Gateway ←→ On-Prem)</strong> through NVA/Firewall.&nbsp;</span>
+          <br><span><strong>NSG/ASG IF</strong> &nbsp;Filter traffic between VMs/Subnets.</span>
+        </div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </body>
+
+</html>
